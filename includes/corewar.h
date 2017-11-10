@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 14:26:33 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/10 15:26:34 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
 #define SEPARATOR_CHAR			','
-#define REG_CHAR			'r'
-#define SPACE ' '
-#define TAB '\t'
+#define REG_CHAR				'r'
+#define SPACE					' '
+#define TAB						'\t'
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
@@ -63,8 +63,8 @@
 #define MAX_CHECKS				10
 
 /*
- **
- */
+**
+*/
 
 // typedef char	t_arg_type;
 
@@ -74,8 +74,8 @@
 #define T_LAB					8
 
 /*
- **
- */
+**
+*/
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
@@ -139,7 +139,6 @@ typedef struct s_player
 {
 	char	*name;
 	int		active;
-	// int		id;
 	int		life_signal;
 	int		last_live;
 	char	*file_name;
@@ -228,7 +227,7 @@ int			srch_players(t_vm *vm, int argc, char **argv);
 void		initialisation(t_vm *vm);
 void		error(char *str);
 // void	write_player(t_vm *vm);
-void		write_player(t_vm *vm, int nb, int num);
+void		write_players(t_vm *vm, int nb, int num);
 int			check_arg(t_vm *vm, int argc, char **argv);
 t_proc		*create_process(t_vm *vm, int num);
 void		add_process(t_vm *vm, t_proc *proc);

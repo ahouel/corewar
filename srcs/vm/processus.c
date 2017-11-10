@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/05 14:14:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/10 15:43:09 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,11 @@ t_proc	*create_process(t_vm *vm, int num)
 	if(!(tmp = (t_proc*)ft_memalloc(sizeof(t_proc))))
 		error("error : malloc\n");
 	tmp->id = set_proc_id(vm);
-	// printf("NOMBRE => %d\n", num * (-1));
-	// printf("NUM > %d\n", num);
 	tmp->num = num;
 	tmp->pc = (MEM_SIZE / vm->nb_player) * ((num * (-1) -1));
 	tmp->last_pc = 0;
-	// printf(">>>> %d   num %d\n", tmp->pc, num);
 	tmp->op = NULL;
-	// tmp->reg = init_registre(num);
 	ft_bzero(tmp->reg, sizeof(int) * (REG_NUMBER + 1));
-	// printf("INIT REG 1 >>> %x\n", num * -1);
 	tmp->reg[1] = num;
 	tmp->state = IDLE;
 	tmp->carry = 0;
