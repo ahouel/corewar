@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/09 16:02:19 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/10 14:26:33 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ typedef struct s_vm
 
 int			ft_strargv(int argc, char **argv, char *str);
 int			srch_players(t_vm *vm, int argc, char **argv);
-void		create_players(t_vm *vm);
+void		initialisation(t_vm *vm);
 void		error(char *str);
 // void	write_player(t_vm *vm);
 void		write_player(t_vm *vm, int nb, int num);

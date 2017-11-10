@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:41:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/09 10:22:35 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/10 11:44:52 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ void	idle_state(t_vm *vm, t_proc *proc)
 		proc->op->loadtime--;
 		if (proc->op->loadtime <= 0)
 		{
-			// printf("SEGFFAULT_2\n");
+			//ft_putstr("SEGFFAULT_2\n");
 			fill_cur_op(vm, proc);
+			//ft_putstr("SEGFFAULT_3\n");
 			if (op_tab[proc->op->code - 1].func != NULL)
 			{
 				op_tab[proc->op->code - 1].func(vm, proc);

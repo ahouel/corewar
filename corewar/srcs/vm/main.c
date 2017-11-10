@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/09 16:00:09 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/10 13:48:18 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	get_ocp(t_vm *vm, t_proc *proc)
 
 void	get_dir(t_vm *vm, t_proc *proc, int num)
 {
-	// printf(">>>>>>>>>>GET_DIR<<<<<<<<<<<\n");
+//	ft_putstr(">>>>>>>>>>GET_DIR<<<<<<<<<<<\n");
 	unsigned int value;
 
 	value = 0;
@@ -37,8 +37,15 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	if (vm->debug)
 	printf("Pc => %d\n", proc->pc);
 	proc->pc++;
+//	ft_putstr("A\n");
 	value = value << 8;
+//	ft_putstr("a\n");
+//	ft_printf("value : %d\n ram : %p\nproc : %p\nproc->pc : %d\n", value, vm->ram, proc, proc->pc);
+//	ft_putstr("b\n");
+	if (proc->pc > MEM_SIZE)
+		return ;		// FIXXXXX
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
+//	ft_putstr("B\n");
 	if (vm->debug)
 	printf("Value => %x\n", value);
 	if (vm->debug)
@@ -206,7 +213,7 @@ void	run(t_vm *vm)
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);
 
-		// ft_putstr("SEGV 1\n");
+	//	ft_putstr("SEGV 1\n");
 		//-------------------NCURSES
 		if (vm->ncurses)
 		{
@@ -222,11 +229,11 @@ void	run(t_vm *vm)
 			if (proc->active)
 			{
 				// printf("SEGFFAULT_3\n");
-				// printf("SEGV 2\n");
+			//	ft_putstr("SEGV 2\n");
 				animate_proc(vm, proc);
-				// printf("SEGV 3\n");
+			//	ft_putstr("SEGV 3\n");
 			}
-			// printf("SEGFFAULT_4\n");
+			//ft_putstr("bipbip\n");
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
 			proc->last_pc = proc->pc;
@@ -241,9 +248,9 @@ void	run(t_vm *vm)
 			dump(vm);
 		// printf("SEGFFAULT_5\n");
 		// printf("SEGV 4\n");
-		// ft_putstr("SEGV 4\n");
+	//	ft_putstr("SEGV 4\n");
 	}
-	printf("END\n");
+//	printf("END\n");
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
 }
@@ -300,21 +307,21 @@ int		main(int argc, char **argv)
 	init_vm(&vm);
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
-	/*
-	int i = 0;
+/*	int i = 0;
 	while (i < 5)
 	{
 		ft_printf("le i %d, Joueur : %s, active : %d\n", i, vm.player[i].file_name, vm.player[i].active);
 		i++;
-	}
-	*/
+	}*/
 	if (vm.ncurses)
 		init_ncurses(&w);
 
 //-------------Debug
 	// printf("Debug : active -> %d\n", vm.player[1].active);
 //-------------Debug
-	create_players(&vm);//initialisation de la machine virtuelle
+	ft_printf("%d\n", vm.nb_player);
+	initialisation(&vm);
+	ft_printf("=======FIGHT=======\n");
 	run(&vm);//lancement du combat
 	if (vm.ncurses)
 		endwin();

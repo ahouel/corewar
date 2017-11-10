@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/09 15:44:01 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/10 11:06:43 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-void	init_mem(t_vm *vm)
-{//init la memoire 4096 * un octet
-
-	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
-
-}
 
 // void	init_nb_player(t_vm *vm)
 // {//init le nombre de players
@@ -156,16 +149,15 @@ void	init_process(t_vm *vm)
 // 	init_process(vm);
 // }
 
-void	create_players(t_vm *vm)
-{//appel de toutes les fonctions d init
+void	initialisation(t_vm *vm)
+{
 	int i;
 	int j;
 
 	i = 1;
 	j = 0;
-	// printf("Debug : init_vm nb_player %d\n", vm->nb_player);
-	init_mem(vm);
-	while (i <= MAX_PLAYERS)
+	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
+	while (i < MAX_PLAYERS + 1)
 	{
 		if (vm->player[i].active)
 		{

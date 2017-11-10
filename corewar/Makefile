@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/11/09 16:02:38 by ahouel           ###   ########.fr        #
+#    Updated: 2017/11/10 11:01:42 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -29,7 +29,7 @@ LIB_PATH = ./libft/
 BUILD_PATH = ./build/
 
 SRC_FILES_VM = main.c \
-								init.c	\
+								initialisation.c	\
 								error.c	\
 								check_arg.c	\
 								controller.c	\
