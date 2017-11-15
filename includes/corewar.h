@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 15:26:34 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/15 12:07:41 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ typedef struct s_op
 
 typedef struct s_player
 {
-	char	*name;
+	char	name[PROG_NAME_LENGTH + 1];
+	char	comment[COMMENT_LENGTH + 1];
 	int		active;
 	int		life_signal;
 	int		last_live;
@@ -222,11 +223,11 @@ typedef struct s_vm
 	t_proc	*proc;
 }	t_vm;
 
+void		exe(t_vm *vm);
 int			ft_strargv(int argc, char **argv, char *str);
 int			srch_players(t_vm *vm, int argc, char **argv);
 void		initialisation(t_vm *vm);
 void		error(char *str);
-// void	write_player(t_vm *vm);
 void		write_players(t_vm *vm, int nb, int num);
 int			check_arg(t_vm *vm, int argc, char **argv);
 t_proc		*create_process(t_vm *vm, int num);

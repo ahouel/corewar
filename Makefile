@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/11/10 15:38:56 by ahouel           ###   ########.fr        #
+#    Updated: 2017/11/15 11:12:38 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -30,6 +30,7 @@ BUILD_PATH = ./build/
 
 SRC_FILES_VM = main.c \
 								initialisation.c	\
+								exe.c	\
 								error.c	\
 								check_arg.c	\
 								controller.c	\

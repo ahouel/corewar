@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 15:43:08 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/15 12:07:44 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ static void	init_process(t_vm *vm)
 		i++;
 	}
 }
+
+/*
+**	Generation de la ram, ecriture des joueurs dessus, et creation des processus.
+*/
 
 void		initialisation(t_vm *vm)
 {

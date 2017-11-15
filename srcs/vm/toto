@@ -1,0 +1,17 @@
+static char	*get_data(char *filename)
+{
+	header_t	hd;
+	int			fd;
+	char		buff[CHAMP_MAX_SIZE + 1];
+	char		*data;
+	int			ret;
+
+	fd = 0;
+	ret = 0;
+	if ((fd = open(filename, O_RDONLY)) < 0)
+		error("error : file\n");
+	ret = read(fd, &hd, sizeof(header_t));
+	data = ft_memalloc(ret + 1);
+	ft_memcpy(data, buff, ret);
+	return (data);
+}

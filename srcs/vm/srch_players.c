@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 15:45:34 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/10 10:13:37 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/13 12:44:03 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void	init_players(t_vm *vm)
 		vm->player[i].active = 0;
 		vm->player[i].life_signal = 0;
 		vm->player[i].file_name = NULL;
-		vm->player[i].name = NULL;
 		vm->player[i].last_live = 0;
 	}
 }

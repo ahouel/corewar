@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 16:16:50 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/15 10:29:42 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+void				ft_bswap(void *bytes, size_t len);
 size_t				ft_strlen(const char *str);
 char				*ft_strcpy(char *dest, const char *src);
 char				*ft_strncpy(char *dest, const char *src, size_t n);

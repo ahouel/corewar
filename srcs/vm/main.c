@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 14:59:43 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/15 11:24:24 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,18 +170,6 @@ t_player	*get_survivor(t_vm *vm)
 // 	return (0);
 // }
 
-void	animate_proc(t_vm *vm, t_proc *proc)
-{
-	// if (proc->state == IDLE)
-
-	idle_state(vm, proc);
-
-	// else if (proc->state == WAIT)
-	// 	wait_state(vm, proc);
-	// else if (proc->state == START)
-	// 	proc->state = IDLE;
-}
-
 int		count_proc(t_vm *vm)
 {
 	int i;
@@ -198,63 +186,6 @@ int		count_proc(t_vm *vm)
 	return (i);
 }
 
-void	dump(t_vm *vm)
-{
-	if (!(vm->cycle % vm->dump))
-		show_mem(vm);
-}
-
-void	run(t_vm *vm)
-{
-	t_proc	*proc;
-
-	while (process_living(vm))
-	{
-		if (2 & vm->verbosity)
-			printf("It is now cycle %d\n", vm->cycle + 1);
-
-	//	ft_putstr("SEGV 1\n");
-		//-------------------NCURSES
-		if (vm->ncurses)
-		{
-			call_ncurses(vm);
-			controller(vm);
-			usleep(vm->delay);
-		}
-		//-------------------NCURSES
-		// printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->cycle);
-		proc = vm->proc;
-		while (proc != NULL)
-		{
-			if (proc->active)
-			{
-				// printf("SEGFFAULT_3\n");
-			//	ft_putstr("SEGV 2\n");
-				animate_proc(vm, proc);
-			//	ft_putstr("SEGV 3\n");
-			}
-			//ft_putstr("bipbip\n");
-			if (16 & vm->verbosity)
-				show_pc_move(vm, proc);
-			proc->last_pc = proc->pc;
-			proc = proc->next;
-		}
-		vm->cycle++;
-//-------------------------Debug
-
-//-------------------------Debug
-		// printf("%d\n", vm->dump);
-		if (vm->dump != -1 && !vm->ncurses)
-			dump(vm);
-		// printf("SEGFFAULT_5\n");
-		// printf("SEGV 4\n");
-	//	ft_putstr("SEGV 4\n");
-	}
-//	printf("END\n");
-	if (vm->last_one)
-		printf("Last_one => %s\n", vm->last_one->file_name);
-}
-
 int		modulo(int a, int b)
 {
 	if (a % b >= 0)
@@ -264,7 +195,7 @@ int		modulo(int a, int b)
 	// return (a % b) >= 0 ? (a % b) : (a % b) + b;
 }
 
-int		get_winner(t_vm *vm)
+static int	get_winner(t_vm *vm)
 {
 	int i;
 	int best;
@@ -278,7 +209,7 @@ int		get_winner(t_vm *vm)
 			best = i;
 		i++;
 	}
-	return (i);
+	return (best);
 }
 
 static void	init_vm(t_vm *vm)
@@ -301,32 +232,19 @@ static void	init_vm(t_vm *vm)
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
-	WINDOW *w;//ncurses
+	WINDOW *w;
 
-	// show_mem(&vm);
 	init_vm(&vm);
-	if(check_arg(&vm, argc, argv))//check des parametres
+	if(check_arg(&vm, argc, argv))
 		error("Error\n");
-/*	int i = 0;
-	while (i < 5)
-	{
-		ft_printf("le i %d, Joueur : %s, active : %d\n", i, vm.player[i].file_name, vm.player[i].active);
-		i++;
-	}*/
 	if (vm.ncurses)
 		init_ncurses(&w);
-
-//-------------Debug
-	// printf("Debug : active -> %d\n", vm.player[1].active);
-//-------------Debug
 	ft_printf("%d\n", vm.nb_player);
 	initialisation(&vm);
 	ft_printf("=======FIGHT=======\n");
-	run(&vm);//lancement du combat
+	exe(&vm);
 	if (vm.ncurses)
 		endwin();
-
 	printf("winner nb -> %d\n", get_winner(&vm));
-
 	return (0);
 }
