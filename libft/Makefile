@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/29 03:17:34 by rfulop            #+#    #+#              #
-#    Updated: 2017/11/15 10:30:15 by ahouel           ###   ########.fr        #
+#    Updated: 2017/11/15 15:55:52 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,12 +142,12 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 clean:
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
-	@rm -fv $(OBJ)
-	@echo "\033[31mObjects files \033[1;31m$(OBJ_NAME)\033[1;0m\033[31m removed.\033[0m"
+	@rm -f $(OBJ)
+#	@echo "\033[31mObjects files \033[1;31m$(OBJ_NAME)\033[1;0m\033[31m removed.\033[0m"
 
 fclean: clean
-	@rm -fv $(NAME)
-	@echo "\033[31mLib \033[1;31m$(NAME)\033[1;0m\033[31m removed.\033[0m"
+	@rm -f $(NAME)
+#	@echo "\033[31mLib \033[1;31m$(NAME)\033[1;0m\033[31m removed.\033[0m"
 
 re: fclean all
 

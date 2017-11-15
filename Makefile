@@ -3,166 +3,65 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
+#    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/11/15 11:12:38 by ahouel           ###   ########.fr        #
+#    Created: 2017/11/15 14:02:54 by ahouel            #+#    #+#              #
+#    Updated: 2017/11/15 15:54:44 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 .PHONY: all, clean, fclean, re
 
-CC = clang
-CFLAGS = -g
+NAME = CW
 VM_NAME = corewar
 ASM_NAME = asm
-DASM_NAME = decompiler
+DASM_NAME = dasm
+LIB_NAME = libft.a
 
-SRC_PATH_VM = ./srcs/vm/
-SRC_PATH_ASM = ./srcs/asm/
-SRC_PATH_DASM = ./srcs/dasm/
-OBJ_PATH = ./obj/
-OBJ_PATH_VM = ./obj/vm/
-OBJ_PATH_ASM = ./obj/asm/
-OBJ_PATH_DASM = ./obj/dasm/
-INC_PATH = ./includes/
+VM_PATH = ./Machine-Virtuelle/
+ASM_PATH = ./Assembleur/
+DASM_PATH = ./Desassembleur/
 LIB_PATH = ./libft/
-BUILD_PATH = ./build/
+OBJS_PATHS = obj/
 
-SRC_FILES_VM = main.c \
-								initialisation.c	\
-								exe.c	\
-								error.c	\
-								check_arg.c	\
-								controller.c	\
-								cycle_to_die.c	\
-								check_inst.c	\
-								add_process.c	\
-								debug.c	\
-								write_players.c	\
-								ft_strargv.c \
-								srch_players.c \
-								sti.c	\
-								ld.c	\
-								ldi.c	\
-								live.c	\
-								add.c	\
-								and.c	\
-								ncurses.c	\
-								pars_op.c	\
-								players.c	\
-								processus.c	\
-								fork.c \
-								or.c \
-								xor.c \
-								sub.c \
-								st.c \
-								state.c	\
-								zjmp.c \
-								op.c \
-								lld.c
+all: $(NAME)
 
-SRC_FILES_ASM = main.c \
-								create_file.c \
-								error.c \
-								labels.c \
-								header.c \
-								debug.c \
-								op.c \
-								find_op.c \
-								parsing_tools.c \
-								toolkit.c \
-								analyse.c \
-								analyse_tools.c \
-								display1.c \
-								display2.c \
-								check_line.c \
-								lex_ins1.c \
-								lex_ins2.c \
-								check_arg1.c \
-								check_arg2.c \
-								read_line.c \
-								read_tools.c \
-								verbose.c \
-								free.c
-SRC_FILES_DASM = main.c \
-				op.c \
-				error.c \
-				file.c \
-				get.c \
-				display_args.c \
+$(NAME): $(VM_NAME) $(ASM_NAME) $(DASM_NAME)
 
+$(VM_NAME):
+	@echo "\033[34mCompilation of \033[36m$(notdir $(VM_NAME))\033[34m...\033[0m"
+	@make -C $(VM_PATH)
 
-INC_FILES = corewar.h
-LIB_FILES = libft.a
-LIB = $(addprefix $(LIB_PATH), $(LIB_FILES))
+$(ASM_NAME):
+	@echo "\033[34mCompilation of \033[36m$(notdir $(ASM_NAME))\033[34m...\033[0m"
+	@make -C $(ASM_PATH)
 
-OBJ_FILES_VM = $(SRC_FILES_VM:.c=.o)
-OBJ_FILES_ASM = $(SRC_FILES_ASM:.c=.o)
-OBJ_FILES_DASM = $(SRC_FILES_DASM:.c=.o)
-OBJ_EXEC_VM = $(addprefix $(OBJ_PATH_VM), $(OBJ_FILES_VM))
-OBJ_EXEC_ASM = $(addprefix $(OBJ_PATH_ASM), $(OBJ_FILES_ASM))
-OBJ_EXEC_DASM = $(addprefix $(OBJ_PATH_DASM), $(OBJ_FILES_DASM))
-
-all: $(VM_NAME) $(ASM_NAME) $(DASM_NAME)
-
-$(OBJ_PATH_VM):
-	@mkdir $(OBJ_PATH) 2> /dev/null || true
-	@mkdir $(OBJ_PATH_VM) 2> /dev/null || true
-
-$(OBJ_PATH_ASM):
-	@mkdir $(OBJ_PATH) 2> /dev/null || true
-	@mkdir $(OBJ_PATH_ASM) 2> /dev/null || true
-
-$(OBJ_PATH_DASM):
-	@mkdir $(OBJ_PATH) 2> /dev/null || true
-	@mkdir $(OBJ_PATH_DASM) 2> /dev/null || true
-
-$(OBJ_PATH_VM)%.o: $(SRC_PATH_VM)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
-	@echo "\033[34mCompilation of \033[36m$(notdir $<)\033[34m done.\033[0m"
-
-$(OBJ_PATH_ASM)%.o: $(SRC_PATH_ASM)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
-	@echo "\033[34mCompilation of \033[36m$(notdir $<)\033[34m done.\033[0m"
-
-$(OBJ_PATH_DASM)%.o: $(SRC_PATH_DASM)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
-	@echo "\033[34mCompilation of \033[36m$(notdir $<)\033[34m done.\033[0m"
-
-CREATE_BUILD:
-	@mkdir $(BUILD_PATH) 2> /dev/null || true
-
-$(VM_NAME): CREATE_BUILD $(OBJ_PATH_VM) $(OBJ_EXEC_VM)
-	@make -C $(LIB_PATH)
-	@$(CC) $(CFLAGS) $(OBJ_EXEC_VM) $(LIB) -o build/$(VM_NAME) -I $(INC_PATH) -I $(LIB_PATH)includes -lncurses
-	@echo "\033[32mBinary \033[1;32m$(VM_NAME)\033[1;0m\033[32m created.\033[0m"
-
-$(ASM_NAME): CREATE_BUILD $(OBJ_PATH_ASM) $(OBJ_EXEC_ASM)
-##	@make -C $(LIB_PATH)
-	@$(CC) $(CFLAGS) $(OBJ_EXEC_ASM) $(LIB) -o build/$(ASM_NAME) -I $(INC_PATH) -I $(LIB_PATH)includes
-	@echo "\033[32mBinary \033[1;32m$(ASM_NAME)\033[1;0m\033[32m created.\033[0m"
-
-$(DASM_NAME): CREATE_BUILD $(OBJ_PATH_DASM) $(OBJ_EXEC_DASM)
-##	@make -C $(LIB_PATH)
-	@$(CC) $(CFLAGS) $(OBJ_EXEC_DASM) $(LIB) -o build/$(DASM_NAME) -I $(INC_PATH) -I $(LIB_PATH)includes
-	@echo "\033[32mBinary \033[1;32m$(DASM_NAME)\033[1;0m\033[32m created.\033[0m"
+$(DASM_NAME):
+	@echo "\033[34mCompilation of \033[36m$(notdir $(DASM_NAME))\033[34m...\033[0m"
+	@make -C $(DASM_PATH)
 
 clean:
-	@rm -rf $(OBJ_PATH)
-	@rm -rf $(OBJ_PATH_VM)
-	@rm -rf $(OBJ_PATH_ASM)
-	@rm -rf $(OBJ_PATH_DASM)
-	@make -C $(LIB_PATH) fclean
-	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_VM)\033[1;0m\033[31m removed.\033[0m"
-	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_ASM)\033[1;0m\033[31m removed.\033[0m"
-	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_DASM)\033[1;0m\033[31m removed.\033[0m"
+	@make -C $(LIB_PATH) clean
+ifeq ("$(shell test -e $(VM_PATH)$(OBJS_PATHS) && echo toto)", "toto")
+	@make -C $(VM_PATH) clean
+endif
+ifeq ("$(shell test -e $(ASM_PATH)$(OBJS_PATHS) && echo tata)", "tata")
+	@make -C $(ASM_PATH) clean
+endif
+ifeq ("$(shell test -e $(DASM_PATH)$(OBJS_PATHS) && echo titi)", "titi")
+	@make -C $(DASM_PATH) clean
+endif
 
-fclean: clean
-	@rm -f $(VM_NAME)
-	@rm -f $(ASM_NAME)
-	@rm -f $(DASM_NAME)
-	@echo "\033[31mBinary \033[1;31m$(VM_NAME)\033[1;0m\033[31m removed.\033[0m"
-	@echo "\033[31mBinary \033[1;31m$(ASM_NAME)\033[1;0m\033[31m removed.\033[0m"
-	@echo "\033[31mBinary \033[1;31m$(DASM_NAME)\033[1;0m\033[31m removed.\033[0m"
+fclean:
+	@make -C $(LIB_PATH) fclean
+ifeq ("$(shell test -e $(VM_NAME) && echo toti)", "toti")
+	@make -C $(VM_PATH) fclean
+endif
+ifeq ("$(shell test -e $(ASM_NAME) && echo toty)", "toty")
+	@make -C $(ASM_PATH) fclean
+endif
+ifeq ("$(shell test -e $(DASM_NAME) && echo totu)", "totu")
+	@make -C $(DASM_PATH) fclean
+endif
 
 re: fclean all
