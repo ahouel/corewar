@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 14:59:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:30:17 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/16 16:54:01 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ t_pcb	*create_processus(t_vm *vm, int num)
 		error("error : malloc\n");
 	tmp->pid = set_proc_pid(vm);
 	tmp->uid = num;
-	tmp->pc = (MEM_SIZE / vm->nb_player) * ((num * (-1) -1));
+	tmp->reg[1] = num;
+	tmp->pc = (MEM_SIZE / vm->nb_player) * num;
 	tmp->last_pc = 0;
 	tmp->op = NULL;
 	ft_bzero(tmp->reg, sizeof(int) * (REG_NUMBER + 1));
-	tmp->reg[1] = num;
 	tmp->state = IDLE;
 	tmp->carry = 0;
 	tmp->last_live = 0;

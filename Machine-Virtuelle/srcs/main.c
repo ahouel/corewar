@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:19:59 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/16 17:12:59 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ static void	init_vm(t_vm *vm)
 	vm->next_ctd = CYCLE_TO_DIE;
 	vm->dump = -1;
 	vm->debug = 0;
+	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
 }
 
 int		main(int argc, char **argv)
@@ -199,8 +200,9 @@ int		main(int argc, char **argv)
 		error("Error\n");
 	if (vm.ncurses)
 		init_ncurses(&w);
-	ft_printf("%d\n", vm.nb_player);
 	initialisation(&vm);
+	if (vm.debug == 1)
+		show_mem(&vm);
 	ft_printf("=======FIGHT=======\n");
 	//ft_printf("verbo : %d", vm.verbosity);
 	exe(&vm);

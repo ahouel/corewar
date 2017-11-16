@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/16 16:23:13 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/16 17:12:59 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	show_mem(t_vm *vm)
 
 	while (i < MEM_SIZE)
 	{
-		printf("%02x ", (unsigned char)vm->ram[i].mem);
+		printf("%02x ", vm->ram[i].mem);
 		if (i / 64 != (i + 1) / 64)
 			printf("\n");
 		i++;
