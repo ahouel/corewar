@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/10 15:37:59 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/10 15:43:07 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:17:29 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:08:24 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	add_process(t_vm *vm, t_proc *proc)
+void	add_process(t_vm *vm, t_pcb *proc)
 {
-	t_proc	*tmp;
+	t_pcb	*tmp;
 
 	if (vm->proc)
 	{

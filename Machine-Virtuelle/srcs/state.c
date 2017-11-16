@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/20 14:41:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 11:44:52 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:13:36 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 // void	idle_state(t_vm *vm, t_proc *proc)
 // {
@@ -30,7 +30,7 @@
 //
 // }
 
-void	idle_state(t_vm *vm, t_proc *proc)
+void	idle_state(t_vm *vm, t_pcb *proc)
 {
 	if(!proc->op)
 	{

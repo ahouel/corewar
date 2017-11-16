@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/09 15:51:22 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/09 15:56:14 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:19:37 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 11:19:45 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 int	ft_strargv(int argc, char **argv, char *str)
 {

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   players.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 15:42:14 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:22:50 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:12:27 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 void	reset_life_signal(t_vm *vm)
 {
 	int		i;
-	t_proc	*tmp;
+	t_pcb	*tmp;
 
 	i = 1;
 	tmp = vm->proc;

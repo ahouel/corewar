@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ncurses.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 18:21:36 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:21:33 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:34:30 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 static void	colors_init(void)
 {
@@ -57,20 +57,20 @@ static void	ram_init(t_vm *vm)
 		{
 			attron(COLOR_PAIR(22));
 		}
-		if (vm->ram[i].blingbling)
+		if (vm->ram[i].flash)
 		{
 			attron(A_BOLD);
 			if (vm->ram[i].num == -1)
 				attron(COLOR_PAIR(24));
 			if (vm->ram[i].num == -2)
 				attron(COLOR_PAIR(25));
-			vm->ram[i].blingbling--;
+			vm->ram[i].flash--;
 		}
-		if (vm->ram[i].live)
-		{
-			attron(COLOR_PAIR(26));
-			vm->ram[i].live--;
-		}
+//		if (vm->ram[i].live)
+//		{
+//			attron(COLOR_PAIR(26));
+//			vm->ram[i].live--;
+//		}
 		mvprintw((3 + i / 64), (3 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
 		attroff(A_STANDOUT);
 		attroff(A_BOLD);
@@ -113,7 +113,7 @@ void	call_ncurses(t_vm *vm)
 		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** RUNNING **");
 	mvprintw(5, 3 * (MEM_SIZE / 64) + 6, "Delay : %d", vm->delay);
 	mvprintw(10, 3 * (MEM_SIZE / 64) + 6, "Cycles : %d", vm->cycle);
-	mvprintw(14, 3 * (MEM_SIZE / 64) + 6, "Proc Nb : %d", count_proc(vm));
+//`	mvprintw(14, 3 * (MEM_SIZE / 64) + 6, "Proc Nb : %d", count_proc(vm));
 	mvprintw(22, 3 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d", vm->ctd);
 	mvprintw(24, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d", CYCLE_DELTA);
 	mvprintw(26, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d", NBR_LIVE);

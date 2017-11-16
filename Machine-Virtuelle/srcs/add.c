@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/18 16:57:54 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/08 17:20:22 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:17:17 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:08:05 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	add(t_vm *vm, t_proc *proc)
+void	add(t_vm *vm, t_pcb *proc)
 {
 	int	sum;
 

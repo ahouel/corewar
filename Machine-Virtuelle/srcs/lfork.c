@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lfork.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/30 17:24:42 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:20:37 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:10:58 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-static void registre_cpy(t_proc *proc, t_proc *new)
+static void registre_cpy(t_pcb *proc, t_proc *new)
 {
 	int i;
 
@@ -25,14 +25,14 @@ static void registre_cpy(t_proc *proc, t_proc *new)
 
 }
 
-static void	clone_proc(t_proc *proc, t_proc *new)
+static void	clone_proc(t_pcb *proc, t_proc *new)
 {
 	registre_cpy(proc, new);
 	new->carry = proc->carry;
 	new->last_live = proc->last_live;
 }
 
-void	ft_lfork(t_vm *vm, t_proc *proc)
+void	ft_lfork(t_vm *vm, t_pcb *proc)
 {
 	t_proc	*new;
 	new = create_process(vm, proc->num);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   xor.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/24 14:12:14 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/04 20:45:41 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:24:46 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:14:21 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 {
@@ -31,7 +31,7 @@ static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 	return (value);
 }
 
-void	xor(t_vm *vm, t_proc *proc)
+void	xor(t_vm *vm, t_pcb *proc)
 {
 	unsigned int	ar1;
 	unsigned int	ar2;

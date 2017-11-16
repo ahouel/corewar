@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/10 15:21:58 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/15 10:58:55 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:24:31 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 14:58:38 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 /*
 **	Recuperation du champion dans son .cor.
@@ -30,6 +30,7 @@ static char	*get_data(char *filename, header_t *hd)
 	ft_bzero(buff, CHAMP_MAX_SIZE + SRC_BEGIN + 1);
 	ret = read(fd, hd, sizeof(header_t));
 	ft_bswap((void*)&hd->prog_size, sizeof(int));
+	ft_bswap((void*)&hd->magic, sizeof(int));
 	ret = read(fd, buff, hd->prog_size);
 	if (!(data = ft_strnew(ret)))
 		error("malloc failed\n");
@@ -38,7 +39,7 @@ static char	*get_data(char *filename, header_t *hd)
 }
 
 /*
-**	Ecriture des joueurs sur la ram.
+**	Ecriture des joueurs sur la ram. /!\ TO DO : check errors sur le header.
 */
 
 void		write_players(t_vm *vm, int nb, int num)
@@ -48,16 +49,17 @@ void		write_players(t_vm *vm, int nb, int num)
 	char		*data_tmp;
 	header_t	hd;
 
-	printf("Write Player\n");
 	ft_bzero(&hd, sizeof(header_t));
 	i = (MEM_SIZE / vm->nb_player) * num;
 	data = get_data(vm->player[nb].file_name, &hd);
 	data_tmp = data + SRC_BEGIN;
+	ft_printf("* Player %d, weighing %u bytes, \"%s\" (\"%s\")\n",
+			num + 1, hd.prog_size, hd.prog_name, hd.comment);
 	hd.prog_size += i;
 	while (i < hd.prog_size)
 	{
 		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data_tmp;
-		vm->ram[i % MEM_SIZE].num = (num + 1) * -1;
+		vm->ram[i % MEM_SIZE].num = num + 1;
 		data_tmp++;
 		i++;
 	}

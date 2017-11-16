@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   and.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/19 12:13:33 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/08 17:21:05 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:17:41 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:24:30 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	and(t_vm *vm, t_proc *proc)
+void	and(t_vm *vm, t_pcb *proc)
 {
 	unsigned int	ar1;
 	unsigned int	ar2;

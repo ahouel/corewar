@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_inst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 11:43:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/07 18:13:21 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:18:04 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 11:18:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 int		check_reg(int nb)
 {

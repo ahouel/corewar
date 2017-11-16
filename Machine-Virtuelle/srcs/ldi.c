@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ldi.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 16:07:59 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:20:23 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:10:33 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 {
@@ -31,7 +31,7 @@ static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 	return (value);
 }
 
-void		ldi(t_vm *vm, t_proc *proc)
+void		ldi(t_vm *vm, t_pcb *proc)
 {
 	unsigned int		addr;
 	unsigned int		reg_nb;

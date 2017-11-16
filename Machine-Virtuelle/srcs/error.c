@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/01 15:09:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 09:23:44 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:18:49 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 11:18:57 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 /*
 **	En cas d error afficher str et exit le programme

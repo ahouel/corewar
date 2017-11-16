@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   st.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 18:14:56 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:23:36 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:32:42 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	st(t_vm *vm, t_proc *proc)
+void	st(t_vm *vm, t_pcb *proc)
 {
 	unsigned int	addr;
 
@@ -30,32 +30,32 @@ void	st(t_vm *vm, t_proc *proc)
 		addr = modulo(addr, MEM_SIZE);
 
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 24;
-		vm->ram[addr].num = proc->num;
-		vm->ram[addr].blingbling = 40;
+		vm->ram[addr].num = proc->uid;
+		vm->ram[addr].flash = 40;
 
 		if (!vm->ncurses && vm->debug)
 			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 16;
-		vm->ram[addr].num = proc->num;
-		vm->ram[addr].blingbling = 40;
+		vm->ram[addr].num = proc->uid;
+		vm->ram[addr].flash = 40;
 
 		if (!vm->ncurses && vm->debug)
 			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 8;
-		vm->ram[addr].num = proc->num;
-		vm->ram[addr].blingbling = 40;
+		vm->ram[addr].num = proc->uid;
+		vm->ram[addr].flash = 40;
 
 		if (!vm->ncurses && vm->debug)
 			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]];
-		vm->ram[addr].num = proc->num;
-		vm->ram[addr].blingbling = 40;
+		vm->ram[addr].num = proc->uid;
+		vm->ram[addr].flash = 40;
 
 		if (!vm->ncurses && vm->debug)
 		{

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cycle_to_die.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/20 00:00:52 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/08 17:31:05 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:18:25 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:08:47 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 /* void	reduce_ctd(t_vm *vm)
 ** {
@@ -33,14 +33,14 @@ void	set_ctd(t_vm *vm)
 /*
 ** printf("lives in cycle => %d\n", vm->lives_in_cycle);
 */
-	if (vm->lives_in_cycle >= NBR_LIVE || vm->ctd_check >= MAX_CHECKS)
-	{
-		vm->ctd -= CYCLE_DELTA;
-		vm->ctd_check = 0;
-		if (2 & vm->verbosity)
-			printf("Cycle to die is now %d\n", vm->ctd);
-	}
-	else
-		vm->ctd_check++;
-	vm->lives_in_cycle = 0;
+//	if (vm->lives_in_cycle >= NBR_LIVE || vm->ctd_check >= MAX_CHECKS)
+//	{
+//		vm->ctd -= CYCLE_DELTA;
+//		vm->ctd_check = 0;
+//		if (2 & vm->verbosity)
+//			printf("Cycle to die is now %d\n", vm->ctd);
+//	}
+//	else
+//		vm->ctd_check++;
+//	vm->lives_in_cycle = 0;
 }

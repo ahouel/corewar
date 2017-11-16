@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pars_op.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 11:21:16 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:22:35 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:25:01 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 void	init_op(t_op *op)
 {
@@ -22,7 +22,7 @@ void	init_op(t_op *op)
 	op->ar_typ[2] = 0;
 }
 
-t_op		*create_op(t_vm *vm, t_proc *proc, char data)
+t_op		*create_op(t_vm *vm, t_pcb *proc, char data)
 {
 	int		i;
 	t_op	*op;
@@ -41,7 +41,7 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 	return (op);
 }
 
-void	fill_cur_op(t_vm *vm, t_proc *proc)
+void	fill_cur_op(t_vm *vm, t_pcb *proc)
 {
 	int i;
 	t_optab *optab_ref;

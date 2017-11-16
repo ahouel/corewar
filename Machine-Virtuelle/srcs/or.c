@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   or.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/24 14:09:08 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/14 20:49:36 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:22:23 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:11:48 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	or(t_vm *vm, t_proc *proc)
+void	or(t_vm *vm, t_pcb *proc)
 {
 	unsigned int	ar1;
 	unsigned int	ar2;

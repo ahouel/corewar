@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   zjmp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 21:03:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/04 16:01:15 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:25:02 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:15:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	zjmp(t_vm *vm, t_proc *proc)
+void	zjmp(t_vm *vm, t_pcb *proc)
 {
 	// printf(">>>>>>ENTER ZJMP<<<<<<   : Cycle > %d\n", vm->cycle);
 

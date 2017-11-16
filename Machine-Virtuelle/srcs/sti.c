@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sti.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/07 18:15:59 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:24:05 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:24:10 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	sti(t_vm *vm, t_proc *proc)
+void	sti(t_vm *vm, t_pcb *proc)
 {
 	int addr;
 	int reg;
@@ -26,22 +26,22 @@ void	sti(t_vm *vm, t_proc *proc)
 	reg = proc->op->ar[0];
 
 	vm->ram[modulo(addr, MEM_SIZE)].mem = proc->reg[reg] >>24;
-	vm->ram[modulo(addr, MEM_SIZE)].num = proc->num;
-	vm->ram[modulo(addr, MEM_SIZE)].blingbling = BLING_DELAY;
+	vm->ram[modulo(addr, MEM_SIZE)].num = proc->uid;
+	vm->ram[modulo(addr, MEM_SIZE)].flash = BLING_DELAY;
 
 	vm->ram[modulo(addr + 1, MEM_SIZE)].mem = proc->reg[reg] >>16;
-	vm->ram[modulo(addr + 1, MEM_SIZE)].num = proc->num;
-	vm->ram[modulo(addr + 1, MEM_SIZE)].blingbling = BLING_DELAY;
+	vm->ram[modulo(addr + 1, MEM_SIZE)].num = proc->uid;
+	vm->ram[modulo(addr + 1, MEM_SIZE)].flash = BLING_DELAY;
 
 
 	vm->ram[modulo(addr + 2, MEM_SIZE)].mem = proc->reg[reg] >>8;
-	vm->ram[modulo(addr + 2, MEM_SIZE)].num = proc->num;
-	vm->ram[modulo(addr + 2, MEM_SIZE)].blingbling = BLING_DELAY;
+	vm->ram[modulo(addr + 2, MEM_SIZE)].num = proc->uid;
+	vm->ram[modulo(addr + 2, MEM_SIZE)].flash = BLING_DELAY;
 
 
 	vm->ram[modulo(addr + 3, MEM_SIZE)].mem = proc->reg[reg];
-	vm->ram[modulo(addr + 3, MEM_SIZE)].num = proc->num;
-	vm->ram[modulo(addr + 3, MEM_SIZE)].blingbling = BLING_DELAY;
+	vm->ram[modulo(addr + 3, MEM_SIZE)].num = proc->uid;
+	vm->ram[modulo(addr + 3, MEM_SIZE)].flash = BLING_DELAY;
 
 	if (0x4 & vm->verbosity)
 	{

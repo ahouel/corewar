@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 10:00:14 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:08:39 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 static int	srch_nb_dump(int argc, char **argv)
 {
@@ -55,6 +55,10 @@ static int	srch_ncurses(int argc, char **argv)
 		return (1);
 	return (0);
 }
+
+/*
+**	On cherche -v -dump et -ncurses pour les stocker, puis les joueurs (.cor)
+*/
 
 int			check_arg(t_vm *vm, int argc, char **argv)
 {

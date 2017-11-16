@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/10 14:53:05 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/15 11:24:25 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:19:57 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 static void	dump(t_vm *vm)
 {
@@ -20,7 +20,7 @@ static void	dump(t_vm *vm)
 
 void		exe(t_vm *vm)
 {
-	t_proc	*proc;
+	t_pcb	*proc;
 
 	while (process_living(vm))
 	{
@@ -35,7 +35,7 @@ void		exe(t_vm *vm)
 		proc = vm->proc;
 		while (proc != NULL)
 		{
-			if (proc->active)
+			if (proc->state == 'R')
 				idle_state(vm, proc);
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);

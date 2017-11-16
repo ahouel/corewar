@@ -6,11 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/05 14:15:17 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/16 16:23:13 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 void	show_mem(t_vm *vm)
 {
@@ -31,7 +31,7 @@ void	show_mem(t_vm *vm)
 
 void	show_proc_nb(t_vm *vm)
 {
-	t_proc *tmp;
+	t_pcb *tmp;
 	int i;
 
 	i = 0;
@@ -46,7 +46,7 @@ void	show_proc_nb(t_vm *vm)
 
 void	debug_display_proc(t_vm *vm)
 {
-	t_proc *tmp;
+	t_pcb *tmp;
 	int i;
 
 	i = 0;
@@ -54,7 +54,7 @@ void	debug_display_proc(t_vm *vm)
 	while (tmp)
 	{
 		move (24 + i, 198);
-		printw("Proc n:%d on:%d num:%d pc:%d live:%d", i, tmp->active, tmp->num, tmp->pc, tmp->last_live);
+		printw("Proc n:%d on:%d num:%d pc:%d live:%d", i, tmp->state, tmp->uid, tmp->pc, tmp->last_live);
 		tmp = tmp->next;
 		i++;
 	}
@@ -62,21 +62,21 @@ void	debug_display_proc(t_vm *vm)
 
 }
 
-static void	display_args(t_vm *vm, t_proc *proc, int n)
+static void	display_args(t_vm *vm, t_pcb *proc, int n)
 {
 	if (proc->op->ar_typ[n] == REG_CODE)
 		printf("r");
 	printf("%d", proc->op->ar[n]);
 }
 
-void	show_operations(t_vm *vm, t_proc *proc)
+void	show_operations(t_vm *vm, t_pcb *proc)
 {
 	int	nb_arg;
 	int i;
 
 	i = 0;
 	nb_arg = op_tab[proc->op->code - 1].nb_arg;
-	printf("P%5d | %s", proc->id + 1, op_tab[proc->op->code - 1].inst);
+	printf("P%5d | %s", proc->uid + 1, op_tab[proc->op->code - 1].inst);
 	while (i < nb_arg)
 	{
 		printf(" ");
@@ -85,7 +85,7 @@ void	show_operations(t_vm *vm, t_proc *proc)
 	}
 }
 
-void	show_pc_move(t_vm *vm, t_proc *proc)
+void	show_pc_move(t_vm *vm, t_pcb *proc)
 {
 	int	i;
 	int	move_size;

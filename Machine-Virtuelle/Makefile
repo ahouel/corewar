@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
+#    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/11/15 15:30:30 by ahouel           ###   ########.fr        #
+#    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
+#    Updated: 2017/11/16 15:01:09 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 .PHONY: all, clean, fclean, re
 
 CC = clang
@@ -18,7 +19,7 @@ NAME = ../corewar
 SRC_PATH = ./srcs/
 OBJ_PATH = ./obj/
 INC_PATH = ./includes/
-LIB_PATH = ../libft/
+LIB_PATH = ../libftt/
 
 SRC_FILES =	main.c \
 			initialisation.c	\
@@ -43,6 +44,7 @@ SRC_FILES =	main.c \
 			pars_op.c	\
 			players.c	\
 			processus.c	\
+			create_processus.c \
 			fork.c \
 			or.c \
 			xor.c \
@@ -53,7 +55,7 @@ SRC_FILES =	main.c \
 			op.c \
 			lld.c
 
-INC_FILES = corewar.h
+INC_FILES = vm.h op.h vm_struct.h
 LIB_FILES = libft.a
 LIB = $(addprefix $(LIB_PATH), $(LIB_FILES))
 

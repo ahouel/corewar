@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   controller.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/20 14:33:15 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/08 17:27:55 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:18:14 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 11:18:15 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 static void	keys_press(t_vm *vm, char key)
 {

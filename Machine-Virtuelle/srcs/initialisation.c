@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/15 12:07:44 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:19:53 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:19:58 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
+
+/*
+**	Creation d'un processus par joueur
+*/
 
 static void	init_process(t_vm *vm)
 {
@@ -20,7 +24,7 @@ static void	init_process(t_vm *vm)
 	while (i < MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
-			add_process(vm, create_process(vm, i * (-1)));
+			add_process(vm, create_processus(vm, i));
 		i++;
 	}
 }
@@ -37,7 +41,8 @@ void		initialisation(t_vm *vm)
 	i = 1;
 	j = 0;
 	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
-	while (i < MAX_PLAYERS + 1)
+	ft_printf("Introducing contestants...\n");
+	while (i < MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
 		{

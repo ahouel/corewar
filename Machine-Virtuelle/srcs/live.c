@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   live.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 00:46:58 by lchety           ###   ########.fr       */
+/*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:11:11 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	live(t_vm *vm, t_proc *proc)
+void	live(t_vm *vm, t_pcb *proc)
 {
 	if (!vm->ncurses && vm->debug)
 		printf(">>>>>ENTER_LIVE<<<<< : Cycle > %d\n", vm->cycle);
 	int		num;
 
-	vm->lives_in_cycle++;
+//	vm->lives_in_cycle++;
 	proc->last_live = vm->cycle + 1;
 
 	num = 0;
@@ -44,7 +44,7 @@ void	live(t_vm *vm, t_proc *proc)
 		// printf("LIVE HERE ##################################\n");
 		vm->player[num].life_signal++;
 		vm->player[num].last_live = vm->cycle;
-		vm->ram[proc->op->pos_opcode].live = BLING_LIVE;
+//		vm->ram[proc->op->pos_opcode].live = BLING_LIVE;
 		if (5 & vm->verbosity)
 			printf("Player %d (helltrain) is said to be alive\n", num);
 	}

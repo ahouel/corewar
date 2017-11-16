@@ -5,15 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/09 15:45:34 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/13 12:44:03 by ahouel           ###   ########.fr       */
+/*   Created: 2017/11/16 11:23:22 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 15:22:47 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
 /*
 **	Fix 2 joueur avec un slot libre entre
+*/
+
+/*
+**	On cherche s'il y a un -n
 */
 
 static int	srch_nb_player(int argc, char **argv, int arg_num)
@@ -23,6 +27,10 @@ static int	srch_nb_player(int argc, char **argv, int arg_num)
 			return (1);
 	return (0);
 }
+
+/*
+**	On prend le nombre apres un -n
+*/
 
 static int	get_nb_player(t_vm *vm, int argc, char **argv, int arg_num)
 {
@@ -37,6 +45,10 @@ static int	get_nb_player(t_vm *vm, int argc, char **argv, int arg_num)
 	}
 	return (0);
 }
+
+/*
+**	Creation d'un nouveau joueur, set ses variables
+*/
 
 static void	new_player(t_vm *vm, int nb, char *str)
 {
@@ -71,12 +83,16 @@ static void	new_player(t_vm *vm, int nb, char *str)
 	vm->player[nb].active = 1;
 }
 
+/*
+**	Init du tableau de joueurs
+*/
+
 static void	init_players(t_vm *vm)
 {
 	int	i;
 
-	i = 0;
-	while (++i < MAX_PLAYERS + 1)
+	i = -1;
+	while (++i < MAX_PLAYERS)
 	{
 		vm->player[i].active = 0;
 		vm->player[i].life_signal = 0;
@@ -84,6 +100,10 @@ static void	init_players(t_vm *vm)
 		vm->player[i].last_live = 0;
 	}
 }
+
+/*
+**	Recherche des .cor dans les arguments
+*/
 
 int			srch_players(t_vm *vm, int argc, char **argv)
 {
@@ -98,7 +118,7 @@ int			srch_players(t_vm *vm, int argc, char **argv)
 		if ((tmp = ft_strstr(argv[i], ".cor")) && !tmp[4])
 		{
 			vm->nb_player++;
-			if (vm->nb_player > 4)
+			if (vm->nb_player > MAX_PLAYERS)
 				error("Too many champs\n");
 			new_player(vm, get_nb_player(vm, argc, argv, i), argv[i]);
 		}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lld.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 01:19:08 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 22:46:11 by rfulop           ###   ########.fr       */
+/*   Created: 2017/11/16 11:21:09 by ahouel            #+#    #+#             */
+/*   Updated: 2017/11/16 16:11:32 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "vm.h"
 
-void	lld(t_vm *vm, t_proc *proc)
+void	lld(t_vm *vm, t_pcb *proc)
 {
 	// printf(">>>>ENTER LD<<<<  : Cycle > %d\n", vm->cycle);
 	int		reg_nb;
