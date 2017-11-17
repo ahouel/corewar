@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/17 15:20:54 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 16:41:50 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,9 @@ int		main(int argc, char **argv)
 		show_players(&vm);
 	if (vm.debug == 1)
 		show_mem(&vm);
-	ft_printf("=======FIGHT=======\n");
+	if (vm.debug == 2)
+		show_processus(&vm);
+	//ft_printf("=======FIGHT=======\n");
 	//ft_printf("verbo : %d", vm.verbosity);
 	exe(&vm);
 	if (vm.ncurses)

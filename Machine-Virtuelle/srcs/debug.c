@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/17 12:52:42 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 16:41:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ void	show_players(t_vm *vm)
 	{
 		p = &vm->player[i];
 		ft_printf("Player[%d]\nname : %s\ncomment : %s\nactive : %d\nlife_signal : %d\nfile_name : %s\n", i, p->name, p->comment, p->active, p->life_signal, p->file_name);
+	}
+}
+
+void	show_processus(t_vm *vm)
+{
+	t_pcb	*proc;
+
+	proc = vm->proc;
+	while (proc)
+	{
+		ft_printf("pid : %d\nuid : %d\nlast_pc : %d\npc : %d\nstate : %c\ncarry : %c\nlast live : %d", proc->pid, proc->uid, proc->last_pc, proc->pc, proc->pc, proc->state, proc->carry, proc->last_live);
+	proc = proc->next;
 	}
 }
 

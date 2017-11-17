@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/17 15:37:24 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 16:41:52 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_player
 
 typedef struct s_pcb
 {
-	int		pid;
-	int		uid;
+	int		pid;	//process identifier
+	int		uid;	//user idetifier
 	int		last_pc;
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	char	state;

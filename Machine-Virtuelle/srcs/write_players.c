@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:31 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/17 15:37:07 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 15:49:10 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static unsigned char	*get_data(char *filename, header_t *hd)
 	ft_bswap((void*)&hd->prog_size, sizeof(int));
 	ft_bswap((void*)&hd->magic, sizeof(int));
 	ret = read(fd, buff, hd->prog_size);
-	if (!(data = ft_strnew(ret)))
+	if (!(data = (unsigned char*)ft_strnew(ret)))
 		error("malloc failed\n");
 	ft_memcpy(data, buff, ret);
 	return (data);

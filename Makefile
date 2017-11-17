@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 14:02:54 by ahouel            #+#    #+#              #
-#    Updated: 2017/11/16 10:03:58 by ahouel           ###   ########.fr        #
+#    Updated: 2017/11/17 16:42:57 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ $(DASM_NAME):
 
 clean:
 	@make -C $(LIB_PATH) clean
+	@make -C ./libftt/ fclean
 ifeq ("$(shell test -e $(VM_PATH)$(OBJS_PATHS) && echo toto)", "toto")
 	@make -C $(VM_PATH) clean
 endif
@@ -54,6 +55,7 @@ endif
 
 fclean:
 	@make -C $(LIB_PATH) fclean
+	@make -C ./libftt/ fclean
 ifeq ("$(shell test -e $(VM_NAME) && echo toti)", "toti")
 	@make -C $(VM_PATH) fclean
 endif
