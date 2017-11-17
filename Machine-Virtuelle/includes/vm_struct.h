@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 17:15:38 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 15:37:24 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef struct s_op
 
 typedef struct s_player
 {
-	char	name[PROG_NAME_LENGTH + 1];
-	char	comment[COMMENT_LENGTH + 1];
+	char	*name;
+	char	*comment;
 	int		active;
 	int		life_signal;
 	int		last_live;

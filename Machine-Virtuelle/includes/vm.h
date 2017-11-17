@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:17:08 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 12:45:36 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ void		show_mem(t_vm *vm);
 void		show_mem_2(t_vm *vm);
 void		show_proc_nb(t_vm *vm);
 void		debug_display_proc(t_vm *vm);
+void		show_players(t_vm *vm);
 
 #endif

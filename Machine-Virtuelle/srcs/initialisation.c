@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:53 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 17:13:12 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 15:37:09 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	init_process(t_vm *vm)
 
 /*
 **	Ecriture des joueurs sur la ram et creation des processus.
+**	Appel de write : i le num du joueur (joueur[i - 1]) et j : le combien
+**	eme joueur on pose.
 */
 
 void		initialisation(t_vm *vm)
@@ -38,17 +40,16 @@ void		initialisation(t_vm *vm)
 	int i;
 	int j;
 
-	i = 1;
+	i = -1;
 	j = 0;
 	ft_printf("Introducing contestants...\n");
-	while (i < MAX_PLAYERS)
+	while (++i < MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
 		{
+			++j;
 			write_players(vm, i, j);
-			j++;
 		}
-		i++;
 	}
 	init_process(vm);
 }

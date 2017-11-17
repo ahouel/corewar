@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/16 17:12:59 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 12:52:42 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ void	show_mem(t_vm *vm)
 		i++;
 	}
 	printf("\n\n");
+}
+
+void	show_players(t_vm *vm)
+{
+	int	i;
+	t_player	*p;
+
+	i = -1;
+	while (++i < MAX_PLAYERS)
+	{
+		p = &vm->player[i];
+		ft_printf("Player[%d]\nname : %s\ncomment : %s\nactive : %d\nlife_signal : %d\nfile_name : %s\n", i, p->name, p->comment, p->active, p->life_signal, p->file_name);
+	}
 }
 
 void	show_proc_nb(t_vm *vm)

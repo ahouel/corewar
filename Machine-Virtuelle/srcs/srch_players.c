@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:22 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:51:30 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 15:07:10 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ static int	get_nb_player(t_vm *vm, int argc, char **argv, int arg_num)
 	if (srch_nb_player(argc, argv, arg_num))
 	{
 		ret = ft_atoi(argv[arg_num - 1]);
-		if (ret > 0 && ret < MAX_PLAYERS + 1)
-			return (ret);
+		if (ret < 1 || ret > MAX_PLAYERS)
+			error("-n wrong number\n");
+		return (ret - 1);
 	}
-	return (0);
+	return (-1);
 }
 
 /*
@@ -55,7 +56,7 @@ static void	new_player(t_vm *vm, int nb, char *str)
 	char	*tmp;
 
 	tmp = NULL;
-	if (nb != 0)
+	if (nb > -1)
 	{
 		if (!vm->player[nb].life_signal && !vm->player[nb].file_name)
 		{
@@ -93,12 +94,7 @@ static void	init_players(t_vm *vm)
 
 	i = -1;
 	while (++i < MAX_PLAYERS)
-	{
-		vm->player[i].active = 0;
-		vm->player[i].life_signal = 0;
-		vm->player[i].file_name = NULL;
-		vm->player[i].last_live = 0;
-	}
+		ft_bzero(&vm->player[i], sizeof(t_player));
 }
 
 /*
@@ -124,8 +120,7 @@ int			srch_players(t_vm *vm, int argc, char **argv)
 		}
 		i++;
 	}
-	if (vm->nb_player)
+	if (!vm->nb_player)
 		return (0);
-	else
-		return (1);
+	return (1);
 }

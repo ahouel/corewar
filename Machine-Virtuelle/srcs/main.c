@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 17:12:59 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 15:20:54 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ static void	init_vm(t_vm *vm)
 	vm->ctd_check = 0;
 	vm->next_ctd = CYCLE_TO_DIE;
 	vm->dump = -1;
-	vm->debug = 0;
+	vm->debug = -1;
 	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
 }
 
@@ -195,12 +195,15 @@ int		main(int argc, char **argv)
 	t_vm	vm;
 	WINDOW *w;
 
+
 	init_vm(&vm);
-	if(check_arg(&vm, argc, argv))
-		error("Error\n");
+	if(!check_arg(&vm, argc, argv))
+		error("Error : no player\n");
 	if (vm.ncurses)
 		init_ncurses(&w);
 	initialisation(&vm);
+	if (vm.debug == 0)
+		show_players(&vm);
 	if (vm.debug == 1)
 		show_mem(&vm);
 	ft_printf("=======FIGHT=======\n");
