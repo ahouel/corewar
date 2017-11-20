@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2017/11/16 17:00:40 by ahouel           ###   ########.fr        #
+#    Updated: 2017/11/20 12:01:21 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,26 +34,27 @@ SRC_FILES =	main.c \
 			write_players.c	\
 			ft_strargv.c \
 			srch_players.c \
-			sti.c	\
-			ld.c	\
-			ldi.c	\
 			live.c	\
-			add.c	\
-			and.c	\
 			ncurses.c	\
-			pars_op.c	\
+			load_op.c	\
 			players.c	\
+			move_processus.c	\
 			processus.c	\
-			create_processus.c \
-			fork.c \
+			create_processus.c	\
+			op.c
+#			fork.c \
 			or.c \
 			xor.c \
 			sub.c \
 			st.c \
-			state.c	\
 			zjmp.c \
-			op.c \
-			lld.c
+			ldi.c	\
+			sti.c	\
+			ld.c	\
+			add.c	\
+			and.c	\
+			lld.c	\
+			new_op.c
 
 INC_FILES = vm.h op.h vm_struct.h
 LIB_FILES = libft.a

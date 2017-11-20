@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/17 16:41:52 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/20 16:14:23 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@
 #define INST_OCP 2
 #define INST_ARG 2
 
-#define	IDLE 1
-#define	WAIT 2
-#define	READY 3
-#define START 4
+#define	IDLE 	1
+#define	WAIT 	2
+#define	READY 	3
+#define START 	4
+#define DEAD	5
+
+#define RUN 1
 
 #define	MAGIC_NB 4
 #define PROG_NAME 128 + 4
@@ -39,20 +42,25 @@
 #define BLING_LIVE 45
 #define NCURSES_DELAY 100000
 
-typedef struct s_vm t_vm;
-typedef struct s_optab t_optab;
+typedef struct s_vm		t_vm;
+typedef struct s_pcb	t_pcb;
+
+/*
+**	Structure des operation (labels)
+*/
 
 typedef struct s_op
 {
-	t_optab			*optab_ref;
-	char			code;
-	unsigned char	ocp;
-	int				ar[3];
-	int				ar_typ[3];
-	int				loadtime;
-	int				pos_opcode;
-	int				countdown;
-}	t_op;
+	char	*inst;
+	void	(*func)(t_vm *vm, t_pcb *proc);
+	int		nb_arg;
+	int		ocp[3];
+	int		code;
+	int		loadtime;
+	char	*name;
+	int		has_ocp;
+	int		nb_byte;
+}				t_op;
 
 /*
 **	Joueur (.cor)
@@ -81,8 +89,7 @@ typedef struct s_pcb
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	char	state;
 	char	carry;
-	// int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
-	int		reg[17];
+	int		reg[REG_NUMBER + 1];
 	// int		loadtime;
 	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
@@ -99,7 +106,7 @@ typedef struct s_mem
 	int				num;
 	int				flash;
 }	t_mem;
-
+/*
 typedef struct s_optab
 {
 	char	*inst;
@@ -112,8 +119,9 @@ typedef struct s_optab
 	int		need_ocp;
 	int		direct_size; 	// nombre d'octect d'encodage. 2 ou 4;
 }	t_optab;
+*/
 
-extern t_optab op_tab[];
+extern t_op op_tab[];
 
 /*
 **	Environnement de la vm
@@ -141,7 +149,6 @@ typedef struct s_vm
 
 	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
 
-	t_optab	optab[17];
 	t_pcb	*proc;
 }	t_vm;
 

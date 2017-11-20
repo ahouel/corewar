@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:07 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:33:48 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/20 10:55:57 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,15 @@ void	kill_proc(t_vm *vm)
 	tmp = vm->proc;
 	while (tmp)
 	{
-		if ((vm->cycle - tmp->last_live) > vm->ctd && tmp->state == 'R')
+		if ((vm->cycle - tmp->last_live) > vm->ctd && tmp->state != DEAD)
 		{
-			tmp->state = 'Z';
+			tmp->state = DEAD;
 			if (0x8 & vm->verbosity)
 				printf("Process %d hasn't lived for %d cycles (CTD %d)\n", tmp->uid + 1, vm->cycle - tmp->last_live, vm->ctd);
 		}
 		tmp = tmp->next;
 	}
 }
-
-
 
 void	undertaker(t_vm *vm)
 {
@@ -57,27 +55,6 @@ int		is_pc(t_vm *vm, int nb)
 	while (tmp)
 	{
 		if (tmp->pc == nb && tmp->state == 'R')
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-int		process_living(t_vm *vm)
-{
-	int		i;
-	t_pcb	*tmp;
-
-	i = 0;
-	tmp = vm->proc;
-	if (vm->cycle < vm->next_ctd)
-		return (1);
-	kill_proc(vm);
-	set_ctd(vm);
-	vm->next_ctd = vm->cycle + vm->ctd;
-	while (tmp)
-	{
-		if (tmp->state == 'R')
 			return (1);
 		tmp = tmp->next;
 	}

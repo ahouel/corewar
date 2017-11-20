@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:11:11 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/20 10:55:49 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	live(t_vm *vm, t_pcb *proc)
 	num = 0;
 	// printf("NUM player => %d\n", proc->op->ar[0]);
 
-	if (!vm->ncurses && vm->debug)
-	{
-		printf("opcode pos : %d\n", proc->op->pos_opcode);
-		printf("fuck num %d\n", (int)proc->op->ar[0]);
-		printf("fuck num %x\n", (int)proc->op->ar[0]);
-	}
-	num = proc->op->ar[0] * -1;
+//	if (!vm->ncurses && vm->debug)
+//	{
+//		printf("opcode pos : %d\n", proc->op->pos_opcode);
+//		printf("fuck num %d\n", (int)proc->op->ar[0]);
+//		printf("fuck num %x\n", (int)proc->op->ar[0]);
+//	}
+//	num = proc->op->ar[0] * -1;
 
 	// printf("fuck num %d\n", num);
 	if (4 & vm->verbosity)

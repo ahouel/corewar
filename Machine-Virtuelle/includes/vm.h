@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/17 16:41:54 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/20 16:14:26 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,14 @@ void		exe(t_vm *vm);
 t_pcb		*create_processus(t_vm *vm, int num);
 void		add_process(t_vm *vm, t_pcb *proc);
 void		wait_state(t_vm *vm, t_pcb *proc);
-void		idle_state(t_vm *vm, t_pcb *proc);
-t_op		*create_op(t_vm *vm, t_pcb *proc, char data);
+void		move_processus(t_vm *vm, t_pcb *proc);
+//t_op		*new_op(t_vm *vm, t_pcb *proc, char data);
 void		undertaker(t_vm *vm);
 void		kill_proc(t_vm *vm);
-void		fill_cur_op(t_vm *vm, t_pcb *proc);
+void		load_op(t_vm *vm, t_pcb *proc);
 int			is_pc(t_vm *vm, int nb);
 int			count_proc(t_vm *vm);
 int			all_died(t_vm *vm);
-int			is_opcode(char data);
 int			cycle_to_die(t_vm *vm);
 t_player	*get_survivor(t_vm *vm);
 void		get_ocp(t_vm *vm, t_pcb *proc);
@@ -66,7 +65,6 @@ int			modulo(int a, int b);
 void		show_operations(t_vm *vm, t_pcb *proc);
 void		show_pc_move(t_vm *vm, t_pcb *proc);
 void		reduce_ctd(t_vm *vm);
-int			process_living(t_vm *vm);
 void		set_ctd(t_vm *vm);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/17 16:41:56 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/20 10:55:52 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	show_processus(t_vm *vm)
 	proc = vm->proc;
 	while (proc)
 	{
-		ft_printf("pid : %d\nuid : %d\nlast_pc : %d\npc : %d\nstate : %c\ncarry : %c\nlast live : %d", proc->pid, proc->uid, proc->last_pc, proc->pc, proc->pc, proc->state, proc->carry, proc->last_live);
+		ft_printf("pid : %d\nuid : %d\nlast_pc : %d\npc : %d\nstate : %c\ncarry : %c\nlast live : %d\n", proc->pid, proc->uid, proc->last_pc, proc->pc, proc->pc, proc->state, proc->carry, proc->last_live);
 	proc = proc->next;
 	}
 }
@@ -89,9 +89,9 @@ void	debug_display_proc(t_vm *vm)
 
 static void	display_args(t_vm *vm, t_pcb *proc, int n)
 {
-	if (proc->op->ar_typ[n] == REG_CODE)
+	if (proc->op->ocp[n] == REG_CODE)
 		printf("r");
-	printf("%d", proc->op->ar[n]);
+	printf("%d", proc->op->ocp[n]);
 }
 
 void	show_operations(t_vm *vm, t_pcb *proc)
