@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/20 16:14:26 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/21 18:06:45 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		initialisation(t_vm *vm);
 int			check_reg(int nb);
 int			check_params(t_op *op);
 int			check_arg(t_vm *vm, int argc, char **argv);
-void		find_args(t_vm *vm, t_pcb *proc, int num);
+//void		find_args(t_vm *vm, t_pcb *proc, int num);
 int			ft_strargv(int argc, char **argv, char *str);
 int			srch_players(t_vm *vm, int argc, char **argv);
 void		error(char *str);

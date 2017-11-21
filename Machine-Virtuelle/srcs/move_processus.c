@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/20 16:14:29 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/21 18:06:41 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,32 @@
 **	Check si data est un code op
 */
 
-static char	is_opcode(char data)
+static int	is_opcode(unsigned char data)
 {
 	int i;
 
 	i = -1;
 	while (++i < NBR_OP)
 	{
-		if ((char)op_tab[i].code == data)
-			return (data);
+		if (op_tab[i].code == (int)data)
+			return (1);
+	}
+	return (0);
+}
+
+/*
+**	Return le num du tableau op_tab[num] correspondant a l'op de data
+*/
+
+static int	which_op(unsigned char data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < NBR_OP)
+	{
+		if (op_tab[i].code == (int)data)
+			return (i);
 	}
 	return (0);
 }
@@ -40,11 +57,10 @@ static t_op	*new_op(t_vm *vm, t_pcb *proc, char data)
 
 	i = 0;
 	op = NULL;
-	if (!is_opcode(data))
-		return (NULL);
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
 		error("error : malloc\n");
-	ft_memcpy(op, &op_tab[data], sizeof(t_op));
+	ft_memcpy(op, &op_tab[which_op(data)], sizeof(t_op));
+//	ft_printf("copie name : %s, inst : %s, has_ocp : %d data : %02x\n", op->name, op->inst, op->has_ocp, data);
 	return (op);
 }
 
@@ -60,7 +76,8 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
 		{
 			proc->op = new_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
-		ft_printf("%{BLUE}02x\n", proc->pc);
+			load_op(vm, proc);
+//			ft_printf("%{BLUE}02x\n", proc->pc);
 		}
 		else
 		{
@@ -72,7 +89,6 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 		proc->op->loadtime--;
 		if (proc->op->loadtime < 1)
 		{
-			load_op(vm, proc);
 			if (op_tab[proc->op->code - 1].func != NULL)
 			{
 				op_tab[proc->op->code - 1].func(vm, proc);

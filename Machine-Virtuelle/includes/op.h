@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:09:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/20 16:14:24 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/21 18:06:46 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 #define MAX_ARGS_NUMBER			4
 #define MAX_PLAYERS				4
-#define MEM_SIZE				(4*1024)
+#define MEM_SIZE				(4*256)
 #define IDX_MOD					(MEM_SIZE / 8)
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 

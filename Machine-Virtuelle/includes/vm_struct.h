@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/20 16:14:23 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/21 18:06:44 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,10 @@ typedef struct s_pcb
 	int		pid;	//process identifier
 	int		uid;	//user idetifier
 	int		last_pc;
-	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
+	int		pc;// L adresse dans la ram du processus
 	char	state;
 	char	carry;
 	int		reg[REG_NUMBER + 1];
-	// int		loadtime;
 	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
 	struct	s_pcb	*next;
@@ -144,7 +143,7 @@ typedef struct s_vm
 	t_mem	ram[MEM_SIZE];
 //	int		life_signal[4];			// tab pour les vies.
 //	char	*files_name[5];
-	t_player	player[MAX_PLAYERS - 1];
+	t_player	player[MAX_PLAYERS];
 	t_player	*last_one;
 
 	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
