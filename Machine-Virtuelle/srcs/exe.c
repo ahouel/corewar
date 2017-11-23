@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/21 18:06:42 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/23 13:19:47 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void		exe(t_vm *vm)
 				show_pc_move(vm, proc);
 			proc->last_pc = proc->pc;
 			proc = proc->next;
+		}
+		if (vm->debug == 3)
+		{
+			show_ops(vm);
+			break ;
 		}
 		vm->cycle++;
 		if (vm->dump != -1 && !vm->ncurses)

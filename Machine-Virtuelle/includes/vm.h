@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/21 18:06:45 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/23 12:19:43 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ int			all_died(t_vm *vm);
 int			cycle_to_die(t_vm *vm);
 t_player	*get_survivor(t_vm *vm);
 void		get_ocp(t_vm *vm, t_pcb *proc);
-void		get_dir(t_vm *vm, t_pcb *proc, int num);
+//void		get_dir(t_vm *vm, t_pcb *proc, int num);
 int			modulo(int a, int b);
-void		show_operations(t_vm *vm, t_pcb *proc);
 void		show_pc_move(t_vm *vm, t_pcb *proc);
 void		reduce_ctd(t_vm *vm);
 void		set_ctd(t_vm *vm);
@@ -103,5 +102,6 @@ void		show_proc_nb(t_vm *vm);
 void		debug_display_proc(t_vm *vm);
 void		show_players(t_vm *vm);
 void		show_processus(t_vm *vm);
+void		show_ops(t_vm *vm);
 
 #endif

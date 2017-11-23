@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/20 10:55:49 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/23 13:19:37 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	live(t_vm *vm, t_pcb *proc)
 	// printf("fuck num %d\n", num);
 	if (4 & vm->verbosity)
 	{
-		show_operations(vm, proc);
+		show_ops(vm);
 		printf("\n");
 	}
 

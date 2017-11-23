@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 10:55:52 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/23 14:13:12 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,18 @@ static void	display_args(t_vm *vm, t_pcb *proc, int n)
 	printf("%d", proc->op->ocp[n]);
 }
 
-void	show_operations(t_vm *vm, t_pcb *proc)
+void	show_ops(t_vm *vm)
 {
-	int	nb_arg;
-	int i;
+	t_pcb	*proc;
+	t_op	*op;
 
-	i = 0;
-	nb_arg = op_tab[proc->op->code - 1].nb_arg;
-	printf("P%5d | %s", proc->uid + 1, op_tab[proc->op->code - 1].inst);
-	while (i < nb_arg)
+
+	proc = vm->proc;
+	while (proc)
 	{
-		printf(" ");
-		display_args(vm, proc, i);
-		i++;
+		op = proc->op;
+		ft_printf("inst : %s, ocp[0] : %d, [1] : %d, [2] : %d, code : %d, name : %s\n", op->inst, op->ocp[0], op->ocp[1], op->ocp[2], op->code, op->name);
+		proc = proc->next;
 	}
 }
 

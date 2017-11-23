@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/21 18:06:41 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/23 14:13:10 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_op	*new_op(t_vm *vm, t_pcb *proc, char data)
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
 		error("error : malloc\n");
 	ft_memcpy(op, &op_tab[which_op(data)], sizeof(t_op));
-//	ft_printf("copie name : %s, inst : %s, has_ocp : %d data : %02x\n", op->name, op->inst, op->has_ocp, data);
+//	ft_printf("copie name : %s, inst : %s, has_ocp : %d data : %02x, nbr_byte : %d\n", op->name, op->inst, op->has_ocp, data, op->nb_byte);
 	return (op);
 }
 
@@ -89,9 +89,9 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 		proc->op->loadtime--;
 		if (proc->op->loadtime < 1)
 		{
-			if (op_tab[proc->op->code - 1].func != NULL)
+			if (proc->op->func != NULL)
 			{
-				op_tab[proc->op->code - 1].func(vm, proc);
+				proc->op->func(vm, proc);
 			}
 			proc->op = NULL;
 		}

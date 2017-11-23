@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:22:35 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/21 18:06:40 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/23 14:13:10 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,39 @@
 
 /*
 **	Enregistre la valeur direct dans la structure t_op
-**	Recup : 2 Octets si l'op est : 
-**	zjmp | ldi | sti | fork | lfork | lldi
+**	Recup : 2 Octets si le nb_byte est de 0,
 **	4 Octets autrement
 */
 
-static void	get_dir(t_vm *vm, t_pcb *proc, int num)
+static void	get_dir(t_vm *vm, t_pcb *proc, int i)
 {
-	unsigned int value;
+	int	value;
 
 	value = 0;
-
+	value |= (int)vm->ram[proc->pc % MEM_SIZE].mem;
+	value <<= 8;
+	value = (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
+	if (!proc->op->nb_byte)
+	{
+		value <<= 8;
+		value |= (int)vm->ram[(proc->pc + 2) % MEM_SIZE].mem;
+		value <<= 8;
+		value |= (int)vm->ram[(proc->pc + 3) % MEM_SIZE].mem;
+	}
+	proc->op->ocp[i] = value;
+	proc->pc += (2 + (2 * proc->op->nb_byte));
+/*
+	proc->ocp[i] = value;
+	proc->op->ocp[i] = proc->op->ocp[i] | (int)(vm->ram[(proc->pc + 2) % MEM_SIZE].mem << 8);
+//	if (vm->debug == 3)
+//		printf("Value => %x\n", value);
+//	if (vm->debug == 3)
+//		printf("Pc => %d\n", proc->pc);
 	proc->pc++;
-
-	value = (unsigned char)vm->ram[proc->pc].mem;
-	if (vm->debug == 3)
-		printf("Value => %x\n", value);
-	if (vm->debug == 3)
-		printf("Pc => %d\n", proc->pc);
-	proc->pc++;
-	value = value << 8;
-	if (proc->pc > MEM_SIZE)
-		return ;		// FIXXXXX
-	value = value | (unsigned char)vm->ram[proc->pc].mem;
+//	value = value << 8;
+//	if (proc->pc > MEM_SIZE)
+//		return ;		// FIXXXXX
+	value = (unsigned int)vm->ram[proc->pc% MEM_SIZE].mem;
 	if (vm->debug == 3)
 		printf("Value => %x\n", value);
 	if (vm->debug == 3)
@@ -61,6 +71,7 @@ static void	get_dir(t_vm *vm, t_pcb *proc, int num)
 	proc->op->ocp[num] = value;
 	if (proc->op->code == 1 && proc->pid == 5 && vm->debug == 3)
 		printf("live value => %d   arg_num => %d\n", value, num);
+*/
 }
 
 /*
@@ -69,8 +80,8 @@ static void	get_dir(t_vm *vm, t_pcb *proc, int num)
 
 static void	get_reg(t_vm *vm, t_pcb *proc, int i)
 {
-	proc->pc++;
 	proc->op->ocp[i] = (int)vm->ram[proc->pc % MEM_SIZE].mem;
+	proc->pc++;
 }
 
 /*
@@ -79,8 +90,8 @@ static void	get_reg(t_vm *vm, t_pcb *proc, int i)
 
 static void	get_ind(t_vm *vm, t_pcb *proc, int i)
 {
-	proc->ocp[i] = (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
-	proc->ocp[i] += (int)(vm->ram[proc->pc % MEM_SIZE].mem * 256);
+	proc->op->ocp[i] = (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
+	proc->op->ocp[i] += (int)(vm->ram[proc->pc % MEM_SIZE].mem * 256);
 	proc->pc += 2;
 
 /*	value = 0;
@@ -112,7 +123,7 @@ static void	get_params(t_vm *vm, t_pcb *proc, unsigned char ocp, int i)
 	mask = mask >> (2 * i);
 	param = ocp & mask;
 	param = param >> (6 - (2 * i));
-	ft_printf("param %d : %{RED}02b\n", i, param);
+//	ft_printf("param %d : %{RED}02b\n", i, param);
 	if (proc->op->code == 1)
 		printf("LIVE OP CODE\n");
 	if (param == REG_CODE)
@@ -141,6 +152,7 @@ void	load_op(t_vm *vm, t_pcb *proc)
 	{
 		proc->pc++;
 		ocp = vm->ram[(proc->pc) % MEM_SIZE].mem;
+		proc->pc++;
 		while (++i < proc->op->nb_arg)
 			get_params(vm, proc, ocp, i);
 		op = proc->op;
