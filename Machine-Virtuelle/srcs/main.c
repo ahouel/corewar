@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 11:54:12 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 16:03:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@ static int	get_winner(t_vm *vm)
 	int best;
 
 
-	i = 1;
-	best = 1;
-	while (i < vm->nb_player)
-	{
+	i = -1;
+	best = 0;
+	while (++i < vm->nb_player)
 		if (vm->player[i].last_live < vm->player[best].last_live)
 			best = i;
-		i++;
-	}
 	return (best);
 }
 
@@ -74,9 +71,10 @@ static void	init_vm(t_vm *vm)
 
 int		main(int argc, char **argv)
 {
-	t_vm	vm;
-	WINDOW *w;
-	
+	int			win;
+	t_vm		vm;
+	WINDOW		*w;
+
 	init_vm(&vm);
 	if(!check_arg(&vm, argc, argv))
 		error("Error : no player\n");
@@ -94,6 +92,7 @@ int		main(int argc, char **argv)
 	exe(&vm);
 	if (vm.ncurses)
 		endwin();
-	printf("winner nb -> %d\n", get_winner(&vm));
+	win = get_winner(&vm);
+	ft_printf("Contestant %d, \"%s\", has won !\n", win + 1, vm.player[win].name);
 	return (0);
 }

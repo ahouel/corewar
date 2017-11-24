@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:31 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/17 15:49:10 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 13:08:47 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void					write_players(t_vm *vm, int nb, int num)
 	data = get_data(vm->player[nb].file_name, &hd);
 	tmp = data;
 	get_infos(&vm->player[nb], &hd);
-	ft_printf("* Player %d, weighing %u bytes, \"%s\" (\"%s\")\n",
-			num + 1, hd.prog_size, hd.prog_name, hd.comment);
+	ft_printf("* Player %d, weighing %u bytes, \"%s\" (\"%s\") !\n",
+			num, hd.prog_size, hd.prog_name, hd.comment);
 	hd.prog_size += i;
 	while (i < hd.prog_size)
 	{

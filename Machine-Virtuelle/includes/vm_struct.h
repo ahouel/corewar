@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 11:54:18 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 16:02:48 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_pcb	t_pcb;
 
 typedef struct s_op
 {
-	char	*inst;
+	char	*inst; //change par label
 	void	(*func)(t_vm *vm, t_pcb *proc);
 	int		nb_arg;
 	int		ocp[3];
@@ -66,7 +66,7 @@ typedef struct s_op
 **	Joueur (.cor)
 */
 
-typedef struct s_player
+typedef struct	s_player
 {
 	char	*name;
 	char	*comment;
@@ -74,14 +74,14 @@ typedef struct s_player
 	int		life_signal;
 	int		last_live;
 	char	*file_name;
-}	t_player;
+}				t_player;
 
 /*
 **	https://openclassrooms.com/courses/la-programmation-systeme-en-c-sous-unix/les-processus-1
 **	Processus
 */
 
-typedef struct s_pcb
+typedef struct	s_pcb
 {
 	int		pid;	//process identifier
 	int		uid;	//user idetifier
@@ -93,7 +93,7 @@ typedef struct s_pcb
 	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
 	struct	s_pcb	*next;
-}	t_pcb;
+}			t_pcb;
 
 /*
 **	Representation de la memoire (ram)
@@ -105,20 +105,6 @@ typedef struct s_mem
 	int				num;
 	int				flash;
 }	t_mem;
-/*
-typedef struct s_optab
-{
-	char	*inst;
-	void	(*func)(t_vm *vm, t_pcb *proc);
-	int		nb_arg;
-	int		ocp[3];
-	int		code;
-	int		loadtime;
-	char	*name;
-	int		need_ocp;
-	int		direct_size; 	// nombre d'octect d'encodage. 2 ou 4;
-}	t_optab;
-*/
 
 extern t_op op_tab[];
 
@@ -142,12 +128,8 @@ typedef struct s_vm
 //	int		lives_in_cycle;	// define
 	t_mem	ram[MEM_SIZE];
 //	int		life_signal[4];			// tab pour les vies.
-//	char	*files_name[5];
 	t_player	player[MAX_PLAYERS];
 	t_player	*last_one;
-
-	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
-
 	t_pcb	*proc;
 }	t_vm;
 

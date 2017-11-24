@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 11:54:14 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 16:03:09 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void		exe(t_vm *vm)
 		if (vm->debug == 3)
 		{
 			show_ops(vm);
-			break ;
 		}
 		vm->cycle++;
 		if (vm->dump != -1 && !vm->ncurses && vm->cycle == vm->dump)

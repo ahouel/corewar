@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 11:54:13 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 16:03:05 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	show_ops(t_vm *vm)
 	while (proc)
 	{
 		op = proc->op;
-		ft_printf("inst : %s, ocp[0] : %d, [1] : %d, [2] : %d, code : %d, name : %s\n", op->inst, op->ocp[0], op->ocp[1], op->ocp[2], op->code, op->name);
+		if (op)
+			ft_printf("inst : %s, ocp[0] : %d, [1] : %d, [2] : %d, code : %d, name : %s\n", op->inst, op->ocp[0], op->ocp[1], op->ocp[2], op->code, op->name);
 		proc = proc->next;
 	}
 }

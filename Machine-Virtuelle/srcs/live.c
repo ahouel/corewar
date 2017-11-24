@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/23 13:19:37 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 16:03:11 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 void	live(t_vm *vm, t_pcb *proc)
 {
+	int	i;
+
+	i = proc->op->ocp[0];
+	proc->last_live = vm->cycle + 1;
+	ft_printf("%{RED}d\n", i);
+	if (i < 0 || i > MAX_PLAYERS - 1)
+		return ;
+	if (!vm->player[i].active)
+		return ;
+
+}
+/*
 	if (!vm->ncurses && vm->debug)
 		printf(">>>>>ENTER_LIVE<<<<< : Cycle > %d\n", vm->cycle);
 	int		num;
@@ -50,3 +62,4 @@ void	live(t_vm *vm, t_pcb *proc)
 	}
 
 }
+*/
