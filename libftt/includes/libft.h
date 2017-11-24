@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 12:14:41 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/23 10:41:51 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 11:21:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void			ft_swap(int *a, int *b);
-void			*ft_sqrt(int nb);
+int				ft_sqrt(int nb);
 void			ft_cswap(char *a, char *b);
 char			*ft_strrev(char *str);
 void			ft_div_mod(int a, int b, int *div, int *mod);

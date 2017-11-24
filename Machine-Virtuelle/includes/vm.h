@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/23 12:19:43 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 11:54:19 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int			modulo(int a, int b);
 void		show_pc_move(t_vm *vm, t_pcb *proc);
 void		reduce_ctd(t_vm *vm);
 void		set_ctd(t_vm *vm);
+void		print_ram(t_vm *vm);
 
 /*
 **	--------INSTRUCTIONS----------
@@ -96,7 +97,6 @@ void		controller(t_vm *vm);
 **	-------DEBUG-------
 */
 
-void		show_mem(t_vm *vm);
 void		show_mem_2(t_vm *vm);
 void		show_proc_nb(t_vm *vm);
 void		debug_display_proc(t_vm *vm);

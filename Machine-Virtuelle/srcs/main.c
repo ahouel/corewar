@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/20 12:13:52 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 11:54:12 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		main(int argc, char **argv)
 	if (vm.debug == 0)
 		show_players(&vm);
 	if (vm.debug == 1)
-		show_mem(&vm);
+		print_ram(&vm);
 	if (vm.debug == 2)
 		show_processus(&vm);
 	//ft_printf("=======FIGHT=======\n");

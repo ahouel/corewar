@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/23 13:19:47 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 11:54:14 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	processus_living(t_vm *vm)
 static void	dump(t_vm *vm)
 {
 	if (!(vm->cycle % vm->dump))
-		show_mem(vm);
+		print_ram(vm);
 }
 
 void		exe(t_vm *vm)
@@ -46,7 +46,7 @@ void		exe(t_vm *vm)
 	while (processus_living(vm))
 	{
 		if (2 & vm->verbosity)
-			printf("It is now cycle %d\n", vm->cycle + 1);
+			ft_printf("It is now cycle %d\n", vm->cycle + 1);
 		if (vm->ncurses)
 		{
 			call_ncurses(vm);
@@ -69,9 +69,12 @@ void		exe(t_vm *vm)
 			break ;
 		}
 		vm->cycle++;
-		if (vm->dump != -1 && !vm->ncurses)
-			dump(vm);
+		if (vm->dump != -1 && !vm->ncurses && vm->cycle == vm->dump)
+		{
+			print_ram(vm);
+			exit(EXIT_SUCCESS);
+		}
 	}
 	if (vm->last_one)
-		printf("Last_one => %s\n", vm->last_one->file_name);
+		ft_printf("Last_one => %s\n", vm->last_one->file_name);
 }

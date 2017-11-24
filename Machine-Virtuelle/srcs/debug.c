@@ -6,28 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 14:13:12 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/24 11:54:13 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-void	show_mem(t_vm *vm)
-{
-	printf(">>>>>>>>SHOW MEM<<<<<<<<\n");
-	printf("Cycle : %d\n", vm->cycle);
-	int i;
-	i = 0;
-
-	while (i < MEM_SIZE)
-	{
-		printf("%02x ", vm->ram[i].mem);
-		if (i / 64 != (i + 1) / 64)
-			printf("\n");
-		i++;
-	}
-	printf("\n\n");
-}
 
 void	show_players(t_vm *vm)
 {
