@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 16:02:48 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/27 14:01:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ typedef struct s_pcb	t_pcb;
 
 typedef struct s_op
 {
-	char	*inst; //change par label
+	char	*label; //change par label
 	void	(*func)(t_vm *vm, t_pcb *proc);
 	int		nb_arg;
-	int		ocp[3];
+	int		param[3];
 	int		code;
 	int		loadtime;
 	char	*name;
@@ -74,6 +74,7 @@ typedef struct	s_player
 	int		life_signal;
 	int		last_live;
 	char	*file_name;
+	int		pos;
 }				t_player;
 
 /*
@@ -118,7 +119,7 @@ typedef struct s_vm
 	int		ctd;			//cycle_to_die
 	int		cycle;			//cycle en cours
 	char	pause;			// pause 0 / unpause 1
-	char	ncurses;		// oui : 1 / non : 1
+	char	ncurses;		// oui : 1 / non : 0
 	int		delay;			// delay pour ncurse
 	int		next_ctd;		// prochain cycle to die
 	int		ctd_check;

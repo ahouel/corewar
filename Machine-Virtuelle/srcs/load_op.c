@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:22:35 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 16:03:08 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/27 14:00:26 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ static void	get_dir(t_vm *vm, t_pcb *proc, int i)
 {
 	int	value;
 
-	value = 0;
-	value |= (int)vm->ram[proc->pc % MEM_SIZE].mem;
+	value = (int)vm->ram[proc->pc % MEM_SIZE].mem;
 	value <<= 8;
-	value = (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
+	value |= (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
 	if (!proc->op->nb_byte)
 	{
 		value <<= 8;
@@ -33,45 +32,8 @@ static void	get_dir(t_vm *vm, t_pcb *proc, int i)
 		value <<= 8;
 		value |= (int)vm->ram[(proc->pc + 3) % MEM_SIZE].mem;
 	}
-	proc->op->ocp[i] = value;
-	proc->pc += (2 + (2 * proc->op->nb_byte));
-/*
-	proc->ocp[i] = value;
-	proc->op->ocp[i] = proc->op->ocp[i] | (int)(vm->ram[(proc->pc + 2) % MEM_SIZE].mem << 8);
-//	if (vm->debug == 3)
-//		printf("Value => %x\n", value);
-//	if (vm->debug == 3)
-//		printf("Pc => %d\n", proc->pc);
-	proc->pc++;
-//	value = value << 8;
-//	if (proc->pc > MEM_SIZE)
-//		return ;		// FIXXXXX
-	value = (unsigned int)vm->ram[proc->pc% MEM_SIZE].mem;
-	if (vm->debug == 3)
-		printf("Value => %x\n", value);
-	if (vm->debug == 3)
-		printf("Pc => %d\n", proc->pc);
-
-	if (op_tab[proc->op->code - 1].nb_byte)
-	{
-		if ((value & 0x8000) == 0x8000)
-			value = (value - USHRT_MAX) - 1;
-		proc->op->ocp[num] = value;
-		return ;
-	}
-
-	if (proc->op->code == 1 && proc->pid == 5 && vm->debug == 3)
-		printf("GET DIR 4\n");
-	proc->pc++;
-	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc].mem;
-	proc->pc++;
-	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc].mem;
-	proc->op->ocp[num] = value;
-	if (proc->op->code == 1 && proc->pid == 5 && vm->debug == 3)
-		printf("live value => %d   arg_num => %d\n", value, num);
-*/
+	proc->op->param[i] = value;
+	proc->op->nb_byte ? (proc->pc += 1) : (proc->pc += 3);
 }
 
 /*
@@ -80,7 +42,7 @@ static void	get_dir(t_vm *vm, t_pcb *proc, int i)
 
 static void	get_reg(t_vm *vm, t_pcb *proc, int i)
 {
-	proc->op->ocp[i] = (int)vm->ram[proc->pc % MEM_SIZE].mem;
+	proc->op->param[i] = (int)vm->ram[proc->pc % MEM_SIZE].mem;
 	proc->pc++;
 }
 
@@ -90,20 +52,9 @@ static void	get_reg(t_vm *vm, t_pcb *proc, int i)
 
 static void	get_ind(t_vm *vm, t_pcb *proc, int i)
 {
-	proc->op->ocp[i] = (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
-	proc->op->ocp[i] += (int)(vm->ram[proc->pc % MEM_SIZE].mem * 256);
+	proc->op->param[i] = (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
+	proc->op->param[i] += (int)(vm->ram[proc->pc % MEM_SIZE].mem * 256);
 	proc->pc += 2;
-
-/*	value = 0;
-	proc->pc++;
-	value = value | vm->ram[proc->pc].mem;
-	proc->pc++;
-	value = value << 8;
-	value = value | vm->ram[proc->pc].mem;
-	proc->op->ocp[num] = value;
-	if ((value & 0x8000) == 0x8000)
-		proc->op->ocp[num] = (value - USHRT_MAX) - 1;
-		*/
 }
 
 /*
@@ -117,15 +68,10 @@ static void	get_params(t_vm *vm, t_pcb *proc, unsigned char ocp, int i)
 	unsigned char	param;
 	unsigned char	mask;
 
-//	ft_printf("%02x\n", vm->ram[(proc->pc + 1) % MEM_SIZE].mem);
-//	ft_printf("ocp : %{RED}08b soit %02x\n", ocp, type);
 	mask = 0xC0;
 	mask = mask >> (2 * i);
 	param = ocp & mask;
 	param = param >> (6 - (2 * i));
-//	ft_printf("param %d : %{RED}02b\n", i, param);
-	if (proc->op->code == 1)
-		printf("LIVE OP CODE\n");
 	if (param == REG_CODE)
 		get_reg(vm, proc, i);
 	if (param == DIR_CODE)
@@ -139,15 +85,13 @@ static void	get_params(t_vm *vm, t_pcb *proc, unsigned char ocp, int i)
 **	selon l'OCP s'il y en un, et avance le pc
 */
 
-void	load_op(t_vm *vm, t_pcb *proc)
+void		load_op(t_vm *vm, t_pcb *proc)
 {
-	int i;
-	t_op *op;
-	unsigned char ocp;
+	unsigned char	ocp;
+	int				i;
+	t_op			*op;
 
 	i = -1;
-//	ft_printf("le pc est sur %#02x avec value pc : %d\n", vm->ram[proc->pc % MEM_SIZE].mem, proc->pc % MEM_SIZE);
-//	ft_printf("voyons l'op, has_ocp : %d, apres %b\n", proc->op->has_ocp, (unsigned char)(&proc->op->has_ocp + 1));
 	if (proc->op->has_ocp)
 	{
 		proc->pc++;
@@ -156,11 +100,10 @@ void	load_op(t_vm *vm, t_pcb *proc)
 		while (++i < proc->op->nb_arg)
 			get_params(vm, proc, ocp, i);
 		op = proc->op;
-//		ft_printf("inst : %s, nb arg : %d, code : %d, has ocp : %d, nb_byte : %d\nresult : ocp0 : %x, ocp1 : %x, ocp2 : %x\n", op->inst, op->nb_arg, op->code, op->has_ocp, op->nb_byte, op->ocp[0], op->ocp[1], op->ocp[2]);
 	}
 	else
 	{
 		get_dir(vm, proc, 0);
+		proc->pc++;
 	}
-	proc->pc++;
 }

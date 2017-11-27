@@ -6,60 +6,30 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 16:03:11 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/27 14:00:18 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+static void	print_live(t_vm *vm, t_pcb *proc, int i)
+{
+	if (vm->verbosity & 1)
+		ft_printf("Player %d (%s) is said to be alive\n", i, vm->player[i - 1].name);
+}
+
 void	live(t_vm *vm, t_pcb *proc)
 {
 	int	i;
 
-	i = proc->op->ocp[0];
+	i = (int)proc->op->param[0];
 	proc->last_live = vm->cycle + 1;
-	ft_printf("%{RED}d\n", i);
+	i = -i;
 	if (i < 0 || i > MAX_PLAYERS - 1)
 		return ;
-	if (!vm->player[i].active)
+	if (!vm->player[i - 1].active)
 		return ;
-
+	vm->player[i - 1].life_signal++;
+	vm->player[i - 1].last_live = vm->cycle;
+	print_live(vm, proc, i);
 }
-/*
-	if (!vm->ncurses && vm->debug)
-		printf(">>>>>ENTER_LIVE<<<<< : Cycle > %d\n", vm->cycle);
-	int		num;
-
-//	vm->lives_in_cycle++;
-	proc->last_live = vm->cycle + 1;
-
-	num = 0;
-	// printf("NUM player => %d\n", proc->op->ar[0]);
-
-//	if (!vm->ncurses && vm->debug)
-//	{
-//		printf("opcode pos : %d\n", proc->op->pos_opcode);
-//		printf("fuck num %d\n", (int)proc->op->ar[0]);
-//		printf("fuck num %x\n", (int)proc->op->ar[0]);
-//	}
-//	num = proc->op->ar[0] * -1;
-
-	// printf("fuck num %d\n", num);
-	if (4 & vm->verbosity)
-	{
-		show_ops(vm);
-		printf("\n");
-	}
-
-	if (num >= 1 && num <= vm->nb_player)
-	{
-		// printf("LIVE HERE ##################################\n");
-		vm->player[num].life_signal++;
-		vm->player[num].last_live = vm->cycle;
-//		vm->ram[proc->op->pos_opcode].live = BLING_LIVE;
-		if (5 & vm->verbosity)
-			printf("Player %d (helltrain) is said to be alive\n", num);
-	}
-
-}
-*/

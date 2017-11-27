@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 16:03:06 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/27 11:26:47 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ int		count_pcb(t_vm *vm)
 		proc = proc->next;
 	}
 	return (i);
-}
-
-int		modulo(int a, int b)
-{
-	if (a % b >= 0)
-		return (a % b);
-	else
-		return ((a % b) + b);
-	// return (a % b) >= 0 ? (a % b) : (a % b) + b;
 }
 
 static int	get_winner(t_vm *vm)

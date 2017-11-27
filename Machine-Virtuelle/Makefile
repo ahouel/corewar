@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2017/11/24 13:46:24 by ahouel           ###   ########.fr        #
+#    Updated: 2017/11/27 13:27:26 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,9 @@ SRC_FILES =	main.c \
 			processus.c	\
 			create_processus.c	\
 			print_ram.c	\
-			op.c
-#			fork.c \
-			or.c \
+			op.c	\
+			fork.c
+#			or.c \
 			xor.c \
 			sub.c \
 			st.c \

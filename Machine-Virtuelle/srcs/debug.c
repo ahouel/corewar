@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 16:03:05 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/27 11:27:01 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	debug_display_proc(t_vm *vm)
 
 static void	display_args(t_vm *vm, t_pcb *proc, int n)
 {
-	if (proc->op->ocp[n] == REG_CODE)
+	if (proc->op->param[n] == REG_CODE)
 		printf("r");
-	printf("%d", proc->op->ocp[n]);
+	printf("%d", proc->op->param[n]);
 }
 
 void	show_ops(t_vm *vm)
@@ -88,7 +88,7 @@ void	show_ops(t_vm *vm)
 	{
 		op = proc->op;
 		if (op)
-			ft_printf("inst : %s, ocp[0] : %d, [1] : %d, [2] : %d, code : %d, name : %s\n", op->inst, op->ocp[0], op->ocp[1], op->ocp[2], op->code, op->name);
+			ft_printf("inst : %s, ocp[0] : %d, [1] : %d, [2] : %d, code : %d, name : %s\n", op->label, op->param[0], op->param[1], op->param[2], op->code, op->name);
 		proc = proc->next;
 	}
 }

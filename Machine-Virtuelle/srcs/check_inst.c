@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:18:04 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/20 10:49:00 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/27 11:26:59 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int		check_params(t_op *op)
 	i = 0;
 	while (i < op_tab[op->code].nb_arg)
 	{
-		if (op->ocp[i] == REG_CODE)
-			if (!check_reg(op->ocp[i]))
+		if (op->param[i] == REG_CODE)
+			if (!check_reg(op->param[i]))
 				return (0);
 		i++;
 	}

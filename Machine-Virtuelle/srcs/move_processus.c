@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/24 16:03:09 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/27 14:00:10 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static t_op	*new_op(t_vm *vm, t_pcb *proc, char data)
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
 		error("error : malloc\n");
 	ft_memcpy(op, &op_tab[which_op(data)], sizeof(t_op));
-//	ft_printf("copie name : %s, inst : %s, has_ocp : %d data : %02x, nbr_byte : %d\n", op->name, op->inst, op->has_ocp, data, op->nb_byte);
 	return (op);
 }
 
@@ -76,19 +75,15 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
 		{
 			proc->op = new_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
-			load_op(vm, proc);
-//			ft_printf("%{BLUE}02x\n", proc->pc);
 		}
-		else
-		{
-			proc->pc = (proc->pc + 1) % MEM_SIZE;
-		}
+		proc->pc = (proc->pc + 1) % MEM_SIZE;
 	}
 	else
 	{
 		proc->op->loadtime--;
 		if (proc->op->loadtime < 1)
 		{
+			load_op(vm, proc);
 			if (proc->op->func != NULL)
 			{
 				proc->op->func(vm, proc);
