@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:09:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 14:01:06 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/21 17:35:20 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 #define DIR_SIZE				REG_SIZE
 
 
-# define REG_CODE				1
-# define DIR_CODE				2
-# define IND_CODE				3
+#define REG_CODE				1
+#define DIR_CODE				2
+#define IND_CODE				3
 
 
 #define MAX_ARGS_NUMBER			4
@@ -30,6 +30,13 @@
 #define MEM_SIZE				(4*1024)
 #define IDX_MOD					(MEM_SIZE / 8)
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+
+#define V_LIVES					1
+#define V_CYCLES				2
+#define V_OP					4
+#define V_DEATHS				8
+#define V_PC					16
+#define V_MAX					V_LIVES + V_CYCLES + V_OP + V_DEATHS + V_PC
 
 #define COMMENT_CHAR			'#'
 #define LABEL_CHAR				':'

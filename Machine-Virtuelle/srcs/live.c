@@ -6,30 +6,42 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 14:00:18 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/19 18:56:31 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*
+**	Ecrit si un joueur est reporte comme etant en vie avec -v 1
+*/
+
 static void	print_live(t_vm *vm, t_pcb *proc, int i)
 {
-	if (vm->verbosity & 1)
-		ft_printf("Player %d (%s) is said to be alive\n", i, vm->player[i - 1].name);
+	if (vm->verbosity & V_LIVES)
+		ft_printf("Player %d (%s) is said to be alive\n", i,
+				vm->player[i - 1].name);
 }
 
-void	live(t_vm *vm, t_pcb *proc)
+/*
+**	Rapporte le joueur designe par le param comme etant en vie
+**	(- num du joueur)
+*/
+
+void		live(t_vm *vm, t_pcb *proc)
 {
 	int	i;
 
-	i = (int)proc->op->param[0];
-	proc->last_live = vm->cycle + 1;
+	i = proc->op->param[0];
+	proc->last_live = vm->cycle;
+	if (vm->verbosity & V_OP)
+		ft_printf("%d\n", i);
 	i = -i;
-	if (i < 0 || i > MAX_PLAYERS - 1)
+	if (i < 1 || i > MAX_PLAYERS)
 		return ;
 	if (!vm->player[i - 1].active)
 		return ;
-	vm->player[i - 1].life_signal++;
+	vm->player[i - 1].lives_count++;
 	vm->player[i - 1].last_live = vm->cycle;
 	print_live(vm, proc, i);
 }

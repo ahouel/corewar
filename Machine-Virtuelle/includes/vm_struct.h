@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 14:01:06 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/21 17:35:21 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 #ifndef VM_STRUCT_H
 # define VM_STRUCT_H
-
-#define INST_IDLE 0
-#define INST_NAME 1
-#define INST_OCP 2
-#define INST_ARG 2
 
 #define	IDLE 	1
 #define	WAIT 	2
@@ -51,15 +46,17 @@ typedef struct s_pcb	t_pcb;
 
 typedef struct s_op
 {
-	char	*label; //change par label
+	char	*label;
 	void	(*func)(t_vm *vm, t_pcb *proc);
 	int		nb_arg;
+	int		param_type[3];
 	int		param[3];
 	int		code;
 	int		loadtime;
 	char	*name;
 	int		has_ocp;
 	int		nb_byte;
+	int		addr_rest;
 }				t_op;
 
 /*
@@ -71,10 +68,10 @@ typedef struct	s_player
 	char	*name;
 	char	*comment;
 	int		active;
-	int		life_signal;
+	int		lives_count;
 	int		last_live;
 	char	*file_name;
-	int		pos;
+	int		id_color;
 }				t_player;
 
 /*
@@ -86,9 +83,7 @@ typedef struct	s_pcb
 {
 	int		pid;	//process identifier
 	int		uid;	//user idetifier
-	int		last_pc;
 	int		pc;// L adresse dans la ram du processus
-	char	state;
 	char	carry;
 	int		reg[REG_NUMBER + 1];
 	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
@@ -107,7 +102,7 @@ typedef struct s_mem
 	int				flash;
 }	t_mem;
 
-extern t_op op_tab[];
+extern t_op g_op_tab[];
 
 /*
 **	Environnement de la vm
@@ -116,22 +111,20 @@ extern t_op op_tab[];
 typedef struct s_vm
 {
 	int		nb_player;		//nombre de joueur
-	int		ctd;			//cycle_to_die
 	int		cycle;			//cycle en cours
 	char	pause;			// pause 0 / unpause 1
 	char	ncurses;		// oui : 1 / non : 0
 	int		delay;			// delay pour ncurse
-	int		next_ctd;		// prochain cycle to die
-	int		ctd_check;
+	int		ctd;
+	int		next_ctd;
+	int		last_ctd_decay;
 	int		dump;			// -d
 	int		debug;
 	int		verbosity;		// -v
-//	int		lives_in_cycle;	// define
 	t_mem	ram[MEM_SIZE];
-//	int		life_signal[4];			// tab pour les vies.
 	t_player	player[MAX_PLAYERS];
-	t_player	*last_one;
-	t_pcb	*proc;
+	int		nb_proc;
+	t_pcb	*proc_lst;
 }	t_vm;
 
 #endif

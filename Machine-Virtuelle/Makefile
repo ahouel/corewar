@@ -6,56 +6,56 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2017/11/27 13:27:26 by ahouel           ###   ########.fr        #
+#    Updated: 2017/12/21 17:02:25 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re
 
 CC = clang
+DEBUGFLAGS = -fsanitize=address
 CFLAGS = -g
 NAME = ../corewar
 
 SRC_PATH = ./srcs/
 OBJ_PATH = ./obj/
 INC_PATH = ./includes/
-LIB_PATH = ../libftt/
+LIB_PATH = ../libft/
 
-SRC_FILES =	main.c \
+SRC_FILES =	main.c				\
 			initialisation.c	\
-			exe.c	\
-			error.c	\
-			check_arg.c	\
-			controller.c	\
-			cycle_to_die.c	\
-			check_inst.c	\
-			add_process.c	\
-			debug.c	\
-			write_players.c	\
-			ft_strargv.c \
-			srch_players.c \
-			live.c	\
-			ncurses.c	\
-			load_op.c	\
-			players.c	\
+			init_vm.c			\
+			exe.c				\
+			error.c				\
+			free_vm.c			\
+			get_winner.c		\
+			check_arg.c			\
+			controller.c		\
+			debug.c				\
+			new_player.c		\
+			swap_players.c		\
+			write_players.c		\
+			srch_player.c		\
+			ncurses.c			\
+			load_op.c			\
+			get_ind_value.c		\
+			get_address.c		\
 			move_processus.c	\
-			processus.c	\
 			create_processus.c	\
-			print_ram.c	\
-			op.c	\
-			fork.c
-#			or.c \
-			xor.c \
-			sub.c \
-			st.c \
-			zjmp.c \
-			ldi.c	\
-			sti.c	\
-			ld.c	\
-			add.c	\
-			and.c	\
-			lld.c	\
-			new_op.c
+			add_processus.c		\
+			print_ram.c			\
+			store_ind_value.c	\
+			op.c				\
+			live.c				\
+			ld.c				\
+			st.c				\
+			add.c				\
+			sub.c				\
+			gates.c				\
+			zjmp.c				\
+			ldi.c				\
+			sti.c				\
+			ft_fork.c
 
 INC_FILES = vm.h op.h vm_struct.h
 LIB_FILES = libft.a
@@ -71,7 +71,7 @@ $(OBJ_PATH):
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
-	@echo "\033[34mCompilation of \033[36m$(notdir $<)\033[34m done.\033[0m"
+	@echo "\033[34mCompilation of \033[1m$(notdir $<)\033[0m \033[34mdone.\033[0m"
 
 $(LIB):
 	@make -C $(LIB_PATH)

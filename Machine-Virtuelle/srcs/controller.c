@@ -6,17 +6,25 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:18:14 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 11:18:15 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:02:42 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*
+**	Control pour le ncurses
+**	TO DO : le refaire proprement, changer le delay par un autre nom, idem
+**	pour le nom du fichier .c (voir aue c'est dans la partie ncurses)
+**	utiliser plutot usleep() que sleep()
+*/
+
+
 static void	keys_press(t_vm *vm, char key)
 {
-	if (key == ' ' && vm->pause != 1)
+	if (key == ' ' && vm->pause)
 	{
-		vm->pause = 1;
+		vm->pause = 0;
 		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** PAUSED **");
 	}
 	if (key == 'w')
@@ -43,7 +51,7 @@ void		controller(t_vm *vm)
 	{
 		keys_press(vm, key);
 	}
-	while (vm->pause)
+	while (!vm->pause)
 	{
 		key = getch();
 		if (key != -1)
@@ -52,7 +60,7 @@ void		controller(t_vm *vm)
 			call_ncurses(vm);
 			if (key == ' ')
 			{
-				vm->pause = 0;
+				vm->pause = 1;
 				break ;
 			}
 		}

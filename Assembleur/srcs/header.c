@@ -3,88 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   header.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/03 03:13:29 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 00:49:37 by rfulop           ###   ########.fr       */
+/*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
+/*   Updated: 2017/12/18 19:37:53 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "../includes/asm.h"
 
-void	write_comment(t_asm_env *env, char *line)
+/*
+** on remplit tranquillement les variables qui correspondent au header dans la 
+** structure
+*/
+
+static void	check_comment(char **input, header_t *head, t_champ *pl, int i)
 {
-	int a;
-	int tmp;
-	int c;
-	int size;
+	int		j;
+	int		k;
 
-	a = 0;
-	c = 0;
-	tmp = 0;
-	size = reverse_int(env->size);
-	write(env->fd, &size, 4);
-	while (line[a] != '\"')
-		++a;
-	a++;
-	tmp = a;
-	a = 0;
-	while (line[tmp + a] != '\"')
-	{
-		ft_putchar_fd(line[tmp + a], env->fd);
-		++a;
-	}
-	while (a != PROG_COMS)
-	{
-		ft_putchar_fd(c, env->fd);
-		a++;
-	}
+	if (ft_strncmp(input[i], ".comment", 8) != 0)
+		return ;
+	if ((head->comment)[0] != 0)
+		exit_free("a champ can have only one comment\n", pl, input);
+	j = 8;
+	while (ft_iswhitespace(input[i][j]))
+		j++;
+	k = 0;
+	while (input[i][++j] && input[i][j] != '\"' && k < COMMENT_LENGTH)
+		(head->comment)[k++] = input[i][j];
 }
 
-void	write_name(t_asm_env *env, char *line)
+static void	check_name(char **input, header_t *head, t_champ *pl, int i)
 {
-	int a;
-	int tmp;
-	int c;
-	int magic;
+	int		j;
+	int		k;
 
-	tmp = 0;
-	c = 0;
-	magic = reverse_int(COREWAR_EXEC_MAGIC);
-	write(env->fd, &magic, 4);
-	a = 4;
-	while (line[a] != '\"')
-		++a;
-	++a;
-	tmp = a;
-	a = 0;
-	while (line[tmp + a] != '\"')
-	{
-		ft_putchar_fd(line[tmp + a], env->fd);
-		++a;
-	}
-	while (a != PROG_NAME)
-	{
-		ft_putchar_fd(c, env->fd);
-		a++;
-	}
+	if (ft_strncmp(input[i], ".name", 5) != 0)
+		return ;
+	if ((head->prog_name)[0] != 0)
+		exit_free("a champ can have only one name\n", pl, input);
+	j = 5;
+	while (ft_iswhitespace(input[i][j]))
+		j++;
+	k = 0;
+	while (input[i][++j] && input[i][j] != '\"' && k < PROG_NAME_LENGTH)
+		(head->prog_name)[k++] =input[i][j];
 }
 
-void	write_header(t_asm_env *env, char *line, int printmode)
+t_champ		*manage_header(char **input, t_champ *pl)
 {
-	int	a;
-	int	tmp;
+	int			i;
+	header_t	*head;
 
-	a = 0;
-	tmp = 0;
-	if (!printmode)
-		;
-	else
+	i = 0;
+	if (!(head = ft_memalloc(sizeof(header_t))))
+		exit_free("unsuccessful malloc\n", pl, input);
+	while (input[i] && ((head->prog_name)[0] == 0 || (head->comment)[0] == 0))
 	{
-		if (line[1] == 'n' && line[2] == 'a' && line[3] == 'm' &&
-				line[4] == 'e')
-			write_name(env, line);
+		if (input[i][0] == COMMENT_CHAR)
+			i++;
 		else
-			write_comment(env, line);
+		{
+			check_name(input, head, pl, i);
+			check_comment(input, head, pl, i);
+			i++;
+		}
 	}
+	pl->head = head;
+	return (do_parsing(pl, input, i));
 }

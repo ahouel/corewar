@@ -6,79 +6,133 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/17 15:20:21 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/18 17:20:20 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static int	srch_nb_dump(int argc, char **argv)
-{
-	int ret;
-	int nb;
+/*
+**	Regarde si l'argument[*i] est un -dump
+*/
 
-	ret = 0;
-	nb = 0;
-	if ((ret = ft_strargv(argc, argv, "-dump")))
-	{
-		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
-			return (ft_atoi(argv[ret + 1]));
-		else
-			error("error : dump wrong number\n");
-	}
-	return (-1);
-}
-
-static int	srch_verbose(int argc, char **argv)
-{
-	int ret;
-	int nb;
-
-	ret = 0;
-	nb = 0;
-	if ((ret = ft_strargv(argc, argv, "-v")))
-	{
-		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
-			return (ft_atoi(argv[ret + 1]));
-		else
-			error("error : verbosity wrong number\n");
-	}
-	return (0);
-}
-
-static int	srch_ncurses(int argc, char **argv)
-{
-	if (ft_strargv(argc, argv, "-ncurses"))
-		return (1);
-	return (0);
-}
-
-static int	srch_debug(int argc, char **argv)
+static int	srch_dump(t_vm *vm, int ac, char **av, int *i)
 {
 	int	ret;
 
 	ret = 0;
-	if ((ret = ft_strargv(argc, argv, "-debug")))
+	if (!ft_strcmp(av[*i], "-dump"))
 	{
-		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
-			return (ft_atoi(argv[ret + 1]));
-		else
-			error("error : debug wrong number\n");
+		if (vm->dump != 1)
+			error(vm, "can't use twice -dump");
+		if (*i + 1 < ac && ft_str_isdigit(av[*i + 1]))
+		{
+			ret = ft_atoi(av[++(*i)]);
+			if (ret > -1)
+				return (ret);
+		}
+		error(vm, "dump wrong number");
+	}
+	return (-1);
+}
+
+/*
+**	Regarde si l'argument[*i] est un -v
+*/
+
+static int	srch_verbosity(t_vm *vm, int ac, char **av, int *i)
+{
+	int	ret;
+
+	if (!ft_strcmp(av[*i], "-v"))
+	{
+		if (vm->verbosity)
+			error(vm, "can't use twice -v");
+		if (*i + 1 < ac && ft_str_isdigit(av[*i + 1]))
+		{
+			ret = ft_atoi(av[++(*i)]);
+			if (ret > 0 && ret < V_MAX + 1)
+				return (ret);
+		}
+		error(vm, "verbosity wrong number");
+	}
+	return (0);
+}
+
+/*
+**	Regarde si l'argument arg est un -ncurses
+*/
+
+static int	srch_ncurses(t_vm *vm, char *arg)
+{
+	if (!ft_strcmp(arg, "-ncurses"))
+	{
+		if (vm->ncurses)
+			error(vm, "can't use twice -ncurses");
+		return (1);
+	}
+	return (0);
+}
+
+/*
+**	Regarde si l'argument[*i] est un -debug
+*/
+
+static int	srch_debug(t_vm *vm, int ac, char **av, int *i)
+{
+	int	ret;
+
+	ret = 0;
+	if (!ft_strcmp(av[*i], "-debug"))
+	{
+		if (vm->debug != -1)
+			error(vm, "can't use twice -debug");
+		if ((*i + 1) < ac && ft_str_isdigit(av[*i + 1]))
+		{
+			ret = ft_atoi(av[++(*i)]);
+			if (ret > -1 && ret < 10)
+				return (ret);
+		}
+		error(vm, "-debug wrong number");
 	}
 	return (-1);
 }
 
 /*
 **	On cherche -v -dump et -ncurses pour les stocker, puis les joueurs (.cor)
+**	-v : verbosity -> affichages de differentes donnees
+**	-ncurses : utilisation de ncurses -> interface graphique
+**	-dump : dump dans les cycle -> sauter directement au cycle x
+**	et afficher la memoire
+**	TO DO : -s, bonus, gestion d'erreur a verifier
+**	Re-set les lives_count a 0 pour tous
 */
 
-int			check_arg(t_vm *vm, int argc, char **argv)
+int			check_arg(t_vm *vm, int ac, char **av)
 {
-	vm->dump = srch_nb_dump(argc, argv);
-	vm->ncurses = srch_ncurses(argc, argv);
-	vm->verbosity = srch_verbose(argc, argv);
-	vm->debug = srch_debug(argc, argv);
-	if (!srch_players(vm, argc, argv))
-		return (0);
-	return (1);
+	int	i;
+	int	ret;
+
+	i = 0;
+	while (++i < ac)
+	{
+		if ((ret = srch_dump(vm, ac, av, &i)) > -1)
+			vm->dump = ret;
+		else if ((ret = srch_ncurses(vm, av[i])))
+			vm->ncurses = ret;
+		else if ((ret = srch_verbosity(vm, ac, av, &i)))
+			vm->verbosity = ret;
+		else if ((ret = srch_debug(vm, ac, av, &i)) > -1)
+			vm->debug = ret;
+		else if (!(srch_player(vm, ac, av, &i)))
+		{
+			ft_printf("%{RED}s %{BLUE}s\n",
+					"Error : can't read source file ", av[i]);
+			error(vm, "");
+		}
+	}
+	i = -1;
+	while (++i < MAX_PLAYERS)
+		vm->player[i].lives_count = 0;
+	return (vm->nb_player);
 }

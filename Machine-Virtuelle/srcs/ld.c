@@ -6,57 +6,41 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:07 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 14:01:03 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/21 16:53:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ld(t_vm *vm, t_pcb *proc)
+/*
+**	Montre l'operation ld avec -v 4
+*/
+
+static void	show_ld(t_pcb *proc)
 {
-	// printf(">>>>ENTER LD<<<<  : Cycle > %d\n", vm->cycle);
-	int		reg_nb;
-	int		addr;
+	ft_printf("%d r%d\n", proc->reg[proc->op->param[1] - 1],
+			proc->op->param[1]);
+}
 
-	addr = 0;
+/*
+**	Transfert direct RAM > Registre. Charge le premier parametre dans le
+**	registre passé en second parametre. Si la valeur du premier
+**	parametre est egale a zero, alors le carry passe a l'etat un, sinon a
+**	l'etat zero.
+*/
 
-	if (!check_params(proc->op))
-		return ;
-	if (proc->op->ar_typ[0] == IND_CODE)
+void		ld(t_vm *vm, t_pcb *proc)
+{
+	int	addr;
+
+	if (proc->op->param_type[0] == IND_CODE)
 	{
-		addr = proc->op->pos_opcode + proc->op->ar[0];
-		proc->reg[reg_nb] = 0;
-		proc->reg[reg_nb] = (unsigned char)vm->ram[modulo(addr % IDX_MOD, MEM_SIZE)].mem;
-		// printf("%x     \n", vm->ram[modulo(addr % IDX_MOD, MEM_SIZE)].mem);
-		// printf("%x     \n", proc->reg[reg_nb]);
-		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo((addr + 1) % IDX_MOD, MEM_SIZE)].mem;
-		// printf("%x     \n", proc->reg[reg_nb]);
-
-
-		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo((addr + 2) % IDX_MOD, MEM_SIZE)].mem;
-		// printf("%x     \n", proc->reg[reg_nb]);
-
-
-		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo((addr + 3) % IDX_MOD, MEM_SIZE)].mem;
-		// printf("%x     \n", proc->reg[reg_nb]);
+		addr = get_address(vm, proc, proc->op->param[0]);
+		proc->reg[proc->op->param[1] - 1] = get_ind_value(vm, addr);
 	}
 	else
-		proc->reg[reg_nb] = proc->op->ar[0];
-	proc->carry = (proc->reg[reg_nb] == 0) ? 1 : 0;
-
-	// printf("##LD registre %d == %d\n", proc->op->ar[1], proc->op->ar[0]);
-	/*proc->carry = 0;
-	if (proc->reg[reg_nb] == 0)
-		proc->carry = 1*/
-
-
-	if (0x4 & vm->verbosity)
-	{
-		show_operations(vm, proc);
-		printf("\n");
-	}
-
+		proc->reg[proc->op->param[1] - 1] = proc->op->param[0];
+	proc->carry = (proc->reg[proc->op->param[1] - 1] ? 0 : 1);
+	if (vm->verbosity & V_OP)
+		show_ld(proc);
 }

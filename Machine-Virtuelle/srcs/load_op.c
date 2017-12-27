@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:22:35 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 14:00:26 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/21 16:55:05 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ static void	get_dir(t_vm *vm, t_pcb *proc, int i)
 		value |= (int)vm->ram[(proc->pc + 2) % MEM_SIZE].mem;
 		value <<= 8;
 		value |= (int)vm->ram[(proc->pc + 3) % MEM_SIZE].mem;
+		proc->op->param[i] = value;
 	}
-	proc->op->param[i] = value;
-	proc->op->nb_byte ? (proc->pc += 1) : (proc->pc += 3);
+	else
+		proc->op->param[i] = (signed short)value;
+	proc->op->nb_byte ? (proc->pc += 2) : (proc->pc += 4);
 }
 
 /*
@@ -47,13 +49,18 @@ static void	get_reg(t_vm *vm, t_pcb *proc, int i)
 }
 
 /*
-**	Enregistre la valeur de l'index dans la structure t_op (2 octets)
+**	Enregistre la valeur trouvee a l'index (addresse 2 octet)
+**	dans la structure t_op (4 octets)
 */
 
 static void	get_ind(t_vm *vm, t_pcb *proc, int i)
 {
-	proc->op->param[i] = (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
-	proc->op->param[i] += (int)(vm->ram[proc->pc % MEM_SIZE].mem * 256);
+	int	addr;
+
+	addr = (int)vm->ram[proc->pc % MEM_SIZE].mem;
+	addr <<= 8;
+	addr |= (int)vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
+	proc->op->param[i] = (signed short)addr;
 	proc->pc += 2;
 }
 
@@ -61,6 +68,7 @@ static void	get_ind(t_vm *vm, t_pcb *proc, int i)
 **	Prend les parametres selon l'OCP (lui applique un mask pour retenir
 **	chaque pair de bits correspondant aux params, voir s'il s'agit de direct |
 **	index | registre)
+**	Enregistre le type de param dans la struct op (param_type)
 */
 
 static void	get_params(t_vm *vm, t_pcb *proc, unsigned char ocp, int i)
@@ -72,6 +80,7 @@ static void	get_params(t_vm *vm, t_pcb *proc, unsigned char ocp, int i)
 	mask = mask >> (2 * i);
 	param = ocp & mask;
 	param = param >> (6 - (2 * i));
+	proc->op->param_type[i] = param;
 	if (param == REG_CODE)
 		get_reg(vm, proc, i);
 	if (param == DIR_CODE)
@@ -89,21 +98,15 @@ void		load_op(t_vm *vm, t_pcb *proc)
 {
 	unsigned char	ocp;
 	int				i;
-	t_op			*op;
 
 	i = -1;
+	ocp = 0x80;
 	if (proc->op->has_ocp)
 	{
 		proc->pc++;
 		ocp = vm->ram[(proc->pc) % MEM_SIZE].mem;
-		proc->pc++;
-		while (++i < proc->op->nb_arg)
-			get_params(vm, proc, ocp, i);
-		op = proc->op;
 	}
-	else
-	{
-		get_dir(vm, proc, 0);
-		proc->pc++;
-	}
+	proc->pc++;
+	while (++i < proc->op->nb_arg)
+		get_params(vm, proc, ocp, i);
 }

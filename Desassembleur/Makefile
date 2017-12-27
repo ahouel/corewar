@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 13:52:46 by ahouel            #+#    #+#              #
-#    Updated: 2017/11/15 15:56:30 by ahouel           ###   ########.fr        #
+#    Updated: 2017/11/30 16:31:46 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,8 @@ INC_PATH = ./includes/
 LIB_PATH = ../libft/
 
 SRC_FILES =	main.c \
-			op.c \
-			error.c \
-			file.c \
-			get.c \
-			display_args.c
 
-INC_FILES = corewar.h
+INC_FILES =
 LIB_FILES = libft.a
 LIB = $(addprefix $(LIB_PATH), $(LIB_FILES))
 
@@ -42,7 +37,7 @@ $(OBJ_PATH):
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
-	@echo "\033[34mCompilation of \033[36m$(notdir $<)\033[34m done.\033[0m"
+	@echo "\033[34mCompilation of \033[1m$(notdir $<)\033[0m \033[34mdone.\033[0m"
 
 $(LIB):
 	@make -C $(LIB_PATH)

@@ -6,70 +6,41 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:36 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:32:42 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/21 16:54:04 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	st(t_vm *vm, t_pcb *proc)
+/*
+**	Montre l'operation ld avec -v 4
+*/
+
+static void	show_st(t_pcb *proc)
 {
-	unsigned int	addr;
-
-	if (!check_params(proc->op))
-		return ;
-	if (proc->op->ar_typ[1] == REG_CODE)
-	{
-		if (proc->op->ar[1] >= 1 && proc->op->ar[1] <= 16)
-			proc->reg[proc->op->ar[1]] = proc->reg[proc->op->ar[0]];
-	}
-	else
-	{
-		addr = (proc->op->pos_opcode + (proc->op->ar[1] % IDX_MOD));
-
-		addr = modulo(addr, MEM_SIZE);
-
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 24;
-		vm->ram[addr].num = proc->uid;
-		vm->ram[addr].flash = 40;
-
-		if (!vm->ncurses && vm->debug)
-			printf("> : %x  ", vm->ram[addr].mem);
-
-		addr = modulo(addr + 1, MEM_SIZE);
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 16;
-		vm->ram[addr].num = proc->uid;
-		vm->ram[addr].flash = 40;
-
-		if (!vm->ncurses && vm->debug)
-			printf("> : %x  ", vm->ram[addr].mem);
-
-		addr = modulo(addr + 1, MEM_SIZE);
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 8;
-		vm->ram[addr].num = proc->uid;
-		vm->ram[addr].flash = 40;
-
-		if (!vm->ncurses && vm->debug)
-			printf("> : %x  ", vm->ram[addr].mem);
-
-		addr = modulo(addr + 1, MEM_SIZE);
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0]];
-		vm->ram[addr].num = proc->uid;
-		vm->ram[addr].flash = 40;
-
-		if (!vm->ncurses && vm->debug)
-		{
-			printf("> : %x  ", vm->ram[addr].mem);
-			printf("\n");
-		}
-	}
-
-	if (0x4 & vm->verbosity)
-	{
-		show_operations(vm, proc);
-		printf("\n");
-	}
+	ft_printf("r%d %d\n", proc->op->param[0],
+			proc->op->param[1]);
 }
 
+/*
+**	Transfert direct Registre > RAM / Registre. Charge le contenu du
+**	registre passé en premier parametre dans le second parametre. Si la
+**	valeur du premier parametre est egale a zero, alors le carry passe a
+**	l'etat un, sinon a l'etat zero.
+*/
 
-//(PC + (42 % IDX_MOD)
+void		st(t_vm *vm, t_pcb *proc)
+{
+	int addr;
+
+	if (proc->op->param_type[1] == IND_CODE)
+	{
+		addr = get_address(vm, proc, proc->op->param[1]);
+		store_ind_value(vm, addr, proc->reg[proc->op->param[0] - 1], proc->uid);
+	}
+	else
+		proc->reg[proc->op->param[1] - 1] = proc->reg[proc->op->param[0] - 1];
+	proc->carry = (proc->reg[proc->op->param[0] - 1] ? 0 : 1);
+	if (vm->verbosity & V_OP)
+		show_st(proc);
+}

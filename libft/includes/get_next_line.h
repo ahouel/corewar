@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/30 02:50:51 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/01 18:06:51 by rfulop           ###   ########.fr       */
+/*   Created: 2017/01/05 08:53:11 by ahouel            #+#    #+#             */
+/*   Updated: 2017/01/12 15:55:09 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,15 @@
 
 # include "libft.h"
 
-# define BUFF_SIZE 1
+# define BUFF_SIZE 1000
 
-int		get_next_line(const int fd, char **line);
+typedef struct		s_gnl
+{
+	char			*save;
+	int				fd;
+	struct s_gnl	*next;
+}					t_gnl;
+
+int					get_next_line(const int fd, char **line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 14:01:05 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/21 17:35:19 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <ncurses.h>
 
 # include "libft.h"
-# include "ft_printf.h"
 # include "op.h"
 # include "vm_struct.h"
 
@@ -32,14 +31,15 @@
 */
 
 void		initialisation(t_vm *vm);
-int			check_reg(int nb);
-int			check_params(t_op *op);
-int			check_arg(t_vm *vm, int argc, char **argv);
-//void		find_args(t_vm *vm, t_pcb *proc, int num);
-int			ft_strargv(int argc, char **argv, char *str);
-int			srch_players(t_vm *vm, int argc, char **argv);
-void		error(char *str);
+void		init_vm(t_vm *vm);
+int			check_arg(t_vm *vm, int ac, char **av);
+int			srch_player(t_vm *vm, int ac, char **av, int *i);
+void		error(t_vm *vm, char *str);
 void		write_players(t_vm *vm, int nb, int num);
+void		new_player(t_vm *vm, int nb, char *str);
+void		swap_players(t_vm *vm, int nb, char *str);
+int			get_winner(t_vm *vm);
+void		free_vm(t_vm *vm);
 
 /*
 **	----------EXECUTION-----------
@@ -47,43 +47,29 @@ void		write_players(t_vm *vm, int nb, int num);
 
 void		exe(t_vm *vm);
 t_pcb		*create_processus(t_vm *vm, int num);
-void		add_process(t_vm *vm, t_pcb *proc);
-void		wait_state(t_vm *vm, t_pcb *proc);
+void		add_processus(t_vm *vm, t_pcb *proc);
 void		move_processus(t_vm *vm, t_pcb *proc);
-//t_op		*new_op(t_vm *vm, t_pcb *proc, char data);
-void		undertaker(t_vm *vm);
-void		kill_proc(t_vm *vm);
 void		load_op(t_vm *vm, t_pcb *proc);
-int			is_pc(t_vm *vm, int nb);
-int			count_proc(t_vm *vm);
-int			all_died(t_vm *vm);
-int			cycle_to_die(t_vm *vm);
-t_player	*get_survivor(t_vm *vm);
-void		get_ocp(t_vm *vm, t_pcb *proc);
-//void		get_dir(t_vm *vm, t_pcb *proc, int num);
-//int			modulo(int a, int b);
-void		show_pc_move(t_vm *vm, t_pcb *proc);
-void		reduce_ctd(t_vm *vm);
-void		set_ctd(t_vm *vm);
+int			get_ind_value(t_vm *vm, int addr);
+int			get_address(t_vm *vm, t_pcb *proc, int addr);
 void		print_ram(t_vm *vm);
+//int			valid_regs(t_pcb *proc);
+void		store_ind_value(t_vm *vm, int addr, int value, int p);
 
 /*
 **	--------INSTRUCTIONS----------
 */
 
-void		and(t_vm *vm, t_pcb *proc);
+void		live(t_vm *vm, t_pcb *proc);
 void		ld(t_vm *vm, t_pcb *proc);
+void		st(t_vm *vm, t_pcb *proc);
+void		add(t_vm *vm, t_pcb *proc);
+void		sub(t_vm *vm, t_pcb *proc);
+void		gates(t_vm *vm, t_pcb *proc);
+void		zjmp(t_vm *vm, t_pcb *proc);
 void		ldi(t_vm *vm, t_pcb *proc);
 void		sti(t_vm *vm, t_pcb *proc);
-void		live(t_vm *vm, t_pcb *proc);
-void		add(t_vm *vm, t_pcb *proc);
-void		or(t_vm *vm, t_pcb *proc);
-void		xor(t_vm *vm, t_pcb *proc);
-void		st(t_vm *vm, t_pcb *proc);
-void		sub(t_vm *vm, t_pcb *proc);
 void		ft_fork(t_vm *vm, t_pcb *proc);
-void		zjmp(t_vm *vm, t_pcb *proc);
-void		lld(t_vm *vm, t_pcb *proc);
 
 /*
 **	--------NCURSES---------

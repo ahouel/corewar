@@ -6,31 +6,38 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:25:02 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:15:06 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/19 15:55:48 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	zjmp(t_vm *vm, t_pcb *proc)
+/*
+**	Montre si le zjmp a reussit ou non avec -v 4
+*/
+
+static void	show_zjmp(t_pcb *proc)
 {
-	// printf(">>>>>>ENTER ZJMP<<<<<<   : Cycle > %d\n", vm->cycle);
-
-	// printf("zjmp pos op => %d\n", proc->op->pos_opcode);
-	// printf("ZJMP VALUE => %d\n", proc->op->ar[0]);
+//	ft_printf("%d ", proc->op->param[0]);
 	if (proc->carry)
-	{
-		proc->pc = modulo(proc->op->pos_opcode + (proc->op->ar[0] % IDX_MOD), MEM_SIZE);
-		proc->last_pc = proc->pc;
-	}
+		ft_printf("OK\n");
+	else
+		ft_printf("FAILED\n");
+}
 
-	if (0x4 & vm->verbosity)
-	{
-		show_operations(vm, proc);
-		if (proc->carry)
-			printf(" OK");
-		else
-			printf(" FAILED");
-		printf("\n");
-	}
+/*
+**	Saute a l'adresse passé en parametre si le carry est a l'etat un.
+**	L'adresse devient alors celle de la prochaine instruction.
+**	Si le carry est a l'etat zero, rien ne se passe et le flot
+**	continue normalement jusqu'a l'instruction suivante.
+*/
+
+void		zjmp(t_vm *vm, t_pcb *proc)
+{
+//	ft_printf("le pc pendant le jump%d et le param[0]%d\n", proc->pc, proc->op->param[0]);
+//	ft_printf("get_add %d\n", get_address(vm, proc, proc->op->param[0]));
+	if (proc->carry)
+		proc->pc = get_address(vm, proc, proc->op->param[0]) % MEM_SIZE;
+	if (vm->verbosity & V_OP)
+		show_zjmp(proc);
 }

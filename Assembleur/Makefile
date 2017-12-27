@@ -6,13 +6,13 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 13:53:00 by ahouel            #+#    #+#              #
-#    Updated: 2017/11/15 15:52:02 by ahouel           ###   ########.fr        #
+#    Updated: 2017/12/18 17:10:10 by lgaveria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re
 
-CC = clang
+CC = gcc
 CFLAGS = -g
 NAME = ../asm
 
@@ -22,30 +22,18 @@ INC_PATH = ./includes/
 LIB_PATH = ../libft/
 
 SRC_FILES = main.c \
-			create_file.c \
-			error.c \
-			labels.c \
 			header.c \
-			debug.c \
-			op.c \
-			find_op.c \
-			parsing_tools.c \
-			toolkit.c \
-			analyse.c \
-			analyse_tools.c \
-			display1.c \
-			display2.c \
-			check_line.c \
-			lex_ins1.c \
-			lex_ins2.c \
-			check_arg1.c \
-			check_arg2.c \
-			read_line.c \
-			read_tools.c \
-			verbose.c \
-			free.c
+			clean_it.c \
+			end_it.c \
+			pars.c \
+			new_instruction.c \
+			new_label.c \
+			label_chars.c \
+			coding_help.c
 
-INC_FILES = corewar.h
+INC_FILES = asm.h \
+			op.h
+
 LIB_FILES = libft.a
 LIB = $(addprefix $(LIB_PATH), $(LIB_FILES))
 

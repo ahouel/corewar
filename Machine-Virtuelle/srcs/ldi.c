@@ -5,86 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 11:20:23 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/16 16:10:33 by ahouel           ###   ########.fr       */
+/*   Created: 2017/12/06 16:53:09 by ahouel            #+#    #+#             */
+/*   Updated: 2017/12/21 16:54:44 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
+/*
+**	Montre l'operation ldi avec -v 4
+*/
+
+static void	show_ldi(t_pcb *proc, int *param, int addr)
 {
-	int	value;
-	int	pos;
-
-	value = 0x0;
-	pos = op->pos_opcode + (op->ar[nb_arg] % IDX_MOD);
-	// printf("POS LDI %d\n", pos);
-	value |= (unsigned char)vm->ram[modulo(pos, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 1, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 2, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 3, MEM_SIZE)].mem;
-
-	return (value);
+	ft_printf("%d %d r%d\n", param[0], param[1], proc->op->param[2]);
+	ft_printf("       | -> load from %d + %d = %d (with pc ",
+			param[0], param[1], param[0] + param[1]);
+	if (proc->op->addr_rest)
+		ft_printf("and mod %d)\n", addr);
+	else
+		ft_printf("%d)\n", addr);
 }
+
+/*
+**	Transfert indirect RAM > Registre. Charge la valeur a l'adresse resultante
+**	de l'addition des deux premiers parametres dans le registre
+**	passé en troisieme parametre. Si cette valeur est nulle,
+**	alors le carry passe a l'etat un, sinon a l'ettat zero.
+*/
 
 void		ldi(t_vm *vm, t_pcb *proc)
 {
-	unsigned int		addr;
-	unsigned int		reg_nb;
-	int ar1;
-	int ar2;
-	int value;
+	int	addr;
+	int	i;
+	int	param[2];
 
-	value = 0x0;
-	addr = 0;
-
-	if (!check_params(proc->op))
-		return ;
-
-	if (proc->op->ar_typ[0] == REG_CODE)
+	i = -1;
+	addr = get_address(vm, proc, 0);
+	while (++i < 2)
 	{
-		// printf("reg %d\n", proc->op->ar[0]);
-		proc->op->ar[0] = proc->reg[proc->op->ar[0]];
+		if (proc->op->param_type[i] == IND_CODE)
+			param[i] = get_ind_value(vm,
+					get_address(vm, proc, proc->op->param[i]));
+		else if (proc->op->param_type[i] == REG_CODE)
+			param[i] = proc->reg[proc->op->param[i] - 1];
+		else
+			param[i] = proc->op->param[i];
+		addr += param[i];
 	}
-	else if (proc->op->ar_typ[0] == IND_CODE)// IND CODE
-	{
-		proc->op->ar[0] = get_indirect(vm, proc->op, 0);
-		printf("ar1 IND => %d\n", proc->op->ar[0]);
-		// ar1 = vm->ram[].mem         proc->op->pos_opcode
-	}
-
-	if (proc->op->ar_typ[1] == REG_CODE && !check_reg(proc->op->ar[1]))
-		return ;
-	if (proc->op->ar_typ[1] == REG_CODE)
-	{
-		// printf("reg %d\n", proc->op->ar[1]);
-		proc->op->ar[1] = proc->reg[proc->op->ar[1]];
-	}
-
-	addr = (proc->op->ar[0] + proc->op->ar[1]) % IDX_MOD;
-	addr = addr + proc->op->pos_opcode;
-
-	value |= (unsigned char)vm->ram[modulo(addr, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(addr + 1, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(addr + 2, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(addr + 3, MEM_SIZE)].mem;
-
-	if (proc->op->ar_typ[2] == REG_CODE && !check_reg(proc->op->ar[2]))
-		return ;
-	proc->reg[proc->op->ar[2]] = value;
-
-	if (0x4 & vm->verbosity)
-	{
-		show_operations(vm, proc);
-		printf("\n| -> load from %d + %d = %d (with pc and mod %d)", proc->op->ar[0], proc->op->ar[1], value, addr);
-		printf("\n");
-	}
-
+	addr %= MEM_SIZE;
+	proc->reg[proc->op->param[2] - 1] = get_ind_value(vm, addr);
+	proc->carry = (proc->reg[proc->op->param[2] - 1] ? 0 : 1);
+	if (vm->verbosity & V_OP)
+		show_ldi(proc, param, addr);
 }
