@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 17:35:13 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/27 15:13:49 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ static void	ctd_manager(t_vm *vm)
 	}
 	if (lives > NBR_LIVE - 1 || vm->last_ctd_decay + (MAX_CHECKS * vm->ctd) < vm->cycle + 1)
 	{
-//		ft_printf("decrementing CTD cycle %d\n", vm->cycle);
 		vm->last_ctd_decay = vm->cycle;
 		vm->ctd -= CYCLE_DELTA;
+		if (vm->verbosity & 2 && vm->proc_lst)
+			ft_printf("Cycle to die is now %d\n", vm->ctd);
 	}
 	if (vm->ctd > 0)
 		vm->next_ctd += vm->ctd;

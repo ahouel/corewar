@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:05 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 16:54:55 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/27 16:02:57 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		sti(t_vm *vm, t_pcb *proc)
 	int	i;
 	int	param[2];
 
-	addr = get_address(vm, proc, 0);
+	addr = 0;
 	i = 0;
 	while (++i < 3)
 	{
@@ -51,7 +51,7 @@ void		sti(t_vm *vm, t_pcb *proc)
 			param[i - 1] = proc->op->param[i];
 		addr += param[i - 1];
 	}
-	addr %= MEM_SIZE;
+	addr = get_address(vm, proc, addr);
 	store_ind_value(vm, addr, proc->reg[proc->op->param[0] - 1], proc->uid);
 	proc->carry = (proc->reg[proc->op->param[0] - 1] ? 0 : 1);
 	if (vm->verbosity & V_OP)

@@ -6,9 +6,13 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/29 13:15:50 by ahouel            #+#    #+#              #
-#    Updated: 2017/12/13 13:00:03 by ahouel           ###   ########.fr        #
+#    Updated: 2017/12/27 15:36:11 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+/!\ sti => Reg, reg/dir/ind, dir/REG
+le corewar cheat faux
+
 
 TO DO :
 

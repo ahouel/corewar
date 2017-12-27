@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 16:56:58 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/12/27 16:02:58 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 				proc->op->func(vm, proc);
 			}
 //			ft_printf("after func pc %d\n", proc->pc);
-			if (vm->verbosity & V_PC && proc->op->code != 9)
+			if (vm->verbosity & V_PC && (proc->op->code != 9 || !proc->carry))
 				show_pc_move(vm, last_pc, proc->pc);
 			proc->op ? free(proc->op) : 0;
 			proc->op = NULL;
