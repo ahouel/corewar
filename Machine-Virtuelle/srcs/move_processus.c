@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/27 16:02:58 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 15:12:19 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,12 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 			last_pc = proc->pc;
 			load_op(vm, proc);
 //			ft_printf("loaded %s with pc %d\n", proc->op->label, proc->pc);
-			if (proc->op->func != NULL && valid_regs(proc))
+			if (proc->op->func != NULL)
 			{
 				if (vm->verbosity & V_OP)
-					ft_printf("P    %d | %s ", proc->uid, proc->op->label);
-				proc->op->func(vm, proc);
+					ft_printf("P    %d | %s ", proc->pid, proc->op->label);
+				if (valid_regs(proc))
+					proc->op->func(vm, proc);
 			}
 //			ft_printf("after func pc %d\n", proc->pc);
 			if (vm->verbosity & V_PC && (proc->op->code != 9 || !proc->carry))

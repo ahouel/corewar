@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 16:53:09 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 16:54:44 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 14:32:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		ldi(t_vm *vm, t_pcb *proc)
 			param[i] = proc->op->param[i];
 		addr += param[i];
 	}
-	addr %= MEM_SIZE;
+//	addr %= MEM_SIZE;
 	proc->reg[proc->op->param[2] - 1] = get_ind_value(vm, addr);
 	proc->carry = (proc->reg[proc->op->param[2] - 1] ? 0 : 1);
 	if (vm->verbosity & V_OP)
