@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 15:12:19 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 17:44:47 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 static void	show_pc_move(t_vm *vm, int last_pc, int pc)
 {
+//	ft_printf("%{RED}s", "ici\n");
 	ft_printf("ADV %d (0x%04x -> 0x%04x)", pc - last_pc, last_pc, pc);
 	while (last_pc < pc)
 	{
@@ -25,6 +26,7 @@ static void	show_pc_move(t_vm *vm, int last_pc, int pc)
 		++last_pc;
 	}
 	ft_printf("\n");
+//	ft_printf("%{RED}s", "la\n");
 }
 
 /*
@@ -102,12 +104,11 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 			last_pc = proc->pc;
 			load_op(vm, proc);
 //			ft_printf("loaded %s with pc %d\n", proc->op->label, proc->pc);
-			if (proc->op->func != NULL)
+			if (proc->op->func != NULL && valid_regs(proc))
 			{
 				if (vm->verbosity & V_OP)
 					ft_printf("P    %d | %s ", proc->pid, proc->op->label);
-				if (valid_regs(proc))
-					proc->op->func(vm, proc);
+				proc->op->func(vm, proc);
 			}
 //			ft_printf("after func pc %d\n", proc->pc);
 			if (vm->verbosity & V_PC && (proc->op->code != 9 || !proc->carry))

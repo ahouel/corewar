@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:22:35 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 16:55:05 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 17:44:45 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void		load_op(t_vm *vm, t_pcb *proc)
 	{
 		proc->pc++;
 		ocp = vm->ram[(proc->pc) % MEM_SIZE].mem;
+		if (!ocp_is_valid(vm, proc, ocp))
+			return ;
 	}
 	proc->pc++;
 	while (++i < proc->op->nb_arg)
