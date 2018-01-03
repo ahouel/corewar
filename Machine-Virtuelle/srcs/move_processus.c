@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 17:44:47 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 19:31:12 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 static void	show_pc_move(t_vm *vm, int last_pc, int pc)
 {
-//	ft_printf("%{RED}s", "ici\n");
 	ft_printf("ADV %d (0x%04x -> 0x%04x)", pc - last_pc, last_pc, pc);
 	while (last_pc < pc)
 	{
@@ -26,14 +25,13 @@ static void	show_pc_move(t_vm *vm, int last_pc, int pc)
 		++last_pc;
 	}
 	ft_printf("\n");
-//	ft_printf("%{RED}s", "la\n");
 }
 
 /*
 **	Verifie si les registres appeles sont valides ou non
 */
 
-static int	valid_regs(t_pcb *proc)
+int	valid_regs(t_pcb *proc)
 {
 	int	i;
 
@@ -66,7 +64,7 @@ static int	which_op(unsigned char data)
 **	Creation d'un op vierge, copie sur le correspondant dans op.c
 */
 
-static t_op	*new_op(t_vm *vm, t_pcb *proc, char data)
+static t_op	*new_op(t_vm *vm, char data)
 {
 	int		i;
 	t_op	*op;
@@ -92,7 +90,7 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 	if (!proc->op)
 	{
 		if (which_op(vm->ram[proc->pc % MEM_SIZE].mem) > -1)
-			proc->op = new_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
+			proc->op = new_op(vm, vm->ram[proc->pc % MEM_SIZE].mem);
 		else
 			proc->pc = (proc->pc + 1) % MEM_SIZE;
 	}
@@ -103,18 +101,17 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 		{
 			last_pc = proc->pc;
 			load_op(vm, proc);
-//			ft_printf("loaded %s with pc %d\n", proc->op->label, proc->pc);
 			if (proc->op->func != NULL && valid_regs(proc))
 			{
 				if (vm->verbosity & V_OP)
 					ft_printf("P    %d | %s ", proc->pid, proc->op->label);
 				proc->op->func(vm, proc);
 			}
-//			ft_printf("after func pc %d\n", proc->pc);
 			if (vm->verbosity & V_PC && (proc->op->code != 9 || !proc->carry))
 				show_pc_move(vm, last_pc, proc->pc);
 			proc->op ? free(proc->op) : 0;
 			proc->op = NULL;
 		}
 	}
+	proc->pc %= MEM_SIZE;
 }

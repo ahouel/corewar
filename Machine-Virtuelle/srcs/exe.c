@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 14:14:26 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 18:38:18 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	delete_processus(t_vm *vm, t_pcb *proc)
 static void	ctd_manager(t_vm *vm)
 {
 	t_pcb	*proc;
+	t_pcb	*tmp;
 	int		i;
 	int		lives;
 
@@ -58,6 +59,7 @@ static void	ctd_manager(t_vm *vm)
 	proc = vm->proc_lst;
 	while (proc)
 	{
+		tmp = proc->next;
 		if (vm->cycle - proc->last_live > vm->ctd - 1)
 		{
 			if (vm->verbosity & 8)
@@ -65,7 +67,7 @@ static void	ctd_manager(t_vm *vm)
 						proc->pid, vm->cycle - proc->last_live, vm->ctd);
 			delete_processus(vm, proc);
 		}
-		proc = proc->next;
+		proc = tmp;
 	}
 	while (++i < vm->nb_player)
 	{

@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:22:35 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 17:44:45 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 19:31:15 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static void	get_params(t_vm *vm, t_pcb *proc, unsigned char ocp, int i)
 	mask = mask >> (2 * i);
 	param = ocp & mask;
 	param = param >> (6 - (2 * i));
-	proc->op->param_type[i] = param;
+	if (proc->op->has_ocp)
+		proc->op->param_type[i] = param;
 	if (param == REG_CODE)
 		get_reg(vm, proc, i);
 	if (param == DIR_CODE)
@@ -101,6 +102,8 @@ void		load_op(t_vm *vm, t_pcb *proc)
 
 	i = -1;
 	ocp = 0x80;
+//	if (proc->op->code == 4)
+//		ft_printf("hello %d\n", proc->op->has_ocp);
 	if (proc->op->has_ocp)
 	{
 		proc->pc++;
