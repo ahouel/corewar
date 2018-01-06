@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:18:49 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/18 19:56:19 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/02 14:40:11 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ void	free_instructions(t_inst *lst)
 		free_instructions(lst->next);
 		lst->next = NULL;
 	}
-	if (lst->opcode)
-		free(lst->opcode);
-	if (lst->ocp)
-		free(lst->ocp);
 	if (lst->param_one)
 		free(lst->param_one);
 	if (lst->param_two)

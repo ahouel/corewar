@@ -12,6 +12,11 @@
 
 #include "../includes/asm.h"
 
+/*
+**	Initialise une nouvelle structure instruction puis la place correctement par
+**	rapport aux labels.
+*/
+
 t_inst		*new_instruction(char *name, t_champ **champ)
 {
 	t_inst	*new;
