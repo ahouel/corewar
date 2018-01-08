@@ -6,15 +6,36 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:13:22 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 19:31:14 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/08 15:37:42 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 /*
+**	Regarde la correspondance entre le param trouve dans l'ocp
+**	et le param_type de g_op_tab[]
+*/
+
+static int	check_type(unsigned char param, int	param_type)
+{
+	if (param == REG_CODE)
+		if (param_type & T_REG)
+			return (1);
+	if (param == DIR_CODE)
+		if (param_type & T_DIR)
+			return (1);
+	if (param == IND_CODE)
+		if (param_type & T_IND)
+			return (1);
+	return (0);
+}
+
+/*
 **	Verifie si l'ocp est valide par rapport aux directives donnees
 **	par le g_op_tab[]
+**	En bref : si l'ocp annonce un type qui n'est de base pas supporte par
+**	le label, revoit 0. Sinon 1
 */
 
 int			ocp_is_valid(t_vm *vm, t_pcb *proc, unsigned char ocp)
@@ -30,12 +51,12 @@ int			ocp_is_valid(t_vm *vm, t_pcb *proc, unsigned char ocp)
 		mask = mask >> (2 * i);
 		param = ocp & mask;
 		param = param >> (6 - (2 * i));
-		if (!(param & proc->op->param_type[i]))
+		if (!check_type(param, proc->op->param_type[i]))
 		{
 			proc->op->func = NULL;
-			proc->pc++;
 			return (0);
 		}
 	}
+//	ft_printf("\nvalide !");
 	return (1);
 }
