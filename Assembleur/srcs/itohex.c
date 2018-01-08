@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2017/12/18 19:37:55 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/06 16:41:12 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 char		*itohex(int n, int size)
 {
-	char			*hexabase;
 	char			*ret;
 	int				i;
 
-	hexabase = "0123456789abcdef";
 	if (!(ret = malloc(sizeof(char) * (size + 1))))
 		return (NULL);
 	ret[size] = '\0';
 	while (--size >= 0)
 	{
-		ret[size] = hexabase[n % 16];
+		ret[size] = n % 16;
 		n /= 16;
 	}
 	return (ret);

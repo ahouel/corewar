@@ -6,15 +6,16 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
-/*   Updated: 2017/12/18 19:37:53 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/02 14:56:25 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
 /*
-** on remplit tranquillement les variables qui correspondent au header dans la 
-** structure
+**	On vérifie si la ligne passée contient bien le commentaire. Si oui, on le
+**	récupère. 
+**	!!! manque la gestion d'erreur sur la fin de la ligne, après le commentaire
 */
 
 static void	check_comment(char **input, header_t *head, t_champ *pl, int i)
@@ -34,6 +35,10 @@ static void	check_comment(char **input, header_t *head, t_champ *pl, int i)
 		(head->comment)[k++] = input[i][j];
 }
 
+/*
+** Meme remarque que pour check_comment mais concernant le nom du champion.
+*/
+
 static void	check_name(char **input, header_t *head, t_champ *pl, int i)
 {
 	int		j;
@@ -51,6 +56,11 @@ static void	check_name(char **input, header_t *head, t_champ *pl, int i)
 		(head->prog_name)[k++] =input[i][j];
 }
 
+/*
+**	On parcourt les lignes du .s en sautant celles de commentaires.
+**	!!! à rendre plus propre quand les deux fonctions au dessus seront rénovées
+*/
+
 t_champ		*manage_header(char **input, t_champ *pl)
 {
 	int			i;
@@ -59,17 +69,17 @@ t_champ		*manage_header(char **input, t_champ *pl)
 	i = 0;
 	if (!(head = ft_memalloc(sizeof(header_t))))
 		exit_free("unsuccessful malloc\n", pl, input);
-	while (input[i] && ((head->prog_name)[0] == 0 || (head->comment)[0] == 0))
-	{
-		if (input[i][0] == COMMENT_CHAR)
-			i++;
-		else
-		{
-			check_name(input, head, pl, i);
-			check_comment(input, head, pl, i);
-			i++;
-		}
-	}
+	while (input[i][0] == COMMENT_CHAR)
+		i++;
+	check_name(input, head, pl, i);
+	if ((head->prog_name)[0] == 0)
+		exit_free("has to be a name on the top of a file\n", pl, input);
+	while (input[++i][0] == COMMENT_CHAR)
+		;
+	check_comment(input, head, pl, i);
+	if ((head->comment)[0] == 0)
+		exit_free("has to be a comment right under the name\n", pl, input);
+	i++;
 	pl->head = head;
 	return (do_parsing(pl, input, i));
 }
