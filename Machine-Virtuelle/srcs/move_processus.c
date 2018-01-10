@@ -6,32 +6,17 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/08 15:37:44 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/10 18:24:51 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 /*
-**	Montre les mouvements de pc avec -v 16
-*/
-
-static void	show_pc_move(t_vm *vm, int last_pc, int pc)
-{
-	ft_printf("ADV %d (0x%04x -> 0x%04x)", pc - last_pc, last_pc, pc);
-	while (last_pc < pc)
-	{
-		ft_printf(" %02x", vm->ram[last_pc % MEM_SIZE].mem);
-		++last_pc;
-	}
-	ft_printf("\n");
-}
-
-/*
 **	Verifie si les registres appeles sont valides ou non
 */
 
-int	valid_regs(t_pcb *proc)
+static int	valid_regs(t_pcb *proc)
 {
 	int	i;
 
@@ -79,6 +64,37 @@ static t_op	*new_op(t_vm *vm, char data)
 }
 
 /*
+**	Execute l'op du processus
+*/
+
+static void	exe_processus(t_vm *vm, t_pcb *proc)
+{
+	int	last_pc;
+
+	last_pc = proc->pc;
+	load_op(vm, proc);
+	if (proc->op->func != NULL && valid_regs(proc))
+	{
+		if (vm->verbosity & V_OP)
+			ft_printf("P    %d | %s ", proc->pid, proc->op->label);
+		proc->op->func(vm, proc);
+	}
+	if (vm->verbosity & V_PC && (proc->op->code != 9 || !proc->carry))
+	{
+		ft_printf("ADV %d (0x%04x -> 0x%04x)",
+				proc->pc - last_pc, last_pc, proc->pc);
+		while (last_pc < proc->pc)
+		{
+			ft_printf(" %02x", vm->ram[last_pc % MEM_SIZE].mem);
+			++last_pc;
+		}
+		ft_printf("\n");
+	}
+	proc->op ? free(proc->op) : 0;
+	proc->op = NULL;
+}
+
+/*
 **	Avance le processus d'une case s'il n'a pas d'op.
 **	Autrement l'execute en prenant en compte son temps de load
 */
@@ -98,20 +114,7 @@ void		move_processus(t_vm *vm, t_pcb *proc)
 	{
 		proc->op->loadtime--;
 		if (proc->op->loadtime < 1)
-		{
-			last_pc = proc->pc;
-			load_op(vm, proc);
-			if (proc->op->func != NULL && valid_regs(proc))
-			{
-				if (vm->verbosity & V_OP)
-					ft_printf("P    %d | %s ", proc->pid, proc->op->label);
-				proc->op->func(vm, proc);
-			}
-			if (vm->verbosity & V_PC && (proc->op->code != 9 || !proc->carry))
-				show_pc_move(vm, last_pc, proc->pc);
-			proc->op ? free(proc->op) : 0;
-			proc->op = NULL;
-		}
+			exe_processus(vm, proc);
 	}
 	proc->pc %= MEM_SIZE;
 }

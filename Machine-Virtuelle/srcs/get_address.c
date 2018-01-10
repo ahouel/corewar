@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 16:12:02 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 14:36:20 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/10 17:53:42 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	get_address(t_vm *vm, t_pcb *proc, int addr)
 	int	i;
 
 	i = 3;
-//	while (addr < 0)
-//		addr += MEM_SIZE;
 	proc->op->addr_rest ? (addr %= IDX_MOD) : 0;
 	addr += (proc->pc - (proc->op->has_ocp ? 2 : 1));
 	while (--i > -1)

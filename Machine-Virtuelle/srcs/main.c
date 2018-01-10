@@ -6,11 +6,25 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 17:35:12 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/10 18:07:05 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+/*
+**	Usage verbosity
+*/
+
+static void	usage_verbosity(void)
+{
+	ft_printf("\t\t %{CYAN}s\n", "- 1 : Show lives");
+	ft_printf("\t\t %{CYAN}s\n", "- 2 : Show cycles");
+	ft_printf("\t\t %{CYAN}s\n",
+		"- 4 : Show operations (Params are NOT litteral ...)");
+	ft_printf("\t\t %{CYAN}s\n", "- 8 : Show deaths");
+	ft_printf("\t\t %{CYAN}s\n", "- 16 : Show PC movements (Except for jumps)");
+}
 
 /*
 **	Usage
@@ -19,26 +33,25 @@
 static void	usage(char *cw)
 {
 	ft_printf("%{MAGENTA}s %{RED}s %{CYAN}s %{BLUE}s\n", "Usage:", cw,
-			"[-dump N -s N -v N -ncurses] [-n N]", "<champion1.cor> <...>");
+		"[-dump N -s N -v N -ncurses] [-n N]", "<champion1.cor> <...>");
 	ft_printf("%{GREEN}s\n",
-			"###################### CHOOSE CHAMPION NUMBER ######################");
+		"###################### CHOOSE CHAMPION NUMBER ######################");
 	ft_printf("    %{CYAN}s %{BLUE}s %{CYAN}s\n", "-n N", "<champion.cor>",
-			":\t Set the champion as number N");
+		":\t Set the champion as number N");
 	ft_printf("%{GREEN}s\n",
-			"######################### TEXT OUTPUT MODE #########################");
-	ft_printf("    %{CYAN}s\n", "-d N\t: Dumps memory after N cycles then exits");
-	ft_printf("    %{CYAN}s\n", "-s N\t: Runs N cycles, dumps memory, pauses, then repeats");
-	ft_printf("    %{CYAN}s\n", "-v N\t: Verbosity levels, can be added together to enable several");
-	ft_printf("\t\t %{CYAN}s\n", "- 1 : Show lives");
-	ft_printf("\t\t %{CYAN}s\n", "- 2 : Show cycles");
-	ft_printf("\t\t %{CYAN}s\n", "- 4 : Show operations (Params are NOT litteral ...)");
-	ft_printf("\t\t %{CYAN}s\n", "- 8 : Show deaths");
-	ft_printf("\t\t %{CYAN}s\n", "- 16 : Show PC movements (Except for jumps)");
+		"######################### TEXT OUTPUT MODE #########################");
+	ft_printf("    %{CYAN}s\n",
+		"-d N\t: Dumps memory after N cycles then exits");
+	ft_printf("    %{CYAN}s\n",
+		"-s N\t: Runs N cycles, dumps memory, pauses, then repeats");
+	ft_printf("    %{CYAN}s\n",
+		"-v N\t: Verbosity levels, can be added together to enable several");
+	usage_verbosity();
 	ft_printf("%{GREEN}s\n",
-			"####################### NCURSES OUTPUT MODE ########################");
+		"####################### NCURSES OUTPUT MODE ########################");
 	ft_printf("    %{CYAN}s\n", "-ncurses\t: Ncurses output mode");
 	ft_printf("%{GREEN}s\n",
-			"####################################################################");
+		"####################################################################");
 	exit(EXIT_SUCCESS);
 }
 

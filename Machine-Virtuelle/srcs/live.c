@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 14:40:39 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/10 15:44:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		live(t_vm *vm, t_pcb *proc)
 	if (vm->verbosity & V_OP)
 		ft_printf("%d\n", i);
 	i = -i;
+	vm->period_lives++;
 	if (i < 1 || i > MAX_PLAYERS)
 		return ;
 	if (!vm->player[i - 1].active)

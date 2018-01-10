@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/08 18:33:42 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/10 17:52:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,45 @@ static void	delete_processus(t_vm *vm, t_pcb *proc)
 {
 	t_pcb	*tmp;
 
-//	ft_printf("%{BLUE}p\n", proc);
-	if (vm->proc_lst->next == NULL)
-		vm->proc_lst = NULL;
-	else if (vm->proc_lst == proc)
+	tmp = vm->proc_lst;
+	if (proc == vm->proc_lst)
 		vm->proc_lst = proc->next;
-	else // (proc && vm->proc_lst)
-	{
-//		ft_printf("%{RED}s\n", "11111111111");
-		tmp = vm->proc_lst;
-//		ft_printf("%{RED}s\n", "222222222");
-		while (tmp->next)
+	else
+		while (tmp)
 		{
 			if (tmp->next == proc)
-			{
 				tmp->next = proc->next;
-				break ;
-			}
 			tmp = tmp->next;
 		}
-//		ft_printf("%{RED}s\n", "33333333333333333");
-	}
 	if (proc->op)
 		free(proc->op);
 	free(proc);
 	proc = NULL;
+}
+
+/*
+**	Regarde dans la liste de processus ceux qui n'ont pas fait de live durant
+**	la periode et les supprime
+*/
+
+static void	check_processus(t_vm *vm)
+{
+	t_pcb	*proc;
+	t_pcb	*tmp;
+
+	proc = vm->proc_lst;
+	while (proc)
+	{
+		tmp = proc->next;
+		if (vm->cycle - proc->last_live > vm->ctd - 1)
+		{
+			if (vm->verbosity & 8)
+				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
+						proc->pid, vm->cycle - proc->last_live, vm->ctd);
+			delete_processus(vm, proc);
+		}
+		proc = tmp;
+	}
 }
 
 /*
@@ -56,39 +70,21 @@ static void	delete_processus(t_vm *vm, t_pcb *proc)
 
 static void	ctd_manager(t_vm *vm)
 {
-	t_pcb	*proc;
-	t_pcb	*tmp;
 	int		i;
-	int		lives;
 
 	i = -1;
-	lives = 0;
-	proc = vm->proc_lst;
-	while (proc)
-	{
-		tmp = proc->next;
-		if (vm->cycle - proc->last_live > vm->ctd - 1)
-		{
-			if (vm->verbosity & 8)
-				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-						proc->pid, vm->cycle - proc->last_live, vm->ctd);
-//			ft_printf("%{RED}s\n", "BBL");
-			delete_processus(vm, proc);
-		}
-		proc = tmp;
-	}
+	check_processus(vm);
 	while (++i < vm->nb_player)
-	{
-		lives += vm->player[i].lives_count;
 		vm->player[i].lives_count = 0;
-	}
-	if (lives > NBR_LIVE - 1 || vm->last_ctd_decay + (MAX_CHECKS * vm->ctd) < vm->cycle + 1)
+	if (vm->period_lives > NBR_LIVE - 1 ||
+			vm->last_ctd_decay + (MAX_CHECKS * vm->ctd) < vm->cycle + 1)
 	{
 		vm->last_ctd_decay = vm->cycle;
 		vm->ctd -= CYCLE_DELTA;
 		if (vm->verbosity & 2 && vm->proc_lst)
 			ft_printf("Cycle to die is now %d\n", vm->ctd);
 	}
+	vm->period_lives = 0;
 	if (vm->ctd > 0)
 		vm->next_ctd += vm->ctd;
 	else
@@ -108,8 +104,6 @@ void		exe(t_vm *vm)
 		++vm->cycle;
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle);
-		if (vm->cycle == vm->next_ctd || !vm->next_ctd)
-			ctd_manager(vm);
 		if (vm->ncurses)
 		{
 			call_ncurses(vm);
@@ -122,6 +116,8 @@ void		exe(t_vm *vm)
 			move_processus(vm, proc);
 			proc = proc->next;
 		}
+		if (vm->cycle == vm->next_ctd || !vm->next_ctd)
+			ctd_manager(vm);
 		if (!vm->ncurses && vm->cycle == vm->dump)
 		{
 			print_ram(vm);

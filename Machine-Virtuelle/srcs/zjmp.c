@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:25:02 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 18:38:10 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/08 18:33:40 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		zjmp(t_vm *vm, t_pcb *proc)
 		while (proc->pc < 0)
 			proc->pc += MEM_SIZE;
 	}
-//	ft_printf("\n%{RED}s\n", "ZJMP4");
+//	ft_printf("\n%{RED}s\nEN : %d\n", "ZJMP4", proc->pc);
 	if (vm->verbosity & V_OP)
 		show_zjmp(proc);
 }

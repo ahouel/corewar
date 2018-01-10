@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 19:38:15 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/10 15:39:20 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_vm
 	int		ctd;
 	int		next_ctd;
 	int		last_ctd_decay;
+	int		period_lives;
 	int		dump;			// -d
 	int		debug;
 	int		verbosity;		// -v
