@@ -55,7 +55,8 @@ SRC_FILES =	main.c				\
 			zjmp.c				\
 			ldi.c				\
 			sti.c				\
-			ft_fork.c
+			ft_fork.c			\
+			colors_init
 
 INC_FILES = vm.h op.h vm_struct.h
 LIB_FILES = libft.a

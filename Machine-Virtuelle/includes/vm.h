@@ -79,6 +79,7 @@ void		ft_fork(t_vm *vm, t_pcb *proc);
 void		call_ncurses(t_vm *vm);
 void		init_ncurses(WINDOW **w);
 void		controller(t_vm *vm);
+void		colors_init(t_vm *vm);
 
 /*
 **	-------DEBUG-------
