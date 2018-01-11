@@ -25,7 +25,8 @@ static void	keys_press(t_vm *vm, char key)
 	if (key == ' ' && vm->pause)
 	{
 		vm->pause = 0;
-		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** PAUSED **");
+		attron(COLOR_PAIR(30));
+		mvprintw(1, 216, "~ ~ PAUSED ~ ~");
 	}
 	if (key == 'w')
 	{
@@ -61,9 +62,10 @@ void		controller(t_vm *vm)
 			if (key == ' ')
 			{
 				vm->pause = 1;
+				attron(COLOR_PAIR(31));
+				mvprintw(1, 216, "~ ~ PLAYED ~ ~");
 				break ;
 			}
 		}
-		sleep(1);
 	}
 }
