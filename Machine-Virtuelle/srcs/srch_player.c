@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:22 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/18 16:05:09 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 14:42:27 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int			srch_player(t_vm *vm, int ac, char **av, int *i)
 	nb = srch_nb_player(vm, ac, av, i);
 	if ((tmp = ft_strstr(av[*i], ".cor")) && !tmp[4] && ft_strlen(av[*i]) > 4)
 	{
-//		is_player_valid(vm, av[*i]);
 		vm->nb_player++;
 		if (vm->nb_player > MAX_PLAYERS)
 			error(vm, "too many champs");

@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:23 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/15 17:44:47 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/03 14:32:03 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void		ft_fork(t_vm *vm, t_pcb *proc)
 	new->pid = vm->nb_proc;
 	new->uid = proc->uid;
 	new->pc = get_address(vm, proc, proc->op->param[0]);
+	while (new->pc < 0)
+		new->pc += MEM_SIZE;
 	new->op = NULL;
 	add_processus(vm, new);
 	if (vm->verbosity & V_OP)

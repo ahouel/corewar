@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2017/12/21 17:02:25 by ahouel           ###   ########.fr        #
+#    Updated: 2018/01/11 14:49:49 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,13 @@ SRC_FILES =	main.c				\
 			get_winner.c		\
 			check_arg.c			\
 			controller.c		\
-			debug.c				\
 			new_player.c		\
 			swap_players.c		\
 			write_players.c		\
 			srch_player.c		\
 			ncurses.c			\
 			load_op.c			\
+			ocp_is_valid.c		\
 			get_ind_value.c		\
 			get_address.c		\
 			move_processus.c	\

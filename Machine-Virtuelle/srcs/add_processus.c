@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:29 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/14 12:48:18 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 14:53:27 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 void	add_processus(t_vm *vm, t_pcb *proc)
 {
+	vm->nb_proc++;
 	if (vm->proc_lst)
 	{
 		proc->next = vm->proc_lst;

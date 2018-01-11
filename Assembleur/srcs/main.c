@@ -6,11 +6,16 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:56:27 by lgaveria          #+#    #+#             */
-/*   Updated: 2017/12/18 19:38:06 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/02 15:02:03 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
+
+/*
+**	On ouvre et lit le fichier rentré en paramètre. Il est renvoyé sous forme de
+**	tableau qui est réalloué à chaque appelle de gnl.
+*/
 
 static char		**read_champ(char *file_name)
 {
@@ -19,6 +24,8 @@ static char		**read_champ(char *file_name)
 	int		i;
 	int		gnl_ret;
 
+	if (ft_strncmp(&(file_name[ft_strlen(file_name) - 2]), ".s", 2) != 0)
+		exit_free("extension's file must be [.s]", NULL, NULL);
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		exit_free("invalid file\n", NULL, NULL);
 	if (!(ret = malloc(sizeof(char*) * 1)))
@@ -36,6 +43,13 @@ static char		**read_champ(char *file_name)
 	return (ret);
 }
 
+/*
+**	On boucle pour traiter un par un tous les fichiers envoyés : on le lit, on
+**	récupère les informations du header et on renvoit directement tout ça dans
+**	le parsing, qui renverrat la structure avec tout ce qui est nécessaire
+**	d'écrire dans le .cor.
+*/
+
 int				main(int argc, char **argv)
 {
 	int		i;
@@ -50,7 +64,7 @@ int				main(int argc, char **argv)
 		input = read_champ(argv[i]);
 		if (!input)
 			exit_free("invalid file\n", NULL, NULL);
-		if (!(pl = malloc(sizeof(t_champ))))
+		if (!(pl = ft_memalloc(sizeof(t_champ))))
 			exit_free("unsuccessful malloc\n", NULL, input);
 		pl = manage_header(input, pl);
 		free_tab(input); // sera modifie

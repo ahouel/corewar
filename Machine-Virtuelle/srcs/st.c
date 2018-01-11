@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:36 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 16:54:04 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 14:42:48 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void		st(t_vm *vm, t_pcb *proc)
 	}
 	else
 		proc->reg[proc->op->param[1] - 1] = proc->reg[proc->op->param[0] - 1];
-	proc->carry = (proc->reg[proc->op->param[0] - 1] ? 0 : 1);
 	if (vm->verbosity & V_OP)
 		show_st(proc);
 }

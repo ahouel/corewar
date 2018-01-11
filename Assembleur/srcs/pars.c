@@ -6,11 +6,16 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2017/12/18 19:56:10 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/06 19:14:37 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
+
+/*
+**	Cette fonction sera dégagée dès que j'aurais intégré la structure présente
+**	dans op.c.
+*/
 
 static char		**init_instruction_tab(void)
 {
@@ -38,14 +43,48 @@ static char		**init_instruction_tab(void)
 	return (tab);
 }
 
+/*
+**	On récupère la ligne à traiter, ainsi que l'index de l'instruction
+**	correspondante dans le tableau, et notre structure générale.
+**	Le tableau de pointeur sur fonction est initialisé, et on retourne l'appelle
+**	à la fonction correspondante.
+**	??? Remplacer ce pointeur sur fonction par un nouvel élément dans la
+**	structure d'op.c ?
+*/
+
 static t_champ	*select_fun(char *s, int i, t_champ *pl)
 {
 	t_champ	*(*funptr[15])(t_champ*, char*);
 
 	funptr[0] = &make_live;
-	//a poursuivre
+	funptr[1] = NULL;
+	funptr[2] = &make_sti;
+	funptr[3] = NULL;
+	funptr[4] = NULL;
+	funptr[5] = &make_and;
+	funptr[6] = NULL;
+	funptr[7] = NULL;
+	funptr[8] = NULL;
+	funptr[9] = NULL;
+	funptr[10] = NULL;
+	funptr[11] = NULL;
+	funptr[12] = NULL;
+	funptr[13] = NULL;
+	funptr[14] = NULL;
+	if (!funptr[i])
+	{
+		new_instruction(s, &pl);
+		return (pl);
+	}
 	return (funptr[i](pl, s));
 }
+
+/*
+**	On avance dans la ligne jusqu'à une potentielle instruction et on intialise
+**	le tableau avec tous les termes. La couple compare notre ligne avec chacuns
+**	et s'il y a correspondance, on appelle select_fun qui s'occupera de traiter
+**	l'instruction.
+*/
 
 static int		get_instruction(char *s, t_champ *pl)
 {
@@ -71,7 +110,16 @@ static int		get_instruction(char *s, t_champ *pl)
 	return (ret);
 }
 
-t_champ			*do_parsing(t_champ *champ, char **input, int i)
+/*
+**	On parcourt le tableau selon 3 conditions : 
+**		-si on arrive sur un commentaire, on passe à la ligne suivante;
+**		-si on tombe sur une instruction, elle sera traitée depuis la fonction
+**			qui l'identifie;
+*		-si on lit un label, on le place dans notre liste chainée puis on avance
+*			dans la ligne jusqu'à la fin de ce label.
+*/
+
+t_champ			*do_parsing(t_champ *pl, char **input, int i)
 {
 	int		j;
 
@@ -82,14 +130,15 @@ t_champ			*do_parsing(t_champ *champ, char **input, int i)
 		{
 			if (input[i][j] == COMMENT_CHAR)
 				j = -1;
-			else if (get_instruction(&(input[i][j]), champ))
+			else if (get_instruction(&(input[i][j]), pl))
 				j = -1;
 			else if (how_many_label_char(&(input[i][j])))
 			{
-				champ = new_label(&(input[i][j]), champ);
+				pl = new_label(&(input[i][j]), pl);
 				j += how_many_label_char(&(input[i][j])) + 1;
 			}
 		}
 	}
-	return (champ);
+	pl = get_labels_params(pl);
+	return (pl);
 }
