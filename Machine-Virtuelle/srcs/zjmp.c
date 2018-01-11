@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:25:02 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/08 18:33:40 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 14:46:07 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,12 @@ static void	show_zjmp(t_pcb *proc)
 
 void		zjmp(t_vm *vm, t_pcb *proc)
 {
-//	ft_printf("le pc pendant le jump%d et le param[0]%d\n", proc->pc, proc->op->param[0]);
-//	ft_printf("get_add %d\n", get_address(vm, proc, proc->op->param[0]));
-//	ft_printf("\n%{RED}s\n", "ZJMP1");
 	if (proc->carry)
 	{
-//	ft_printf("\n%{RED}s\n", "ZJMP2");
 		proc->pc = get_address(vm, proc, proc->op->param[0]);
-//	ft_printf("\n%{RED}s\n", "ZJMP3");
 		while (proc->pc < 0)
 			proc->pc += MEM_SIZE;
 	}
-//	ft_printf("\n%{RED}s\nEN : %d\n", "ZJMP4", proc->pc);
 	if (vm->verbosity & V_OP)
 		show_zjmp(proc);
 }

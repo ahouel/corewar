@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/10 18:07:05 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 15:18:53 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,6 @@ int			main(int ac, char **av)
 	if (vm.ncurses)
 		init_ncurses(&w);
 	initialisation(&vm);
-	if (vm.debug == 0)
-		show_players(&vm);
-	if (vm.debug == 1)
-		print_ram(&vm);
-	if (vm.debug == 2)
-		show_processus(&vm);
 	exe(&vm);
 	if (vm.ncurses)
 		endwin();

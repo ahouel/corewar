@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/03 19:24:52 by ahouel           ###   ########.fr        #
+#    Updated: 2018/01/11 14:49:49 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRC_FILES =	main.c				\
 			get_winner.c		\
 			check_arg.c			\
 			controller.c		\
-			debug.c				\
 			new_player.c		\
 			swap_players.c		\
 			write_players.c		\

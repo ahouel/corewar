@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/10 17:52:56 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 15:07:59 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	delete_processus(t_vm *vm, t_pcb *proc)
 	t_pcb	*tmp;
 
 	tmp = vm->proc_lst;
+	vm->nb_proc--;
 	if (proc == vm->proc_lst)
 		vm->proc_lst = proc->next;
 	else

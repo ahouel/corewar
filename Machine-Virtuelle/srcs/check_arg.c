@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/18 17:20:20 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 14:52:31 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,30 +75,6 @@ static int	srch_ncurses(t_vm *vm, char *arg)
 }
 
 /*
-**	Regarde si l'argument[*i] est un -debug
-*/
-
-static int	srch_debug(t_vm *vm, int ac, char **av, int *i)
-{
-	int	ret;
-
-	ret = 0;
-	if (!ft_strcmp(av[*i], "-debug"))
-	{
-		if (vm->debug != -1)
-			error(vm, "can't use twice -debug");
-		if ((*i + 1) < ac && ft_str_isdigit(av[*i + 1]))
-		{
-			ret = ft_atoi(av[++(*i)]);
-			if (ret > -1 && ret < 10)
-				return (ret);
-		}
-		error(vm, "-debug wrong number");
-	}
-	return (-1);
-}
-
-/*
 **	On cherche -v -dump et -ncurses pour les stocker, puis les joueurs (.cor)
 **	-v : verbosity -> affichages de differentes donnees
 **	-ncurses : utilisation de ncurses -> interface graphique
@@ -122,8 +98,6 @@ int			check_arg(t_vm *vm, int ac, char **av)
 			vm->ncurses = ret;
 		else if ((ret = srch_verbosity(vm, ac, av, &i)))
 			vm->verbosity = ret;
-		else if ((ret = srch_debug(vm, ac, av, &i)) > -1)
-			vm->debug = ret;
 		else if (!(srch_player(vm, ac, av, &i)))
 		{
 			ft_printf("%{RED}s %{BLUE}s\n",

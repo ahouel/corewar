@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:13:22 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/08 15:37:42 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 14:39:15 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	et le param_type de g_op_tab[]
 */
 
-static int	check_type(unsigned char param, int	param_type)
+static int	check_type(unsigned char param, int param_type)
 {
 	if (param == REG_CODE)
 		if (param_type & T_REG)
@@ -57,6 +57,5 @@ int			ocp_is_valid(t_vm *vm, t_pcb *proc, unsigned char ocp)
 			return (0);
 		}
 	}
-//	ft_printf("\nvalide !");
 	return (1);
 }

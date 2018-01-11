@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:31 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 16:07:52 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 14:45:04 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 **	Regarde si la taille du champion correspond a celle du header
 */
 
-static void	is_player_valid(t_vm *vm, header_t *hd, char *filename, int ret)
+static void				is_player_valid(t_vm *vm,
+		header_t *hd, char *filename, int ret)
 {
 	if (ret != hd->prog_size)
 	{
@@ -30,7 +31,7 @@ static void	is_player_valid(t_vm *vm, header_t *hd, char *filename, int ret)
 **	regarde si les valeurs du header sont valides
 */
 
-static void	is_header_valid(t_vm *vm, char *filename, header_t *hd)
+static void				is_header_valid(t_vm *vm, char *filename, header_t *hd)
 {
 	if (hd->magic != COREWAR_EXEC_MAGIC)
 	{
@@ -66,7 +67,7 @@ static void				get_infos(t_vm *vm, t_player *player, header_t *hd)
 static unsigned char	*get_data(t_vm *vm, char *filename, header_t *hd)
 {
 	int				fd;
-	char			buff[CHAMP_MAX_SIZE + 2]; // +SRC BEGIN ?
+	char			buff[CHAMP_MAX_SIZE + 2];
 	unsigned char	*data;
 	int				ret;
 
