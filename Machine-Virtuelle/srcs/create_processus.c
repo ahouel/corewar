@@ -6,11 +6,28 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 14:59:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/15 16:49:02 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 13:33:22 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+/*
+**	Ajoute un processus proc a la list chainee dans la vm
+*/
+
+static void	add_processus(t_vm *vm, t_pcb *proc)
+{
+	if (vm->proc_lst)
+	{
+		proc->next = vm->proc_lst;
+		vm->proc_lst = proc;
+	}
+	else
+	{
+		vm->proc_lst = proc;
+	}
+}
 
 /*
 **	Creation d'un processus pour le joueur <num>
@@ -25,13 +42,16 @@ t_pcb		*create_processus(t_vm *vm, int num)
 	if (!(new = (t_pcb*)ft_memalloc(sizeof(t_pcb))))
 		error(vm, "malloc failed");
 	++vm->nb_proc;
-	new->pid = vm->nb_proc;
+	++vm->next_pid;
+	new->pid = vm->next_pid;
 	new->uid = num + 1;
-	new->pc = (MEM_SIZE / vm->nb_player) * num;
+	if (vm->nb_player)
+		new->pc = (MEM_SIZE / vm->nb_player) * num;
 	new->op = NULL;
 	ft_bzero(new->reg, sizeof(int) * (REG_NUMBER + 1));
 	new->carry = 0;
 	new->last_live = 0;
 	new->reg[0] = -(num + 1);
+	add_processus(vm, new);
 	return (new);
 }

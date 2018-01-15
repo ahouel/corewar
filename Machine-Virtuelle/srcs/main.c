@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/11 15:18:53 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 14:02:31 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static void	usage(char *cw)
 }
 
 /*
-**	TO DO : main.c ne devrai pas avoir autant de fontions, a clear
-**	Laisser uniquement main et le usage, possiblement init_vm aussi (pas fan)
+**	Bienvenue sur Corewar - VM
 */
 
 int			main(int ac, char **av)

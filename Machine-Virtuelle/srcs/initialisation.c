@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:53 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 17:00:02 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 12:47:17 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static void	init_process(t_vm *vm)
 	while (i < MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
-		{
-			add_processus(vm, create_processus(vm, i));
-		}
+			create_processus(vm, i);
 		i++;
 	}
 }

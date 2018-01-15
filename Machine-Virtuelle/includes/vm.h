@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 17:30:39 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 12:48:07 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		free_vm(t_vm *vm);
 
 void		exe(t_vm *vm);
 t_pcb		*create_processus(t_vm *vm, int num);
-void		add_processus(t_vm *vm, t_pcb *proc);
+//void		add_processus(t_vm *vm, t_pcb *proc);
 void		move_processus(t_vm *vm, t_pcb *proc);
 void		load_op(t_vm *vm, t_pcb *proc);
 int			ocp_is_valid(t_vm *vm, t_pcb *proc, unsigned char ocp);

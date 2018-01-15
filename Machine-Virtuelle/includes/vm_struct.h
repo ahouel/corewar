@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/11 15:30:26 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 14:17:13 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct	s_vm
 	int			dump;
 	int			verbosity;
 	int			nb_proc;
+	int			next_pid;
 	t_pcb		*proc_lst;
 	t_player	player[MAX_PLAYERS];
 	t_mem		ram[MEM_SIZE];

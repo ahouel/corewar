@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/11 14:49:49 by ahouel           ###   ########.fr        #
+#    Updated: 2018/01/15 12:47:53 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,6 @@ SRC_FILES =	main.c				\
 			get_address.c		\
 			move_processus.c	\
 			create_processus.c	\
-			add_processus.c		\
 			print_ram.c			\
 			store_ind_value.c	\
 			op.c				\
@@ -56,7 +55,7 @@ SRC_FILES =	main.c				\
 			ldi.c				\
 			sti.c				\
 			ft_fork.c			\
-			colors_init
+			init_color.c
 
 INC_FILES = vm.h op.h vm_struct.h
 LIB_FILES = libft.a
