@@ -6,39 +6,38 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/10 15:39:20 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/11 15:30:26 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// VM = https://en.wikibooks.org/wiki/Creating_a_Virtual_Machine/Register_VM_in_C
 
 #ifndef VM_STRUCT_H
 # define VM_STRUCT_H
 
-#define	IDLE 	1
-#define	WAIT 	2
-#define	READY 	3
-#define START 	4
-#define DEAD	5
+/*
+**	https://en.wikibooks.org/wiki/Creating_a_Virtual_Machine/Register_VM_in_C
+*/
 
-#define RUN 1
+//#define D4 0
+//#define D2 1
 
-#define	MAGIC_NB 4
-#define PROG_NAME 128 + 4
-#define PROG_COMS 2048 + 4
-#define	PROG_SIZE 4
-
-#define D4 0
-#define D2 1
-
-#define SRC_BEGIN MAGIC_NB + PROG_NAME + PROG_COMS + PROG_SIZE
-
-#define BLING_DELAY 65
-#define BLING_LIVE 45
-#define NCURSES_DELAY 100000
+# define BLING_DELAY 65
+# define BLING_LIVE 45
+# define NCURSES_DELAY 100000
 
 typedef struct s_vm		t_vm;
 typedef struct s_pcb	t_pcb;
+
+/*
+**	Header de chaque files.cor
+*/
+
+typedef struct		header_s
+{
+	unsigned int		magic;
+	char				prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int		prog_size;
+	char				comment[COMMENT_LENGTH + 1];
+}					header_t;
 
 /*
 **	Structure des operation (labels)
@@ -60,17 +59,23 @@ typedef struct s_op
 }				t_op;
 
 /*
+**	op_tab de reference
+*/
+
+extern t_op g_op_tab[];
+
+/*
 **	Joueur (.cor)
 */
 
 typedef struct	s_player
 {
+	char	*file_name;
 	char	*name;
 	char	*comment;
 	int		active;
 	int		lives_count;
 	int		last_live;
-	char	*file_name;
 	int		id_color;
 }				t_player;
 
@@ -81,51 +86,48 @@ typedef struct	s_player
 
 typedef struct	s_pcb
 {
-	int		pid;	//process identifier
-	int		uid;	//user idetifier
-	int		pc;// L adresse dans la ram du processus
 	char	carry;
-	int		reg[REG_NUMBER + 1];
-	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
+	int		pid;
+	int		uid;
+	int		pc;
+	int		last_live;
 	t_op	*op;
+	int		reg[REG_NUMBER + 1];
 	struct	s_pcb	*next;
-}			t_pcb;
+}				t_pcb;
 
 /*
 **	Representation de la memoire (ram)
 */
 
-typedef struct s_mem
+typedef struct	s_mem
 {
 	unsigned char	mem;
 	int				num;
 	int				flash;
-}	t_mem;
-
-extern t_op g_op_tab[];
+}				t_mem;
 
 /*
 **	Environnement de la vm
 */
 
-typedef struct s_vm
+typedef struct	s_vm
 {
-	int		nb_player;		//nombre de joueur
-	int		cycle;			//cycle en cours
-	char	pause;			// pause 0 / unpause 1
-	char	ncurses;		// oui : 1 / non : 0
-	int		delay;			// delay pour ncurse
-	int		ctd;
-	int		next_ctd;
-	int		last_ctd_decay;
-	int		period_lives;
-	int		dump;			// -d
-	int		debug;
-	int		verbosity;		// -v
-	t_mem	ram[MEM_SIZE];
+	char		ncurses;
+	char		pause;
+	int			nb_player;
+	int			cycle;
+	int			delay;
+	int			ctd;
+	int			next_ctd;
+	int			last_ctd_decay;
+	int			period_lives;
+	int			dump;
+	int			verbosity;
+	int			nb_proc;
+	t_pcb		*proc_lst;
 	t_player	player[MAX_PLAYERS];
-	int		nb_proc;
-	t_pcb	*proc_lst;
-}	t_vm;
+	t_mem		ram[MEM_SIZE];
+}				t_vm;
 
 #endif
