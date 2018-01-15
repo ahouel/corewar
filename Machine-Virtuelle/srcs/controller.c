@@ -19,7 +19,6 @@
 **	utiliser plutot usleep() que sleep()
 */
 
-
 static void	keys_press(t_vm *vm, char key)
 {
 	if (key == ' ' && vm->pause)
