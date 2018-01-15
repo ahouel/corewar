@@ -12,52 +12,6 @@
 
 #include "vm.h"
 
-static void	colors_init(t_vm *vm)
-{
-	/*init_color(35, 350, 350, 350);//basic grey
-	init_color(40, 1000, 1000, 1000);//basic white
-	init_pair(15, 35, COLOR_BLACK);//basic
-	init_pair(40, COLOR_BLACK, 40);//basic white on black
-	init_pair(41, 35, 35);//grey back
-	init_pair(20, COLOR_GREEN, COLOR_BLACK);//player_1
-	init_color(36, 150, 1000, 150);//fluo_green
-	init_color(38, 500, 1000, 500);//blingbling_green
-	init_pair(21, COLOR_GREEN, 36);//player_1_highlight
-	init_pair(24, 38, COLOR_BLACK);//player_1_blingbling
-	init_pair(22, COLOR_BLUE, COLOR_BLACK);//player_2
-	init_color(COLOR_BLUE, 200, 200, 800);//blue change
-	init_color(37, 400, 400, 1000);//fluo_blue
-	init_pair(23, COLOR_BLUE, 37);//player_2_highlight
-	init_pair(25, 37, COLOR_BLACK);//player_2_blingbling
-	init_pair(26, COLOR_GREEN, COLOR_RED);//life highlight*/
-	init_color(35, 350, 350, 350);//basic grey
-	init_color(40, 1000, 1000, 1000);//basic white
-	init_color(50, 102, 1000, 1000); // fluo blue
-	init_color(60, 1000, 302, 824); // fluo pink
-	init_color(70, 102, 1000, 102); // fluo green
-	init_color(80, 1000, 1000, 102); // fluo yellow
-	init_color(55, 51, 500, 500);
-	init_color(65, 500, 151, 412);
-	init_color(75, 51, 500, 51);
-	init_color(85, 500, 500, 51);
-	init_pair(5, 50, COLOR_BLACK); // fluo blue on black
-	init_pair(6, 60, COLOR_BLACK); // fluo pink on black
-	init_pair(7, 70, COLOR_BLACK); // fluo green on black
-	init_pair(8, 80, COLOR_BLACK); // fluo yellow on black
-	init_pair(10, 50, 55); // fluo blue on black for ps
-	init_pair(11, 60, 65); // fluo pink on black for ps
-	init_pair(12, 70, 75); // fluo green on black for ps
-	init_pair(13, 80, 85); // fluo yellow on black for ps
-	vm->player[0].id_color = 5;
-	vm->player[1].id_color = 6;
-	vm->player[2].id_color = 7;
-	vm->player[3].id_color = 8;
-	init_pair(42, 35, 35);
-	init_pair(20, 35, COLOR_BLACK);
-	init_pair(30, COLOR_RED, COLOR_BLACK);
-	init_pair(40, 40, COLOR_BLACK);
-}
-
 /*static int is_pc(t_vm *vm, int i)
 {
 	int	j;
@@ -291,10 +245,36 @@ void	refresh_all(t_vm *vm)
 	while (tmp)
 	{
 		attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
-		mvprintw((1 + tmp->pc / 64), (3 + (tmp->pc % 64) * 3), "%02x", (unsigned char)vm->ram[tmp->pc].mem);
+		mvprintw((1 + tmp->pc / 64), (3 + (tmp->pc % 64) * 3), "%02x",
+			(unsigned char)vm->ram[tmp->pc].mem);
 		attroff(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
 		tmp = tmp->next;
 	}
+}
+
+void	print_stats(int *tab, t_vm *vm, int x, int y)
+{
+	int		i;
+	int		tmp[MAX_PLAYERS];
+
+	i = -1;
+	while (++i < MAX_PLAYERS)
+		tmp[i] = tab[i];
+	i = -1;
+	while (++i < MAX_PLAYERS)
+	{
+		while (tmp[i] > 0)
+		{
+			attron(COLOR_PAIR(vm->player[i].id_color));
+			mvprintw(y, x, "|");
+			attroff(COLOR_PAIR(vm->player[i].id_color));
+			x++;
+			tmp[i]--;
+		}
+	}
+	attron(COLOR_PAIR(40));
+	mvprintw(54, 243, "||");
+	// mvprintw(70, 243, "|");
 }
 
 void	live_stats(t_vm *vm)
@@ -302,29 +282,38 @@ void	live_stats(t_vm *vm)
 	int		total;
 	int		i;
 	int		tmp;
+	int		tab[MAX_PLAYERS];
 
 	total = 0;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		total += vm->player[i].lives_count;
-	/*if (i == 0)
+	/*if (total == 0)
 		ft_transfert_stats();*/
+	if (total == 0)
+		return ;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (vm->player[i].name)
 		{
-			tmp = (vm->player[i].lives_count / total) * 100 * 41;
+			tmp = (vm->player[i].lives_count / total) * 100 * 42;
 			if (tmp % 100 > 50)
 				tmp += 50;
-			
+			tab[i] = tmp / 100;
 		}
+	print_stats(tab, vm, 201, 54);
 }
 
 void	call_ncurses(t_vm *vm)
 {
-	colors_init(vm); // une seule fois
-	basic_print(0); // une seule fois
-	basic_print_two(0, vm); // une seule fois
+	static int	i = 0;
+	if (!i)
+	{
+		colors_init(vm); // une seule fois
+		basic_print(0); // une seule fois
+		basic_print_two(0, vm); // une seule fois
+		i++;
+	}
 	print_player(vm); // tout les tours
 	wprint_ram(vm); // tout les tours
 	refresh_all(vm); // tout les tours
