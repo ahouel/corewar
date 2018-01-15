@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 14:02:31 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 17:06:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			main(int ac, char **av)
 	if (!check_arg(&vm, ac, av))
 		error(&vm, "no player");
 	if (vm.ncurses)
-		init_ncurses(&w);
+		init_ncurses(&vm, &w);
 	initialisation(&vm);
 	exe(&vm);
 	if (vm.ncurses)

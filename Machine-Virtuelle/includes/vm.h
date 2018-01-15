@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 12:48:07 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 16:44:02 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ void		ft_fork(t_vm *vm, t_pcb *proc);
 */
 
 void		call_ncurses(t_vm *vm);
-void		init_ncurses(WINDOW **w);
+void		init_ncurses(t_vm *vm, WINDOW **w);
 void		controller(t_vm *vm);
 void		colors_init(t_vm *vm);
+void		live_stats(t_vm *vm);
+void		refresh_all(t_vm *vm);
+
 
 /*
 **	-------DEBUG-------

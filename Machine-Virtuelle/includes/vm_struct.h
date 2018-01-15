@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 14:17:13 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 17:07:00 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 //#define D4 0
 //#define D2 1
 
-# define BLING_DELAY 65
-# define BLING_LIVE 45
 # define NCURSES_DELAY 100000
+# define LIVE_FLASH 11
+# define ST_FLASH 10
 
 typedef struct s_vm		t_vm;
 typedef struct s_pcb	t_pcb;
@@ -103,8 +103,9 @@ typedef struct	s_pcb
 typedef struct	s_mem
 {
 	unsigned char	mem;
+	char			live;
+	char			store;
 	int				num;
-	int				flash;
 }				t_mem;
 
 /*

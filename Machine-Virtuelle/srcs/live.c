@@ -6,11 +6,22 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/10 15:44:56 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/15 17:06:55 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+
+static void	set_live_case(t_vm *vm, t_pcb *proc)
+{
+	int	pc;
+
+	pc = proc->pc - 4;
+	while (pc < 0)
+		pc += MEM_SIZE;
+	vm->ram[pc % MEM_SIZE].live = LIVE_FLASH;
+}
 
 /*
 **	Ecrit si un joueur est reporte comme etant en vie avec -v 1
@@ -45,4 +56,6 @@ void		live(t_vm *vm, t_pcb *proc)
 	vm->player[i - 1].lives_count++;
 	vm->player[i - 1].last_live = vm->cycle;
 	print_live(vm, proc, i);
+	if (vm->ncurses)
+		set_live_case(vm, proc);
 }

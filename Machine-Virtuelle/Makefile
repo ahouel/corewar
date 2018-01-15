@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/15 12:47:53 by ahouel           ###   ########.fr        #
+#    Updated: 2018/01/15 17:04:01 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,9 +55,15 @@ SRC_FILES =	main.c				\
 			ldi.c				\
 			sti.c				\
 			ft_fork.c			\
-			init_color.c
+			colors_init.c		\
+			ncurses_stats.c		\
+			refresh_ncurses.c	\
+			init_ncurses.c
 
-INC_FILES = vm.h op.h vm_struct.h
+INC_FILES = vm.h				\
+			op.h				\
+			vm_struct.h
+
 LIB_FILES = libft.a
 LIB = $(addprefix $(LIB_PATH), $(LIB_FILES))
 
@@ -76,7 +82,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 $(LIB):
 	@make -C $(LIB_PATH)
 
-$(NAME): $(LIB) $(OBJ_PATH) $(OBJ_EXEC)
+$(NAME): $(LIB) $(OBJ_PATH) $(OBJ_EXEC) $(addprefix $(INC_PATH), $(INC_FILES))
 	@$(CC) $(CFLAGS) $(OBJ_EXEC) $(LIB) -o $(NAME) -I $(INC_PATH) -I $(LIB_PATH)includes -lncurses
 	@echo "\033[32mBinary \033[1;32m$(notdir $(NAME))\033[1;0m\033[32m created.\033[0m"
 
