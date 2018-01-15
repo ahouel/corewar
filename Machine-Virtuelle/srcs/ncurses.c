@@ -12,115 +12,6 @@
 
 #include "vm.h"
 
-/*static int is_pc(t_vm *vm, int i)
-{
-	int	j;
-
-	j = -1;
-	while (++j < NBR_OP + 1)
-	{
-		if ((int)vm->ram[i].mem == op_tab[j].code)
-			return (1);
-	}
-	return (0);
-}*/
-
-/*static void	ram_init(t_vm *vm)
-{
-	int	i;
-
-	i = -1;
-	while (++i < MEM_SIZE)
-	{
-		attron(COLOR_PAIR(15));
-		if ((is_pc(vm, i)))
-		{
-			if (vm->ram[i].num == 1)
-				attron(COLOR_PAIR(21));
-			else if (vm->ram[i].num == 2)
-				attron(COLOR_PAIR(23));
-			attron(A_STANDOUT);
-		}
-		else if (vm->ram[i].num == 1)
-		{
-			attron(COLOR_PAIR(20));
-		}
-		else if (vm->ram[i].num == 2)
-		{
-			attron(COLOR_PAIR(22));
-		}
-		if (vm->ram[i].flash)
-		{
-			attron(A_BOLD);
-			if (vm->ram[i].num == 1)
-				attron(COLOR_PAIR(24));
-			if (vm->ram[i].num == 2)
-				attron(COLOR_PAIR(25));
-			vm->ram[i].flash--;
-		}
-//		if (vm->ram[i].live)
-//		{
-//			attron(COLOR_PAIR(26));
-//			vm->ram[i].live--;
-//		}
-		mvprintw((3 + i / 64), (3 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
-		attroff(A_STANDOUT);
-		attroff(A_BOLD);
-		attroff(COLOR_PAIR(35));
-	}
-}*/
-
-/*void	call_ncurses(t_vm *vm)
-{
-	int i;
-	int	j;
-	int ret;
-
-	i = -1;
-	ret = 0;
-	colors_init();
-	ram_init(vm);
-	attron(COLOR_PAIR(41));
-	attron(A_INVIS);
-	while (++i < MEM_SIZE / 64 + 6)
-	{
-		j = -1;
-		while (++j < 3 * (MEM_SIZE / 64) + 50)
-		{
-			if (i == 0 || j == 0 || i == MEM_SIZE / 64 + 5
-					|| j == 3 * (MEM_SIZE / 64) + 4 ||
-					j == 3 * (MEM_SIZE / 64) + 49)
-				mvprintw(i, j, "*");
-		}
-	}
-	attroff(COLOR_PAIR(41));
-	attroff(A_INVIS);
-	attron(A_STANDOUT);
-	attron(COLOR_PAIR(40));
-	attron(A_BOLD);
-	mvprintw(32, 3 * (MEM_SIZE / 64) + 6, "%d <= pause", vm->pause);
-	if (!vm->pause)
-		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** PAUSED **");
-	if (vm->pause)
-		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** RUNNING **");
-	mvprintw(5, 3 * (MEM_SIZE / 64) + 6, "Delay : %d", vm->delay);
-	mvprintw(10, 3 * (MEM_SIZE / 64) + 6, "Cycles : %d", vm->cycle);
-//`	mvprintw(14, 3 * (MEM_SIZE / 64) + 6, "Proc Nb : %d", count_proc(vm));
-	mvprintw(22, 3 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d", vm->ctd);
-	mvprintw(24, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d", CYCLE_DELTA);
-	mvprintw(26, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d", NBR_LIVE);
-	mvprintw(28, 3 * (MEM_SIZE / 64) + 6, "MAX_CHECKS : %d", MAX_CHECKS);
-	mvprintw(30, 3 * (MEM_SIZE / 64) + 6, "Live P1 : %08d", vm->player[1].lives_count);
-	printw("%i", MEM_SIZE);
-	attroff(COLOR_PAIR(40));
-	//attron(A_BOLD);
-	attroff(A_BOLD);
-	attroff(A_STANDOUT);
-	// debug_display_proc(vm);
-
-	refresh();
-}*/
-
 static void	basic_print(int i)
 {
 	attron(COLOR_PAIR(42));
@@ -150,7 +41,7 @@ static void	basic_print(int i)
 	attroff(COLOR_PAIR(42));
 }
 
-void	basic_print_two(int i, t_vm *vm)
+static void	basic_print_two(int i, t_vm *vm)
 {
 	attron(COLOR_PAIR(40));
 	mvprintw(5, 200, "Cycle max /second : ");
@@ -179,7 +70,7 @@ void	basic_print_two(int i, t_vm *vm)
 	mvprintw(48, 217, " live stats ");
 }
 
-void	print_player(t_vm *vm)
+static void	print_player(t_vm *vm)
 {
 	int		i;
 	int		j;
@@ -206,7 +97,7 @@ void	print_player(t_vm *vm)
 	}
 }
 
-void	wprint_ram(t_vm *vm)
+static void	wprint_ram(t_vm *vm)
 {
 	int		i;
 	int		j;
@@ -221,7 +112,8 @@ void	wprint_ram(t_vm *vm)
 			attron(COLOR_PAIR(20));
 		else
 			attron(COLOR_PAIR(vm->player[j - 1].id_color));
-		mvprintw((1 + i / 64), (3 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
+		mvprintw((1 + i / 64), (3 + (i % 64) * 3), "%02x",
+			(unsigned char)vm->ram[i].mem);
 		if (j == 0)
 			attroff(COLOR_PAIR(20));
 		else
@@ -229,84 +121,10 @@ void	wprint_ram(t_vm *vm)
 	}
 }
 
-void	refresh_all(t_vm *vm)
-{
-	t_pcb	*tmp;
-
-	tmp = vm->proc_lst;
-	attron(COLOR_PAIR(40));
-	mvprintw(7, 216, "%d", vm->cycle);
-	mvprintw(12, 212, "%d", vm->nb_proc);
-	mvprintw(5, 220, "%d", vm->delay);
-	mvprintw(36, 215, "%d", vm->ctd);
-	mvprintw(39, 214, "%d", CYCLE_DELTA);
-	mvprintw(42, 211, "%d", NBR_LIVE);
-	mvprintw(45, 212, "%d", MAX_CHECKS);
-	while (tmp)
-	{
-		attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
-		mvprintw((1 + tmp->pc / 64), (3 + (tmp->pc % 64) * 3), "%02x",
-			(unsigned char)vm->ram[tmp->pc].mem);
-		attroff(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
-		tmp = tmp->next;
-	}
-}
-
-void	print_stats(int *tab, t_vm *vm, int x, int y)
-{
-	int		i;
-	int		tmp[MAX_PLAYERS];
-
-	i = -1;
-	while (++i < MAX_PLAYERS)
-		tmp[i] = tab[i];
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		while (tmp[i] > 0)
-		{
-			attron(COLOR_PAIR(vm->player[i].id_color));
-			mvprintw(y, x, "|");
-			attroff(COLOR_PAIR(vm->player[i].id_color));
-			x++;
-			tmp[i]--;
-		}
-	}
-	attron(COLOR_PAIR(40));
-	mvprintw(54, 243, "||");
-	// mvprintw(70, 243, "|");
-}
-
-void	live_stats(t_vm *vm)
-{
-	int		total;
-	int		i;
-	int		tmp;
-	int		tab[MAX_PLAYERS];
-
-	total = 0;
-	i = -1;
-	while (++i < MAX_PLAYERS)
-		total += vm->player[i].lives_count;
-	/*if (total == 0)
-		ft_transfert_stats();*/
-	if (total == 0)
-		return ;
-	i = -1;
-	while (++i < MAX_PLAYERS)
-		if (vm->player[i].name)
-		{
-			tmp = (vm->player[i].lives_count / total) * 100 * 42;
-			if (tmp % 100 > 50)
-				tmp += 50;
-			tab[i] = tmp / 100;
-		}
-	print_stats(tab, vm, 201, 54);
-}
-
-void	call_ncurses(t_vm *vm)
+void		call_ncurses(t_vm *vm)
 {
 	static int	i = 0;
+	
 	if (!i)
 	{
 		colors_init(vm); // une seule fois
@@ -319,19 +137,4 @@ void	call_ncurses(t_vm *vm)
 	refresh_all(vm); // tout les tours
 	live_stats(vm); // tout les tours
 	refresh();
-}
-
-void	init_ncurses(WINDOW **w)
-{
-	*w = initscr();
-	if (has_colors() == FALSE)
-	{
-		ft_printf("Your terminal does not support colors.\n");
-		endwin();
-		exit(1);
-	}
-	start_color(); // start color
-	cbreak(); //getch() no block
-	curs_set(0);
-	nodelay(*w, TRUE);
 }

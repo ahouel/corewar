@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_color.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/15 15:14:53 by gbradel           #+#    #+#             */
+/*   Updated: 2018/01/15 15:14:55 by gbradel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 
-static void	color_one()
+static void	color_one(void)
 {
 	init_color(35, 350, 350, 350);// basic grey -> ecriture des bordures et de la ram
 	init_color(40, 1000, 1000, 1000);// basic white -> all stats sur le cote
@@ -17,7 +29,7 @@ static void	color_one()
 	init_color(2, 0, 600, 0); // play
 }
 
-static void	color_two()
+static void	color_two(void)
 {
 	init_color(35, 400, 647, 678);//  -> ecriture des bordures et de la ram
 	init_color(40, 769, 875, 902);//  -> all stats sur le cote
