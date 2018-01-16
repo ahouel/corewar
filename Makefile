@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 14:02:54 by ahouel            #+#    #+#              #
-#    Updated: 2017/11/30 17:20:34 by ahouel           ###   ########.fr        #
+#    Updated: 2018/01/11 15:33:10 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,6 @@ $(ASM_NAME):
 
 clean:
 	@make -C $(LIB_PATH) clean
-	@make -C ./libftt/ fclean
 ifeq ("$(shell test -e $(VM_PATH)$(OBJS_PATHS) && echo toto)", "toto")
 	@make -C $(VM_PATH) clean
 endif
