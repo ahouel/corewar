@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 17:07:00 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/16 17:57:15 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 /*
 **	https://en.wikibooks.org/wiki/Creating_a_Virtual_Machine/Register_VM_in_C
 */
-
-//#define D4 0
-//#define D2 1
 
 # define NCURSES_DELAY 100000
 # define LIVE_FLASH 11
@@ -92,7 +89,7 @@ typedef struct	s_pcb
 	int		pc;
 	int		last_live;
 	t_op	*op;
-	int		reg[REG_NUMBER + 1];
+	int		reg[REG_NUMBER];
 	struct	s_pcb	*next;
 }				t_pcb;
 

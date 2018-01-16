@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 16:44:02 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/16 15:52:11 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,12 @@ void		free_vm(t_vm *vm);
 
 void		exe(t_vm *vm);
 t_pcb		*create_processus(t_vm *vm, int num);
-//void		add_processus(t_vm *vm, t_pcb *proc);
 void		move_processus(t_vm *vm, t_pcb *proc);
 void		load_op(t_vm *vm, t_pcb *proc);
 int			ocp_is_valid(t_vm *vm, t_pcb *proc, unsigned char ocp);
 int			get_ind_value(t_vm *vm, int addr);
 int			get_address(t_vm *vm, t_pcb *proc, int addr);
 void		print_ram(t_vm *vm);
-//int			valid_regs(t_pcb *proc);
 void		store_ind_value(t_vm *vm, int addr, int value, int p);
 
 /*
@@ -82,7 +80,6 @@ void		controller(t_vm *vm);
 void		colors_init(t_vm *vm);
 void		live_stats(t_vm *vm);
 void		refresh_all(t_vm *vm);
-
 
 /*
 **	-------DEBUG-------
