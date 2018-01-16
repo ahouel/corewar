@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/16 17:57:15 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/16 18:59:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct	s_player
 typedef struct	s_pcb
 {
 	char	carry;
+	char	aff;
 	int		pid;
 	int		uid;
 	int		pc;
@@ -113,6 +114,7 @@ typedef struct	s_vm
 {
 	char		ncurses;
 	char		pause;
+	char		aff;
 	int			nb_player;
 	int			cycle;
 	int			delay;

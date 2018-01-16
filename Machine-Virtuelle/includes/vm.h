@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/16 15:52:11 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/16 18:59:02 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void		zjmp(t_vm *vm, t_pcb *proc);
 void		ldi(t_vm *vm, t_pcb *proc);
 void		sti(t_vm *vm, t_pcb *proc);
 void		ft_fork(t_vm *vm, t_pcb *proc);
+void		aff(t_vm *vm, t_pcb *proc);
 
 /*
 **	--------NCURSES---------
