@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:31 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/11 14:45:04 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 16:07:48 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 
 static void				is_player_valid(t_vm *vm,
-		header_t *hd, char *filename, int ret)
+		t_header *hd, char *filename, int ret)
 {
 	if (ret != hd->prog_size)
 	{
@@ -31,7 +31,7 @@ static void				is_player_valid(t_vm *vm,
 **	regarde si les valeurs du header sont valides
 */
 
-static void				is_header_valid(t_vm *vm, char *filename, header_t *hd)
+static void				is_header_valid(t_vm *vm, char *filename, t_header *hd)
 {
 	if (hd->magic != COREWAR_EXEC_MAGIC)
 	{
@@ -52,7 +52,7 @@ static void				is_header_valid(t_vm *vm, char *filename, header_t *hd)
 **	Recuperation du nom et du comment du champ grace au header
 */
 
-static void				get_infos(t_vm *vm, t_player *player, header_t *hd)
+static void				get_infos(t_vm *vm, t_player *player, t_header *hd)
 {
 	if (!(player->name = ft_strdup(hd->prog_name)))
 		error(vm, "malloc failed");
@@ -64,7 +64,7 @@ static void				get_infos(t_vm *vm, t_player *player, header_t *hd)
 **	Recuperation du champion dans son .cor.
 */
 
-static unsigned char	*get_data(t_vm *vm, char *filename, header_t *hd)
+static unsigned char	*get_data(t_vm *vm, char *filename, t_header *hd)
 {
 	int				fd;
 	char			buff[CHAMP_MAX_SIZE + 2];
@@ -79,7 +79,7 @@ static unsigned char	*get_data(t_vm *vm, char *filename, header_t *hd)
 		error(vm, "");
 	}
 	ft_bzero(buff, CHAMP_MAX_SIZE + 2);
-	ret = read(fd, hd, sizeof(header_t));
+	ret = read(fd, hd, sizeof(t_header));
 	ft_bswap((void*)&hd->prog_size, sizeof(int));
 	ft_bswap((void*)&hd->magic, sizeof(int));
 	is_header_valid(vm, filename, hd);
@@ -101,9 +101,9 @@ void					write_players(t_vm *vm, int nb, int num)
 	int				i;
 	unsigned char	*data;
 	unsigned char	*tmp;
-	header_t		hd;
+	t_header		hd;
 
-	ft_bzero(&hd, sizeof(header_t));
+	ft_bzero(&hd, sizeof(t_header));
 	i = (MEM_SIZE / vm->nb_player) * (num - 1);
 	data = get_data(vm, vm->player[nb].file_name, &hd);
 	tmp = data;

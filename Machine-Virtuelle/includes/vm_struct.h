@@ -6,20 +6,12 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/16 18:59:06 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 18:47:18 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VM_STRUCT_H
 # define VM_STRUCT_H
-
-/*
-**	https://en.wikibooks.org/wiki/Creating_a_Virtual_Machine/Register_VM_in_C
-*/
-
-# define NCURSES_DELAY 100000
-# define LIVE_FLASH 11
-# define ST_FLASH 10
 
 typedef struct s_vm		t_vm;
 typedef struct s_pcb	t_pcb;
@@ -28,19 +20,19 @@ typedef struct s_pcb	t_pcb;
 **	Header de chaque files.cor
 */
 
-typedef struct		header_s
+typedef struct	s_header
 {
-	unsigned int		magic;
-	char				prog_name[PROG_NAME_LENGTH + 1];
-	unsigned int		prog_size;
-	char				comment[COMMENT_LENGTH + 1];
-}					header_t;
+	unsigned int	magic;
+	char			prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int	prog_size;
+	char			comment[COMMENT_LENGTH + 1];
+}				t_header;
 
 /*
 **	Structure des operation (labels)
 */
 
-typedef struct s_op
+typedef struct	s_op
 {
 	char	*label;
 	void	(*func)(t_vm *vm, t_pcb *proc);
@@ -59,7 +51,7 @@ typedef struct s_op
 **	op_tab de reference
 */
 
-extern t_op g_op_tab[];
+extern t_op		g_op_tab[];
 
 /*
 **	Joueur (.cor)
@@ -77,21 +69,22 @@ typedef struct	s_player
 }				t_player;
 
 /*
-**	https://openclassrooms.com/courses/la-programmation-systeme-en-c-sous-unix/les-processus-1
+**	https://openclassrooms.com/courses/la-programmation-systeme-en-c-sous-unix/
+**	les-processus-1
 **	Processus
 */
 
 typedef struct	s_pcb
 {
-	char	carry;
-	char	aff;
-	int		pid;
-	int		uid;
-	int		pc;
-	int		last_live;
-	t_op	*op;
-	int		reg[REG_NUMBER];
-	struct	s_pcb	*next;
+	char			carry;
+	char			aff;
+	int				pid;
+	int				uid;
+	int				pc;
+	int				last_live;
+	t_op			*op;
+	int				reg[REG_NUMBER];
+	struct s_pcb	*next;
 }				t_pcb;
 
 /*
