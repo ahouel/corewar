@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:20:53 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/16 17:57:11 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:03:54 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	set_live_case(t_vm *vm, t_pcb *proc)
 **	Ecrit si un joueur est reporte comme etant en vie avec -v 1
 */
 
-static void	print_live(t_vm *vm, t_pcb *proc, int i)
+static void	print_live(t_vm *vm, int i)
 {
 	if (vm->verbosity & V_LIVES)
 		ft_printf("Player %d (%s) is said to be alive\n", i,
@@ -59,7 +59,7 @@ void		live(t_vm *vm, t_pcb *proc)
 		return ;
 	vm->player[i - 1].lives_count++;
 	vm->player[i - 1].last_live = vm->cycle;
-	print_live(vm, proc, i);
+	print_live(vm, i);
 	if (vm->ncurses)
 		set_live_case(vm, proc);
 }

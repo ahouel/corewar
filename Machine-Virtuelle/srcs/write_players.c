@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:31 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/17 16:07:48 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 18:58:07 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static void				is_player_valid(t_vm *vm,
 		t_header *hd, char *filename, int ret)
 {
-	if (ret != hd->prog_size)
+	if (ret != (int)hd->prog_size)
 	{
 		ft_printf("%{RED}s %{BLUE}s\n",
 				"Error : wrong program size in the file", filename);
@@ -103,15 +103,17 @@ void					write_players(t_vm *vm, int nb, int num)
 	unsigned char	*tmp;
 	t_header		hd;
 
+	i = 0;
 	ft_bzero(&hd, sizeof(t_header));
-	i = (MEM_SIZE / vm->nb_player) * (num - 1);
+	if (vm->nb_player)
+		i = (MEM_SIZE / vm->nb_player) * (num - 1);
 	data = get_data(vm, vm->player[nb].file_name, &hd);
 	tmp = data;
 	get_infos(vm, &vm->player[nb], &hd);
 	ft_printf("* Player %d, weighing %u bytes, \"%s\" (\"%s\") !\n",
 			nb + 1, hd.prog_size, hd.prog_name, hd.comment);
 	hd.prog_size += i;
-	while (i < hd.prog_size)
+	while (i < (int)hd.prog_size)
 	{
 		vm->ram[i % MEM_SIZE].mem = *data;
 		vm->ram[i % MEM_SIZE].num = nb + 1;

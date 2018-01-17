@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 16:53:09 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/10 17:56:24 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:06:07 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void		ldi(t_vm *vm, t_pcb *proc)
 	int	param[2];
 
 	i = -1;
-	addr = get_address(vm, proc, 0);
+	addr = get_address(proc, 0);
 	while (++i < 2)
 	{
 		if (proc->op->param_type[i] == IND_CODE)
 			param[i] = get_ind_value(vm,
-					get_address(vm, proc, proc->op->param[i]));
+					get_address(proc, proc->op->param[i]));
 		else if (proc->op->param_type[i] == REG_CODE)
 			param[i] = proc->reg[proc->op->param[i] - 1];
 		else

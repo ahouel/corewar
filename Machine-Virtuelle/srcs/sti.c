@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:05 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/03 14:32:05 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:06:30 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		sti(t_vm *vm, t_pcb *proc)
 		if (proc->op->param_type[i] == IND_CODE)
 		{
 			param[i - 1] = get_ind_value(vm,
-					get_address(vm, proc, proc->op->param[i]));
+					get_address(proc, proc->op->param[i]));
 		}
 		else if (proc->op->param_type[i] == REG_CODE)
 			param[i - 1] = proc->reg[proc->op->param[i] - 1];
@@ -51,7 +51,7 @@ void		sti(t_vm *vm, t_pcb *proc)
 			param[i - 1] = proc->op->param[i];
 		addr += param[i - 1];
 	}
-	addr = get_address(vm, proc, addr);
+	addr = get_address(proc, addr);
 	store_ind_value(vm, addr, proc->reg[proc->op->param[0] - 1], proc->uid);
 	proc->carry = (proc->reg[proc->op->param[0] - 1] ? 0 : 1);
 	if (vm->verbosity & V_OP)

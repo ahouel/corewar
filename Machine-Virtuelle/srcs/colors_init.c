@@ -6,7 +6,7 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 15:14:53 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/15 15:14:55 by gbradel          ###   ########.fr       */
+/*   Updated: 2018/01/17 19:07:40 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ static void	do_pair(t_vm *vm)
 void		colors_init(t_vm *vm)
 {
 	color_one();
-	// color_two();
+	color_two();
 	do_pair(vm);
 }

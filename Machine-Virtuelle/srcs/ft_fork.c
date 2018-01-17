@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:23 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 14:02:15 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:06:45 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		ft_fork(t_vm *vm, t_pcb *proc)
 	new = (t_pcb*)ft_memcpy(new, proc, sizeof(t_pcb));
 	new->next = tmp;
 	new->pid = vm->next_pid;
-	new->pc = get_address(vm, proc, proc->op->param[0]);
+	new->pc = get_address(proc, proc->op->param[0]);
 	while (new->pc < 0)
 		new->pc += MEM_SIZE;
 	new->op = NULL;

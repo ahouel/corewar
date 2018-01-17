@@ -6,7 +6,7 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:07:58 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/15 17:07:01 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:09:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	basic_print(int i)
 	attroff(COLOR_PAIR(42));
 }
 
-static void	basic_print_two(int i, t_vm *vm)
+static void	basic_print_two(void)
 {
 	attron(COLOR_PAIR(40));
 	mvprintw(5, 200, "Cycle max /second : ");
@@ -85,5 +85,5 @@ void	init_ncurses(t_vm *vm, WINDOW **w)
 	nodelay(*w, TRUE);
 	colors_init(vm);
 	basic_print(0);
-	basic_print_two(0, vm);
+	basic_print_two();
 }

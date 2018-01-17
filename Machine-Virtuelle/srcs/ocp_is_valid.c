@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:13:22 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/11 14:39:15 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:02:26 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	check_type(unsigned char param, int param_type)
 **	le label, revoit 0. Sinon 1
 */
 
-int			ocp_is_valid(t_vm *vm, t_pcb *proc, unsigned char ocp)
+int			ocp_is_valid(t_pcb *proc, unsigned char ocp)
 {
 	int				i;
 	unsigned char	param;
