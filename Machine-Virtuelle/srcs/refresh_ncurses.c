@@ -12,7 +12,35 @@
 
 #include "vm.h"
 
-void	refresh_all(t_vm *vm)
+static void	print_live_sti(t_vm *vm)
+{
+	t_pcb	*tmp;
+	int		i;
+
+	tmp = vm->proc_lst;
+	i = -1;
+	while (++i < MEM_SIZE)
+	{
+		if (vm->ram[i].store)
+		{
+			attron(COLOR_PAIR(vm->player[vm->ram[i].num - 1].id_color + 10));
+			mvprintw((1 + i / 64), (3 + (i % 64) * 3), "%02x",
+				vm->ram[i].mem);
+			attroff(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 10));
+			(vm->ram[i].store)--;
+		}
+		if (vm->ram[i].live)
+		{
+			attron(COLOR_PAIR(vm->player[vm->ram[i].num - 1].id_color + 20));
+			mvprintw((1 + i / 64), (3 + (i % 64) * 3), "%02x",
+				vm->ram[i].mem);
+			attroff(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 10));
+			(vm->ram[i].live)--;
+		}
+	}
+}
+
+void		refresh_all(t_vm *vm)
 {
 	t_pcb	*tmp;
 
@@ -29,8 +57,9 @@ void	refresh_all(t_vm *vm)
 	{
 		attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
 		mvprintw((1 + tmp->pc / 64), (3 + (tmp->pc % 64) * 3), "%02x",
-			(unsigned char)vm->ram[tmp->pc].mem);
+			vm->ram[tmp->pc].mem);
 		attroff(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
 		tmp = tmp->next;
 	}
+	print_live_sti(vm);
 }

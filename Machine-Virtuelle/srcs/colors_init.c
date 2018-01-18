@@ -48,19 +48,27 @@ static void	color_two(void)
 
 static void	do_pair(t_vm *vm)
 {
-	init_pair(5, 50, 0); // fluo blue on black -> paire p1
-	init_pair(6, 60, 0); // fluo pink on black -> paire p2
-	init_pair(7, 70, 0); // fluo green on black -> paire p3
-	init_pair(8, 80, 0); // fluo yellow on black -> paire p4
-	init_pair(10, 50, 55); // fluo blue on black for ps -> paire ps p1
-	init_pair(11, 60, 65); // fluo pink on black for ps -> paire ps p2
-	init_pair(12, 70, 75); // fluo green on black for ps -> paire ps p3
-	init_pair(13, 80, 85); // fluo yellow on black for ps -> paire ps p4
-	init_pair(42, 35, 35); // paire bordure
-	init_pair(20, 35, 0); // ram de base
-	init_pair(30, 1, 0); // ecriture de paused
-	init_pair(31, 2, 0); // ecriture de play
-	init_pair(40, 40, 0); // stats sur la droite
+	init_pair(5, 50, 0); //-> paire p1
+	init_pair(6, 60, 0); //-> paire p2
+	init_pair(7, 70, 0); //-> paire p3
+	init_pair(8, 80, 0); //-> paire p4
+	init_pair(10, 50, 55); //-> paire ps p1
+	init_pair(11, 60, 65); //-> paire ps p2
+	init_pair(12, 70, 75); //-> paire ps p3
+	init_pair(13, 80, 85); //-> paire ps p4
+	init_pair(15, 55, 0); //-> paire store p1
+	init_pair(16, 65, 0); //-> paire store p2
+	init_pair(17, 75, 0); //-> paire store p3
+	init_pair(18, 85, 0); //-> paire store p4
+	init_pair(25, 40, 50); //-> paire live p1
+	init_pair(26, 40, 60); //-> paire live p2
+	init_pair(27, 40, 70); //-> paire live p3
+	init_pair(28, 40, 80); //-> paire live p4
+	init_pair(42, 35, 35); //-> paire bordure
+	init_pair(20, 35, 0); //-> ram de base
+	init_pair(30, 1, 0); //-> ecriture de paused
+	init_pair(31, 2, 0); //-> ecriture de play
+	init_pair(40, 40, 0); //-> stats sur la droite
 	vm->player[0].id_color = 5;
 	vm->player[1].id_color = 6;
 	vm->player[2].id_color = 7;

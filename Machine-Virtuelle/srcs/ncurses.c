@@ -68,8 +68,7 @@ void		call_ncurses(t_vm *vm)
 	print_player(vm);
 	wprint_ram(vm);
 	refresh_all(vm);
-	live_stats(vm);
+	//live_stats(vm);
 	refresh();
-	controller(vm);
 	usleep(vm->delay);
 }

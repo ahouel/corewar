@@ -26,6 +26,8 @@ static void	keys_press(t_vm *vm, char key)
 		vm->pause = 0;
 		attron(COLOR_PAIR(30));
 		mvprintw(1, 216, "~ ~ PAUSED ~ ~");
+		mvprintw(1, 230, "      ");
+		attroff(COLOR_PAIR(30));
 	}
 	if (key == 'w')
 	{
@@ -47,6 +49,7 @@ void		controller(t_vm *vm)
 
 	key = -1;
 	key = getch();
+	call_ncurses(vm);
 	if (key != -1)
 	{
 		keys_press(vm, key);
@@ -57,7 +60,7 @@ void		controller(t_vm *vm)
 		if (key != -1)
 		{
 			keys_press(vm, key);
-			call_ncurses(vm);
+			refresh_all(vm);
 			if (key == ' ')
 			{
 				vm->pause = 1;

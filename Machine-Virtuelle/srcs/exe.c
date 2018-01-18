@@ -106,7 +106,7 @@ void		exe(t_vm *vm)
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle);
 		if (vm->ncurses)
-			call_ncurses(vm);
+			controller(vm);
 		proc = vm->proc_lst;
 		while (proc)
 		{
