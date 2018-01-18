@@ -6,15 +6,12 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/17 19:19:11 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/18 17:16:16 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VM_STRUCT_H
 # define VM_STRUCT_H
-
-typedef struct s_vm		t_vm;
-typedef struct s_pcb	t_pcb;
 
 /*
 **	Header de chaque files.cor
@@ -27,31 +24,6 @@ typedef struct			s_header
 	unsigned int	prog_size;
 	char			comment[COMMENT_LENGTH + 1];
 }						t_header;
-
-/*
-**	Structure des operation (labels)
-*/
-
-typedef struct			s_op
-{
-	char	*label;
-	void	(*func)(t_vm *vm, t_pcb *proc);
-	int		nb_arg;
-	int		param_type[3];
-	int		param[3];
-	int		code;
-	int		loadtime;
-	char	*name;
-	int		has_ocp;
-	int		nb_byte;
-	int		addr_rest;
-}						t_op;
-
-/*
-**	op_tab de reference
-*/
-
-extern t_op				g_op_tab[];
 
 /*
 **	Joueur (.cor)
@@ -82,10 +54,10 @@ typedef struct			s_pcb
 	int				uid;
 	int				pc;
 	int				last_live;
-	t_op			*op;
+	struct s_op		*op;
 	int				reg[REG_NUMBER];
 	struct s_pcb	*next;
-}				t_pcb;
+}						t_pcb;
 
 /*
 **	Representation de la memoire (ram)
@@ -123,5 +95,30 @@ typedef struct			s_vm
 	t_player	player[MAX_PLAYERS];
 	t_mem		ram[MEM_SIZE];
 }						t_vm;
+
+/*
+**	Structure des operation (labels)
+*/
+
+typedef struct			s_op
+{
+	char	*label;
+	void	(*func)(struct s_vm *vm, struct s_pcb *proc);
+	int		nb_arg;
+	int		param_type[3];
+	int		param[3];
+	int		code;
+	int		loadtime;
+	char	*name;
+	int		has_ocp;
+	int		nb_byte;
+	int		addr_rest;
+}						t_op;
+
+/*
+**	op_tab de reference
+*/
+
+extern t_op				g_op_tab[];
 
 #endif
