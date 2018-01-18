@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:24:05 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/17 19:06:30 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/18 15:28:43 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void		sti(t_vm *vm, t_pcb *proc)
 	}
 	addr = get_address(proc, addr);
 	store_ind_value(vm, addr, proc->reg[proc->op->param[0] - 1], proc->uid);
-	proc->carry = (proc->reg[proc->op->param[0] - 1] ? 0 : 1);
 	if (vm->verbosity & V_OP)
 		show_sti(proc, param, addr);
 }

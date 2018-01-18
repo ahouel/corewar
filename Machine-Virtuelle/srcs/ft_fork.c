@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:23 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/17 19:06:45 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/18 14:25:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void		ft_fork(t_vm *vm, t_pcb *proc)
 	new->next = tmp;
 	new->pid = vm->next_pid;
 	new->pc = get_address(proc, proc->op->param[0]);
+	if (vm->verbosity & V_OP)
+		show_fork(proc, new);
 	while (new->pc < 0)
 		new->pc += MEM_SIZE;
 	new->op = NULL;
-	if (vm->verbosity & V_OP)
-		show_fork(proc, new);
 }
