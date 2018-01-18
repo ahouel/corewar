@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/11 14:52:31 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/16 18:56:08 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,26 @@ static int	srch_ncurses(t_vm *vm, char *arg)
 }
 
 /*
+**	Regarde si l'argument arg est un -a
+*/
+
+static int	srch_aff(t_vm *vm, char *arg)
+{
+	if (!ft_strcmp(arg, "-a"))
+	{
+		if (vm->aff)
+			error(vm, "can't use twice -a");
+		return (1);
+	}
+	return (0);
+}
+
+/*
 **	On cherche -v -dump et -ncurses pour les stocker, puis les joueurs (.cor)
 **	-v : verbosity -> affichages de differentes donnees
 **	-ncurses : utilisation de ncurses -> interface graphique
 **	-dump : dump dans les cycle -> sauter directement au cycle x
+**	-a : affiche les aff sur le terminal
 **	et afficher la memoire
 **	TO DO : -s, bonus, gestion d'erreur a verifier
 **	Re-set les lives_count a 0 pour tous
@@ -98,6 +114,8 @@ int			check_arg(t_vm *vm, int ac, char **av)
 			vm->ncurses = ret;
 		else if ((ret = srch_verbosity(vm, ac, av, &i)))
 			vm->verbosity = ret;
+		else if ((ret = srch_aff(vm, av[i])))
+			vm->aff = ret;
 		else if (!(srch_player(vm, ac, av, &i)))
 		{
 			ft_printf("%{RED}s %{BLUE}s\n",

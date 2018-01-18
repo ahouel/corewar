@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 16:12:02 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/10 17:53:42 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:02:23 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	la % si l'adressage est restreint et ajoute le pc de l op precedente
 */
 
-int	get_address(t_vm *vm, t_pcb *proc, int addr)
+int	get_address(t_pcb *proc, int addr)
 {
 	int	i;
 

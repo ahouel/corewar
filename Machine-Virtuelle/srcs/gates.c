@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:41 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/21 16:54:26 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:04:55 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		gates(t_vm *vm, t_pcb *proc)
 	{
 		if (proc->op->param_type[i] == IND_CODE)
 			param[i] = get_ind_value(vm,
-					get_address(vm, proc, proc->op->param[i]));
+					get_address(proc, proc->op->param[i]));
 		else if (proc->op->param_type[i] == REG_CODE)
 			param[i] = proc->reg[proc->op->param[i] - 1];
 		else

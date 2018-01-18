@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/15 17:04:01 by ahouel           ###   ########.fr        #
+#    Updated: 2018/01/17 19:09:35 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 CC = clang
 DEBUGFLAGS = -fsanitize=address
-CFLAGS = -g
+CFLAGS = -g -Wall -Wextra -Werror
 NAME = ../corewar
 
 SRC_PATH = ./srcs/
@@ -55,6 +55,7 @@ SRC_FILES =	main.c				\
 			ldi.c				\
 			sti.c				\
 			ft_fork.c			\
+			aff.c				\
 			colors_init.c		\
 			ncurses_stats.c		\
 			refresh_ncurses.c	\

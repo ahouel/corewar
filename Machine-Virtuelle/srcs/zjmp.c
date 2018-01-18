@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:25:02 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/11 14:46:07 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:05:09 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		zjmp(t_vm *vm, t_pcb *proc)
 {
 	if (proc->carry)
 	{
-		proc->pc = get_address(vm, proc, proc->op->param[0]);
+		proc->pc = get_address(proc, proc->op->param[0]);
 		while (proc->pc < 0)
 			proc->pc += MEM_SIZE;
 	}

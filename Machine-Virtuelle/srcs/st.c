@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:36 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/11 14:42:48 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:04:38 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		st(t_vm *vm, t_pcb *proc)
 
 	if (proc->op->param_type[1] == IND_CODE)
 	{
-		addr = get_address(vm, proc, proc->op->param[1]);
+		addr = get_address(proc, proc->op->param[1]);
 		store_ind_value(vm, addr, proc->reg[proc->op->param[0] - 1], proc->uid);
 	}
 	else

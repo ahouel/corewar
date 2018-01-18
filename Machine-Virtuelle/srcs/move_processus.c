@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:23:51 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 14:17:16 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/18 15:37:24 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ static void	exe_processus(t_vm *vm, t_pcb *proc)
 
 void		move_processus(t_vm *vm, t_pcb *proc)
 {
-	int	last_pc;
-
 	if (!proc->op)
 	{
 		if (which_op(vm->ram[proc->pc % MEM_SIZE].mem) > -1)

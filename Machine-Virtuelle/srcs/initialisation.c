@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:53 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 12:47:17 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/17 19:00:34 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void		initialisation(t_vm *vm)
 	i = -1;
 	j = 0;
 	ft_printf("Introducing contestants...\n");
+	if (!vm->nb_player)
+		error(vm, "need at least 1 player to run corewar");
 	while (++i < MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
