@@ -29,22 +29,22 @@ static void	color_one(void)
 	init_color(2, 0, 600, 0); // play
 }
 
-static void	color_two(void)
-{
-	init_color(35, 400, 647, 678);//  -> ecriture des bordures et de la ram
-	init_color(40, 769, 875, 902);//  -> all stats sur le cote
-	init_color(50, 275, 129, 102); //  -> p1
-	init_color(60, 412, 239, 239); //  -> p2
-	init_color(70, 729, 333, 212); //  -> p3
-	init_color(80, 643, 220, 125); //  -> p4
-	init_color(55, 137, 65, 51); // processus p1
-	init_color(65, 206, 119, 119); // processus p2
-	init_color(75, 364, 166, 106); // processus p3
-	init_color(85, 321, 110, 62); // processus p4
-	init_color(0, 0, 231, 275); // fond
-	init_color(1, 921, 0, 0); //  pause
-	init_color(2, 0, 600, 0); // play
-}
+// static void	color_two(void)
+// {
+// 	init_color(35, 400, 647, 678);//  -> ecriture des bordures et de la ram
+// 	init_color(40, 769, 875, 902);//  -> all stats sur le cote
+// 	init_color(50, 275, 129, 102); //  -> p1
+// 	init_color(60, 412, 239, 239); //  -> p2
+// 	init_color(70, 729, 333, 212); //  -> p3
+// 	init_color(80, 643, 220, 125); //  -> p4
+// 	init_color(55, 137, 65, 51); // processus p1
+// 	init_color(65, 206, 119, 119); // processus p2
+// 	init_color(75, 364, 166, 106); // processus p3
+// 	init_color(85, 321, 110, 62); // processus p4
+// 	init_color(0, 0, 231, 275); // fond
+// 	init_color(1, 921, 0, 0); //  pause
+// 	init_color(2, 0, 600, 0); // play
+// }
 
 static void	do_pair(t_vm *vm)
 {
@@ -78,6 +78,6 @@ static void	do_pair(t_vm *vm)
 void		colors_init(t_vm *vm)
 {
 	color_one();
-	color_two();
+	// color_two();
 	do_pair(vm);
 }

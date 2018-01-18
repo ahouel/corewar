@@ -26,7 +26,6 @@ static void	keys_press(t_vm *vm, char key)
 		vm->pause = 0;
 		attron(COLOR_PAIR(30));
 		mvprintw(1, 216, "~ ~ PAUSED ~ ~");
-		mvprintw(1, 230, "      ");
 		attroff(COLOR_PAIR(30));
 	}
 	if (key == 'w')
@@ -56,6 +55,7 @@ void		controller(t_vm *vm)
 	}
 	while (!vm->pause)
 	{
+		move(0, 0);
 		key = getch();
 		if (key != -1)
 		{

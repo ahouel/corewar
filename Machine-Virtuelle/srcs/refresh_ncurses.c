@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static void	print_live_sti(t_vm *vm)
+static void	print_live_store(t_vm *vm)
 {
 	t_pcb	*tmp;
 	int		i;
@@ -53,6 +53,8 @@ void		refresh_all(t_vm *vm)
 	mvprintw(39, 214, "%d", CYCLE_DELTA);
 	mvprintw(42, 211, "%d", NBR_LIVE);
 	mvprintw(45, 212, "%d", MAX_CHECKS);
+	attron(COLOR_PAIR(42));
+	mvprintw(0, 0, "*");
 	while (tmp)
 	{
 		attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
@@ -61,5 +63,5 @@ void		refresh_all(t_vm *vm)
 		attroff(COLOR_PAIR(vm->player[tmp->uid - 1].id_color + 5));
 		tmp = tmp->next;
 	}
-	print_live_sti(vm);
+	print_live_store(vm);
 }
