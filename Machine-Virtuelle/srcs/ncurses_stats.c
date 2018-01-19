@@ -33,7 +33,6 @@ static void	print_stats(int *tab, t_vm *vm, int x, int y)
 		}
 	}
 	attron(COLOR_PAIR(40));
-	//mvprintw(54, 243, "||");
 }
 
 void		live_stats(t_vm *vm)
@@ -47,18 +46,16 @@ void		live_stats(t_vm *vm)
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		total += vm->player[i].lives_count;
-	/*if (total == 0)
-		ft_transfert_stats();*/
 	if (total == 0)
 		return ;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (vm->player[i].name)
 		{
-			tmp = (vm->player[i].lives_count / total) * 100 * 42;
+			tmp = (vm->player[i].lives_count * 100 * 48) / total;
 			if (tmp % 100 > 50)
 				tmp += 50;
 			tab[i] = tmp / 100;
 		}
-	print_stats(tab, vm, 201, 54);
+	print_stats(tab, vm, 198, 54);
 }

@@ -48,17 +48,17 @@ static void	basic_print_two(void)
 	mvprintw(7, 200, "Current cycle : ");
 	mvprintw(12, 200, "Processes : ");
 	mvprintw(50, 204, "live breakdown for current period :");
-	mvprintw(53, 199, "||");
-	mvprintw(55, 199, "||");
-	mvprintw(53, 243, "||");
-	mvprintw(55, 243, "||");
-	mvprintw(54, 199, "||||||||||||||||||||||||||||||||||||||||||||||");
+	mvprintw(53, 198, "||");
+	mvprintw(55, 198, "||");
+	mvprintw(53, 244, "||");
+	mvprintw(55, 244, "||");
+	mvprintw(54, 198, "||||||||||||||||||||||||||||||||||||||||||||||||");
 	mvprintw(58, 206, "live breakdown for last period :");
-	mvprintw(61, 199, "||");
-	mvprintw(63, 199, "||");
-	mvprintw(61, 243, "||");
-	mvprintw(63, 243, "||");
-	mvprintw(62, 199, "||||||||||||||||||||||||||||||||||||||||||||||");
+	mvprintw(61, 198, "||");
+	mvprintw(63, 198, "||");
+	mvprintw(61, 244, "||");
+	mvprintw(63, 244, "||");
+	mvprintw(62, 198, "||||||||||||||||||||||||||||||||||||||||||||||||");
 	mvprintw(36, 200, "CYCLE_TO_DIE : ");
 	mvprintw(39, 200, "CYCLE_DELTA : ");
 	mvprintw(42, 200, "NBR_LIVE : ");
@@ -83,7 +83,7 @@ void	init_ncurses(t_vm *vm, WINDOW **w)
 	cbreak(); //getch() no block
 	curs_set(0);
 	nodelay(*w, TRUE);
-	colors_init(vm);
+	colors_init(vm, 1);
 	basic_print(0);
 	basic_print_two();
 }

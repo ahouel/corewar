@@ -67,6 +67,7 @@ void		call_ncurses(t_vm *vm)
 {
 	print_player(vm);
 	wprint_ram(vm);
+	live_stats(vm);
 	refresh_all(vm);
 	move(0, 0);
 	refresh();

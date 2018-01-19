@@ -12,6 +12,20 @@
 
 #include "vm.h"
 
+	// init_color(35, , , ); //  -> ecriture des bordures et de la ram
+	// init_color(40, , , ); //  -> all stats sur le cote
+	// init_color(50, , , ); //  -> p1
+	// init_color(60, , , ); //  -> p2
+	// init_color(70, , , ); //  -> p3
+	// init_color(80, , , ); //  -> p4
+	// init_color(55, , , ); // processus p1
+	// init_color(65, , , ); // processus p2
+	// init_color(75, , , ); // processus p3
+	// init_color(85, , , ); // processus p4
+	// init_color(0, , , ); // fond
+	// init_color(1, , , ); // pause
+	// init_color(2, , , ); // play
+
 static void	color_one(void)
 {
 	init_color(35, 350, 350, 350);// basic grey -> ecriture des bordures et de la ram
@@ -29,22 +43,56 @@ static void	color_one(void)
 	init_color(2, 0, 600, 0); // play
 }
 
-// static void	color_two(void)
-// {
-// 	init_color(35, 400, 647, 678);//  -> ecriture des bordures et de la ram
-// 	init_color(40, 769, 875, 902);//  -> all stats sur le cote
-// 	init_color(50, 275, 129, 102); //  -> p1
-// 	init_color(60, 412, 239, 239); //  -> p2
-// 	init_color(70, 729, 333, 212); //  -> p3
-// 	init_color(80, 643, 220, 125); //  -> p4
-// 	init_color(55, 137, 65, 51); // processus p1
-// 	init_color(65, 206, 119, 119); // processus p2
-// 	init_color(75, 364, 166, 106); // processus p3
-// 	init_color(85, 321, 110, 62); // processus p4
-// 	init_color(0, 0, 231, 275); // fond
-// 	init_color(1, 921, 0, 0); //  pause
-// 	init_color(2, 0, 600, 0); // play
-// }
+static void	color_one_bis(void)
+{
+	init_color(35, 651, 651, 651);//  -> ecriture des bordures et de la ram
+	init_color(40, 0, 0, 0);//  -> all stats sur le cote
+	init_color(50, 894, 12, 0); //  -> p1
+	init_color(60, 0, 698, 176); //  -> p2
+	init_color(70, 886, 24, 898); //  -> p3
+	init_color(80, 4, 16, 898); //  -> p4
+	init_color(55, 953, 502, 502); // processus p1
+	init_color(65, 502, 851, 588); // processus p2
+	init_color(75, 949, 502, 949); // processus p3
+	init_color(85, 502, 502, 949); // processus p4
+	init_color(0, 1000, 1000, 1000); // fond
+	init_color(1, 82, 871, 1000); //  pause
+	init_color(2, 0, 600, 0); // play
+}
+
+static void	color_two(void)
+{
+	init_color(35, 400, 647, 678);//  -> ecriture des bordures et de la ram
+	init_color(40, 769, 875, 902);//  -> all stats sur le cote
+	init_color(50, 275, 129, 102); //  -> p1
+	init_color(60, 412, 239, 239); //  -> p2
+	init_color(70, 729, 333, 212); //  -> p3
+	init_color(80, 643, 220, 125); //  -> p4
+	init_color(55, 137, 65, 51); // processus p1
+	init_color(65, 206, 119, 119); // processus p2
+	init_color(75, 364, 166, 106); // processus p3
+	init_color(85, 321, 110, 62); // processus p4
+	init_color(0, 0, 231, 275); // fond
+	init_color(1, 921, 0, 0); //  pause
+	init_color(2, 0, 600, 0); // play
+}
+
+static void	color_two_bis(void)
+{
+	init_color(35, 600, 357, 325); //  -> ecriture des bordures et de la ram
+	init_color(40, 0, 0, 0); //  -> all stats sur le cote
+	init_color(50, 725, 875, 898); //  -> p1
+	init_color(60, 588, 765, 765); //  -> p2
+	init_color(70, 275, 671, 788); //  -> p3
+	init_color(80, 361, 780, 878); //  -> p4
+	init_color(55, 867, 937, 953); // processus p1
+	init_color(65, 796, 882, 882); // processus p2
+	init_color(75, 639, 835, 894); // processus p3
+	init_color(85, 682, 890, 937); // processus p4
+	init_color(0, 1000, 773, 725); // fond
+	init_color(1, 82, 871, 1000); // pause
+	init_color(2, 0, 600, 0); // play
+}
 
 static void	do_pair(t_vm *vm)
 {
@@ -75,9 +123,15 @@ static void	do_pair(t_vm *vm)
 	vm->player[3].id_color = 8;
 }
 
-void		colors_init(t_vm *vm)
+void		colors_init(t_vm *vm, char color)
 {
-	color_one();
-	// color_two();
+	if (color == 1)
+		color_one();
+	else if (color == '!')
+		color_one_bis();
+	else if (color == 2)
+		color_two();
+	else if (color == '@')
+		color_two_bis();
 	do_pair(vm);
 }

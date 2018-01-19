@@ -19,6 +19,18 @@
 **	utiliser plutot usleep() que sleep()
 */
 
+static void	keys_themes(t_vm *vm, char key)
+{
+	if (key == '1')
+		colors_init(vm, 1);
+	else if (key == '!')
+		colors_init(vm, '!');
+	else if (key == '2')
+		colors_init(vm, 2);
+	else if (key == '@')
+		colors_init(vm, '@');
+}
+
 static void	keys_press(t_vm *vm, char key)
 {
 	if (key == ' ' && vm->pause)
@@ -30,8 +42,8 @@ static void	keys_press(t_vm *vm, char key)
 	}
 	if (key == 'w')
 	{
-		if (vm->delay + 24000 < 1000000)
-			vm->delay += 24000;
+		if (vm->delay + 12000 < 1000000)
+			vm->delay += 12000;
 	}
 	else if (key == 'e')
 	{
@@ -40,6 +52,7 @@ static void	keys_press(t_vm *vm, char key)
 		else
 			vm->delay = 0;
 	}
+	keys_themes(vm, key);
 }
 
 void		controller(t_vm *vm)
