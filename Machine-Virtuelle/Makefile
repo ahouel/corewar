@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/17 19:09:35 by ahouel           ###   ########.fr        #
+#    Updated: 2018/01/24 16:59:58 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,47 +22,48 @@ OBJ_PATH = ./obj/
 INC_PATH = ./includes/
 LIB_PATH = ../libft/
 
-SRC_FILES =	main.c				\
-			initialisation.c	\
-			init_vm.c			\
-			exe.c				\
-			error.c				\
-			free_vm.c			\
-			get_winner.c		\
-			check_arg.c			\
-			controller.c		\
-			new_player.c		\
-			swap_players.c		\
-			write_players.c		\
-			srch_player.c		\
-			ncurses.c			\
-			load_op.c			\
-			ocp_is_valid.c		\
-			get_ind_value.c		\
-			get_address.c		\
-			move_processus.c	\
-			create_processus.c	\
-			print_ram.c			\
-			store_ind_value.c	\
-			op.c				\
-			live.c				\
-			ld.c				\
-			st.c				\
-			add.c				\
-			sub.c				\
-			gates.c				\
-			zjmp.c				\
-			ldi.c				\
-			sti.c				\
-			ft_fork.c			\
-			aff.c				\
-			colors_init.c		\
-			ncurses_stats.c		\
-			refresh_ncurses.c	\
-			init_ncurses.c
+SRC_FILES =	main.c					\
+			initialisation.c		\
+			init_vm.c				\
+			exe.c					\
+			error.c					\
+			free_vm.c				\
+			get_winner.c			\
+			check_arg.c				\
+			new_player.c			\
+			swap_players.c			\
+			write_players.c			\
+			srch_player.c			\
+			load_op.c				\
+			ocp_is_valid.c			\
+			get_ind_value.c			\
+			get_address.c			\
+			move_processus.c		\
+			create_processus.c		\
+			print_ram.c				\
+			store_ind_value.c		\
+			op.c					\
+			live.c					\
+			ld.c					\
+			st.c					\
+			add.c					\
+			sub.c					\
+			gates.c					\
+			zjmp.c					\
+			ldi.c					\
+			sti.c					\
+			ft_fork.c				\
+			aff.c					\
+			init_ncurses.c			\
+			ncurses_colors_init.c	\
+			ncurses_stats.c			\
+			ncurses_pairs.c			\
+			refresh_ncurses.c		\
+			ncurses_controller.c	\
+			call_ncurses.c
 
-INC_FILES = vm.h				\
-			op.h				\
+INC_FILES = vm.h					\
+			op.h					\
 			vm_struct.h
 
 LIB_FILES = libft.a

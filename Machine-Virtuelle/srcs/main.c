@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/18 17:12:44 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/24 16:46:36 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int			main(int ac, char **av)
 {
 	int			win;
 	t_vm		vm;
-	WINDOW		*w;
 
 	if (ac < 2)
 		usage(*av);
@@ -71,7 +70,7 @@ int			main(int ac, char **av)
 	if (!check_arg(&vm, ac, av))
 		error(&vm, "no player");
 	if (vm.ncurses)
-		init_ncurses(&vm, &w);
+		init_ncurses();
 	initialisation(&vm);
 	exe(&vm);
 	if (vm.ncurses)

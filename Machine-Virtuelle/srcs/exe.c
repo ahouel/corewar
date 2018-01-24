@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/15 17:06:58 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/24 16:54:09 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void		exe(t_vm *vm)
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle);
 		if (vm->ncurses)
-			controller(vm);
+			ncurses_controller(vm);
 		proc = vm->proc_lst;
 		while (proc)
 		{

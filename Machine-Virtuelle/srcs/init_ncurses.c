@@ -6,7 +6,7 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:07:58 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/17 19:09:06 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/24 16:56:45 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,23 @@ static void	basic_print_two(void)
 	mvprintw(48, 217, " live stats ");
 }
 
-void	init_ncurses(t_vm *vm, WINDOW **w)
+void		init_ncurses(void)
 {
-	*w = initscr();
+	void	*w;
+
+	w = initscr();
 	if (has_colors() == FALSE)
 	{
 		ft_printf("Your terminal does not support colors.\n");
 		endwin();
 		exit(1);
 	}
-	start_color(); // start color
-	cbreak(); //getch() no block
+	start_color();
+	cbreak();
 	curs_set(0);
-	nodelay(*w, TRUE);
-	colors_init(vm, 1);
+	noecho();
+	nodelay(w, TRUE);
+	ncurses_colors_init(1);
 	basic_print(0);
 	basic_print_two();
 }

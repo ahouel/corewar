@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/17 19:09:13 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/24 17:01:06 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,11 @@ void		aff(t_vm *vm, t_pcb *proc);
 */
 
 void		call_ncurses(t_vm *vm);
-void		init_ncurses(t_vm *vm, WINDOW **w);
-void		controller(t_vm *vm);
-void		colors_init(t_vm *vm);
+void		init_ncurses(void);
+void		ncurses_controller(t_vm *vm);
+void		ncurses_colors_init(char color);
 void		live_stats(t_vm *vm);
 void		refresh_all(t_vm *vm);
-
-/*
-**	-------DEBUG-------
-*/
-
-void		show_mem_2(t_vm *vm);
-void		show_proc_nb(t_vm *vm);
-void		debug_display_proc(t_vm *vm);
-void		show_players(t_vm *vm);
-void		show_processus(t_vm *vm);
-void		show_ops(t_vm *vm);
+void		ncurses_pairs(void);
 
 #endif
