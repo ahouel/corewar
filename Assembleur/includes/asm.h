@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/06 19:14:34 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/24 19:31:47 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,13 @@ char			get_ocp(t_inst *current);
 t_champ			*make_live(t_champ *pl, char *s);
 t_champ			*make_sti(t_champ *pl, char *s);
 t_champ			*make_and(t_champ *pl, char *s);
+t_champ			*make_zjmp(t_champ *pl, char *s);
+t_champ			*make_ldi(t_champ *pl, char *s);
+t_champ			*make_add(t_champ *pl, char *s);
+t_champ			*make_sub(t_champ *pl, char *s);
+t_champ			*make_or(t_champ *pl, char *s);
+t_champ			*make_xor(t_champ *pl, char *s);
+t_champ			*make_ld(t_champ *pl, char *s);
 
 /*
 ** gestion d'erreur && free

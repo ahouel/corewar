@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 16:11:48 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/06 19:10:54 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/24 19:25:00 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ static int	get_first_param(char *s, t_inst *new)
 	if (s[i++] != 'r' || !(ft_isdigit(s[i])))
 		return (0);
 	new->param_one = itohex(ft_atoi(&(s[i])), 1);
-	while (s[i] && ft_isdigit(s[i]))
-		i++;
-	if (s[i])
-		return (0);
-	new->size_one[1] = 1;
+	new->size_one[0] = 1;
+	new->size_one[1] = REG_CODE;
 	return (1);
 }
 
@@ -42,12 +39,12 @@ static int	get_second_param(char *s, t_inst *new, t_champ *pl)
 	{
 		new->param_two = itohex(ft_atoi(&(s[1])), 1);
 		new->size_two[0] = 1;
-		new->size_two[1] = 1;
+		new->size_two[1] = REG_CODE;
 	}
 	else if ((tmp = is_direct(s, pl, 2, new)))
 	{
 		new->size_two[0] = 2;
-		new->size_two[1] = 2;
+		new->size_two[1] = DIR_CODE;
 		if (tmp == 1)
 			new->param_two = itohex(ft_atoi(&(s[1])), 2);
 	}
@@ -55,7 +52,7 @@ static int	get_second_param(char *s, t_inst *new, t_champ *pl)
 	{
 		new->param_two = itohex(ft_atoi(s), 2);
 		new->size_two[0] = 2;
-		new->size_two[1] = 3;
+		new->size_two[1] = IND_CODE;
 	}
 	return (new->size_two[0]);
 }
@@ -72,12 +69,12 @@ static int	get_third_param(char *s, t_inst *new, t_champ *pl)
 	{
 		new->param_three = itohex(ft_atoi(&(s[i + 1])), 1);
 		new->size_three[0] = 1;
-		new->size_three[1] = 1;
+		new->size_three[1] = REG_CODE;
 	}
 	else if ((tmp = is_direct(&(s[i]), pl, 3, new)))
 	{
 		new->size_three[0] = 2;
-		new->size_three[1] = 2;
+		new->size_three[1] = DIR_CODE;
 		if (tmp == 1)
 			new->param_three = itohex(ft_atoi(&(s[i + 1])), 2);
 	}
@@ -105,7 +102,7 @@ t_champ		*make_sti(t_champ *pl, char *s)
 	if (!(new->size_three[0] = get_third_param(tab[2], new, pl)))
 		return (NULL); // a revoir
 	new->ocp = get_ocp(new);
-	new->size = new->size_one[0] + new->size_two[0] + new->size_three[0];
+	new->size = new->size_one[0] + new->size_two[0] + new->size_three[0] + 2;
 	new->pc = pl->current_pc;
 	pl->current_pc += new->size;
 	return (pl);

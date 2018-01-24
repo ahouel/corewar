@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 12:14:41 by ahouel            #+#    #+#             */
-/*   Updated: 2017/12/01 16:28:51 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/24 14:31:37 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,5 @@ void			ft_free_2d(char **str);
 int				ft_str_isdigit(const char *str);
 void			ft_bswap(void *bytes, size_t len);
 int				ft_iswhitespace(char c);
+size_t			ft_tablen(char **tab);
 #endif

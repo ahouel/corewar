@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/06 19:13:13 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:40:17 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,15 @@ static char		*get_value(t_inst *current, t_champ *pl, char *s)
 	t_lab	*lab;
 
 	lab = pl->lab;
-	while (ft_strcmp(lab->name, s) != 0)
+	while (lab && ft_strcmp(lab->name, s) != 0)
 		lab = lab->next;
+	if (!lab)
+		return (NULL); //a revoir
+//	int ttmp = (current->pc - lab->pc) % 65536;
+//	printf("|| %d ||\n", ttmp);
+	if (lab->pc < current->pc)
+		return (itohex(65531, 2));
+//		return (itohex(65536 - ((current->pc - lab->pc) % 65536), 2));
 	return (itohex((lab->pc - current->pc) % 65536, 2));
 }
 
@@ -51,14 +58,11 @@ t_champ			*get_labels_params(t_champ *pl)
 	t_lab	*lab;
 
 	lab = pl->lab;
-	while (strcmp(lab->name, "live") != 0)
-		lab = lab->next;
-	lab->pc = 15;
-/*	while (lab)
+	while (lab)
 	{
 		lab->pc = lab->lst->pc;
 		lab = lab->next;
-	}*/
+	}
 	pl = fill_params(pl);
 	return (pl);
 }

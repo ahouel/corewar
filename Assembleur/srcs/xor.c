@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itohex.c                                           :+:      :+:    :+:   */
+/*   xor.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/24 15:48:00 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/24 18:12:32 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/24 18:15:30 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-char		*itohex(int n, int size)
+t_champ		*make_xor(t_champ *pl, char *s)
 {
-	char			*ret;
-	int				i;
+	t_lab		*lab;
+	t_inst		*inst;
 
-	printf("\nITOHEX\n__________\nn = %d\n", n);
-	if (!(ret = malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	ret[size] = '\0';
-	while (--size >= 0)
-	{
-		ret[size] = n % 256;
-		n /= 256;
-	}
-	return (ret);
+	pl = make_and(pl, s);
+	lab = pl->lab;
+	while (lab->next)
+		lab = lab->next;
+	inst = lab->lst;
+	while (inst->next)
+		inst = inst->next;
+	free(inst->name);
+	inst->name = ft_strdup("xor");
+	inst->opcode = 8;
+	return (pl);
 }

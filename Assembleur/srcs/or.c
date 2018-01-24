@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itohex.c                                           :+:      :+:    :+:   */
+/*   or.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/24 15:48:00 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/24 18:05:42 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/24 18:11:19 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-char		*itohex(int n, int size)
-{
-	char			*ret;
-	int				i;
+/*
+** Voir le commentaire de make_sub
+*/
 
-	printf("\nITOHEX\n__________\nn = %d\n", n);
-	if (!(ret = malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	ret[size] = '\0';
-	while (--size >= 0)
-	{
-		ret[size] = n % 256;
-		n /= 256;
-	}
-	return (ret);
+t_champ		*make_or(t_champ *pl, char *s)
+{
+	t_lab	*lab;
+	t_inst	*inst;
+
+	pl = make_and(pl, s);
+	lab = pl->lab;
+	while (lab->next)
+		lab = lab->next;
+	inst = lab->lst;
+	while (inst->next)
+		inst = inst->next;
+	free(inst->name);
+	inst->name = ft_strdup("or");
+	inst->opcode = 7;
+	return (pl);
 }

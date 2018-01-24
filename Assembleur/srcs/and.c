@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 18:39:30 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/06 19:14:31 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:28:06 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_champ		*make_and(t_champ *pl, char *s)
 	if (!(new->size_three[0] = get_third_param(tab[2], new)))
 		return (NULL);
 	new->ocp = get_ocp(new);
-	new->size = new->size_one[0] + new->size_two[0] + new->size_three[0];
+	new->size = new->size_one[0] + new->size_two[0] + new->size_three[0] + 2;
 	new->pc = pl->current_pc;
 	pl->current_pc += new->size;
 	return (pl);

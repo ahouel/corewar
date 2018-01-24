@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 13:53:00 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/06 19:12:04 by lgaveria         ###   ########.fr        #
+#    Updated: 2018/01/24 19:32:34 by lgaveria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ OBJ_PATH = ./obj/
 INC_PATH = ./includes/
 LIB_PATH = ../libft/
 
-SRC_FILES = and.c \
+SRC_FILES = add.c \
+			and.c \
 			clean_it.c \
 			end_it.c \
 			get_labels_params.c \
@@ -30,12 +31,18 @@ SRC_FILES = and.c \
 			is_direct.c \
 			itohex.c \
 			label_chars.c \
+			ld.c \
+			ldi.c \
 			live.c \
 			main.c \
 			new_instruction.c \
 			new_label.c \
+			or.c \
 			pars.c \
 			sti.c \
+			sub.c \
+			xor.c \
+			zjmp.c \
 			coding_help.c
 
 INC_FILES = asm.h \

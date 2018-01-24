@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itohex.c                                           :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/24 15:48:00 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/24 14:29:15 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/24 14:30:38 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/asm.h"
+#include "libft.h"
 
-char		*itohex(int n, int size)
+size_t		ft_tablen(char **tab)
 {
-	char			*ret;
-	int				i;
+	int i;
 
-	printf("\nITOHEX\n__________\nn = %d\n", n);
-	if (!(ret = malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	ret[size] = '\0';
-	while (--size >= 0)
-	{
-		ret[size] = n % 256;
-		n /= 256;
-	}
-	return (ret);
+	if (!tab)
+		return(0);
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }

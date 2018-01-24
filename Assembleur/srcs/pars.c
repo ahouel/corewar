@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/06 19:14:37 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/24 18:16:00 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ static t_champ	*select_fun(char *s, int i, t_champ *pl)
 	t_champ	*(*funptr[15])(t_champ*, char*);
 
 	funptr[0] = &make_live;
-	funptr[1] = NULL;
+	funptr[1] = &make_ldi;
 	funptr[2] = &make_sti;
-	funptr[3] = NULL;
-	funptr[4] = NULL;
+	funptr[3] = &make_add;
+	funptr[4] = &make_sub;
 	funptr[5] = &make_and;
-	funptr[6] = NULL;
-	funptr[7] = NULL;
-	funptr[8] = NULL;
+	funptr[6] = &make_or;
+	funptr[7] = &make_xor;
+	funptr[8] = &make_zjmp;
 	funptr[9] = NULL;
 	funptr[10] = NULL;
 	funptr[11] = NULL;
