@@ -12,74 +12,77 @@
 
 #include "../includes/asm.h"
 
-/*
-**	On vérifie si la ligne passée contient bien le commentaire. Si oui, on le
-**	récupère. 
-**	!!! manque la gestion d'erreur sur la fin de la ligne, après le commentaire
-*/
-
-static void	check_comment(char **input, header_t *head, t_champ *pl, int i)
+static void	check_comment(char *s, header_t *head, t_champ *pl)
 {
-	int		j;
-	int		k;
+	int		i;
+	int		count;
 
-	if (ft_strncmp(input[i], ".comment", 8) != 0)
-		return ;
+	if (ft_strncmp(s, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
+		exit_free("no comment under the name\n", pl);
 	if ((head->comment)[0] != 0)
-		exit_free("a champ can have only one comment\n", pl, input);
-	j = 8;
-	while (ft_iswhitespace(input[i][j]))
-		j++;
-	k = 0;
-	while (input[i][++j] && input[i][j] != '\"' && k < COMMENT_LENGTH)
-		(head->comment)[k++] = input[i][j];
+		exit_free("a champ can have only one comment\n", pl);
+	i = ft_strlen(COMMENT_CMD_STRING);
+	while (ft_iswhitespace(s[i]))
+		i++;
+	count = 0;
+	while (s[++i] && s[i] != '\"' && count < COMMENT_LENGTH)
+		(head->comment)[count++] = s[i];
+	i++;
+	while (s[i] && ft_iswhitespace(s[i]))
+		i++;
+	if (s[i] && s[i] != '#')
+		exit_free("format comment line\n", pl);
 }
 
-/*
-** Meme remarque que pour check_comment mais concernant le nom du champion.
-*/
-
-static void	check_name(char **input, header_t *head, t_champ *pl, int i)
+static void	check_name(char *s, header_t *head, t_champ *pl)
 {
-	int		j;
-	int		k;
+	int		i;
+	int		count;
 
-	if (ft_strncmp(input[i], ".name", 5) != 0)
-		return ;
+	if (ft_strncmp(s, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
+		exit_free("no name at the top of the file\n", pl);
 	if ((head->prog_name)[0] != 0)
-		exit_free("a champ can have only one name\n", pl, input);
-	j = 5;
-	while (ft_iswhitespace(input[i][j]))
-		j++;
-	k = 0;
-	while (input[i][++j] && input[i][j] != '\"' && k < PROG_NAME_LENGTH)
-		(head->prog_name)[k++] =input[i][j];
+		exit_free("a champ can have only one name\n", pl);
+	i = ft_strlen(NAME_CMD_STRING);
+	while (ft_iswhitespace(s[i]))
+		i++;
+	count = 0;
+	i++;
+	while (s[i] && s[i] != '\"' && count < PROG_NAME_LENGTH)
+		(head->prog_name)[count++] = s[i++];
+	i++;
+	while (s[i] && ft_iswhitespace(s[i]))
+		i++;
+	if (s[i] && s[i] != '#')
+		exit_free("format name line\n", pl);
 }
 
 /*
-**	On parcourt les lignes du .s en sautant celles de commentaires.
-**	!!! à rendre plus propre quand les deux fonctions au dessus seront rénovées
+**	On recupere, en verifiant bien les potentielles erreurs de parsing, le
+**	'.name' et le '.comment' du champion.
+**	Les lignes de commentaires sont ignorees.
 */
 
-t_champ		*manage_header(char **input, t_champ *pl)
+t_champ		*manage_header(t_champ *pl)
 {
 	int			i;
 	header_t	*head;
 
 	i = 0;
 	if (!(head = ft_memalloc(sizeof(header_t))))
-		exit_free("unsuccessful malloc\n", pl, input);
-	while (input[i][0] == COMMENT_CHAR)
-		i++;
-	check_name(input, head, pl, i);
-	if ((head->prog_name)[0] == 0)
-		exit_free("has to be a name on the top of a file\n", pl, input);
-	while (input[++i][0] == COMMENT_CHAR)
-		;
-	check_comment(input, head, pl, i);
-	if ((head->comment)[0] == 0)
-		exit_free("has to be a comment right under the name\n", pl, input);
-	i++;
+		exit_free("unsuccessful malloc\n", pl);
 	pl->head = head;
-	return (do_parsing(pl, input, i));
+	while ((pl->input)[i][0] == COMMENT_CHAR)
+		i++;
+	check_name((pl->input)[i], head, pl);
+	if ((head->prog_name)[0] == 0)
+		exit_free("no name at the top of a file\n", pl);
+	i++;
+	while ((pl->input)[i][0] == COMMENT_CHAR)
+		i++;
+	check_comment((pl->input)[i], head, pl);
+	if ((head->comment)[0] == 0)
+		exit_free("no comment under the name\n", pl);
+	i++;
+	return (do_parsing(pl, i));
 }

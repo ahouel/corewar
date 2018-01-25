@@ -12,6 +12,11 @@
 
 #include "../includes/asm.h"
 
+/*
+** Creer est positionne un nouveau maillon dans la liste de labels. Les mallocs 
+** sont verifiés.
+*/
+
 t_champ		*new_label(char *name, t_champ *pl)
 {
 	t_lab	*new;
@@ -19,12 +24,11 @@ t_champ		*new_label(char *name, t_champ *pl)
 	int		i;
 
 	i = 0;
-	while (ft_iswhitespace(name[i]))
-		i++;
-	name = &(name[i]);
 	if (!(new = ft_memalloc(sizeof(t_lab))))
-		return (NULL); // a gerer
-	new->name = ft_strsub(name, 0, how_many_label_char(name));
+		exit_free("unsuccesfull malloc", pl);
+	if (!(new->name = ft_strsub(name, 0, how_many_label_char(name))))
+		exit_free("unsuccesfull malloc", pl);
+	new->pc = pl->current_pc;
 	tmp = (*pl).lab;
 	if (!tmp)
 		(*pl).lab = new;

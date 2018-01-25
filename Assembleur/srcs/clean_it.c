@@ -12,10 +12,6 @@
 
 #include "../includes/asm.h"
 
-/*
-**	En cas d error afficher str et exit le programme
-*/
-
 void	free_instructions(t_inst *lst)
 {
 	if (lst->next)
@@ -54,6 +50,8 @@ void	free_champ(t_champ *champ)
 {
 	if (champ->head)
 		free((champ->head));
+	if (champ->input)
+		free_tab((champ->input));
 	champ->head = NULL;
 	free(champ);
 	champ = NULL;
@@ -74,10 +72,10 @@ void	free_tab(char **tab)
 	tab = NULL;
 }
 
-void	exit_free(char *str, t_champ *champ, char **input)
+void	exit_free(char *str, t_champ *pl)
 {
 	ft_putstr(str);
-	free_champ(champ);
-	free_tab(input);
+	if (pl)
+		free_champ(pl);
 	exit(EXIT_FAILURE);
 }

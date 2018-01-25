@@ -25,20 +25,20 @@ static char		**read_champ(char *file_name)
 	int		gnl_ret;
 
 	if (ft_strncmp(&(file_name[ft_strlen(file_name) - 2]), ".s", 2) != 0)
-		exit_free("extension's file must be [.s]", NULL, NULL);
+		exit_free("extension's file must be [.s]", NULL);
 	if ((fd = open(file_name, O_RDONLY)) == -1)
-		exit_free("invalid file\n", NULL, NULL);
+		exit_free("invalid file\n", NULL);
 	if (!(ret = malloc(sizeof(char*) * 1)))
-		exit_free("unsuccessful malloc\n", NULL, NULL);
+		exit_free("unsuccessful malloc\n", NULL);
 	i = 0;
 	while ((gnl_ret = get_next_line(fd, &(ret[i]))) > 0)
 	{
 		if (!(ret = realloc(ret, sizeof(char*) * (i + 2))))
-			exit_free("unsuccessful malloc\n", NULL, NULL);
+			exit_free("unsuccessful malloc\n", NULL);
 		ret[++i] = NULL;
 	}
 	if (gnl_ret == -1)
-		exit_free("unsuccessful read\n", NULL, ret); //erreur a gerer
+		exit_free("unsuccessful read\n", NULL); //erreur a gerer
 	close(fd);
 	return (ret);
 }
@@ -46,7 +46,7 @@ static char		**read_champ(char *file_name)
 /*
 **	On boucle pour traiter un par un tous les fichiers envoyés : on le lit, on
 **	récupère les informations du header et on renvoit directement tout ça dans
-**	le parsing, qui renverrat la structure avec tout ce qui est nécessaire
+**	le parsing, qui renverra la structure avec tout ce qui est nécessaire
 **	d'écrire dans le .cor.
 */
 
@@ -58,16 +58,17 @@ int				main(int argc, char **argv)
 
 	i = 1;
 	if (argc < 2)
-		exit_free("usage : ./asm [champ to compile]\n", NULL, NULL);
+		exit_free("usage : ./asm [champ to compile]\n", NULL);
 	while (i != argc)
 	{
 		input = read_champ(argv[i]);
 		if (!input)
-			exit_free("invalid file\n", NULL, NULL);
+			exit_free("invalid file\n", NULL);
 		if (!(pl = ft_memalloc(sizeof(t_champ))))
-			exit_free("unsuccessful malloc\n", NULL, input);
-		pl = manage_header(input, pl);
-		free_tab(input); // sera modifie
+			exit_free("unsuccessful malloc\n", NULL);
+		pl->input = input;
+		pl = manage_header(pl);
+		free_tab(pl->input);
 		print_lst(pl); //
 		end_it(pl, argv[i]);
 		i++;

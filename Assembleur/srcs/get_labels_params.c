@@ -12,7 +12,13 @@
 
 #include "../includes/asm.h"
 
-static char		*get_value(t_inst *current, t_champ *pl, char *s)
+/*
+**	Fait la difference entre le PC actuel et selui qu'on cherche a atteindre via
+**	un addressage de type %:xxx. Le calcul se fait differement selon le sens de
+**	la soustraction.
+*/
+
+static char		*get_val(t_inst *current, t_champ *pl, char *s)
 {
 	t_lab	*lab;
 
@@ -21,18 +27,21 @@ static char		*get_value(t_inst *current, t_champ *pl, char *s)
 		lab = lab->next;
 	if (!lab)
 		return (NULL); //a revoir
-//	int ttmp = (current->pc - lab->pc) % 65536;
-//	printf("|| %d ||\n", ttmp);
 	if (lab->pc < current->pc)
-		return (itohex(65531, 2));
-//		return (itohex(65536 - ((current->pc - lab->pc) % 65536), 2));
+		return (itohex(65536 - ((current->pc - lab->pc) % 65536), 2));
 	return (itohex((lab->pc - current->pc) % 65536, 2));
 }
 
-static t_champ	*fill_params(t_champ *pl)
+/*
+**	Cette fonction finira surement très vite par s'integrer à la detection des
+**	direct, pour ne pas avoir a tout reparcourir ainsi.
+*/
+
+t_champ			*fill_label_params(t_champ *pl)
 {
 	t_lab	*lab;
 	t_inst	*inst;
+	int		i;
 
 	lab = pl->lab;
 	while (lab)
@@ -40,29 +49,15 @@ static t_champ	*fill_params(t_champ *pl)
 		inst = lab->lst;
 		while (inst)
 		{
-			if (inst->one_label_name)
-				inst->param_one = get_value(inst, pl, inst->one_label_name);
-			if (inst->two_label_name)
-				inst->param_two = get_value(inst, pl, inst->two_label_name);
-			if (inst->three_label_name)
-				inst->param_three = get_value(inst, pl, inst->three_label_name);
+			i = 0;
+			while (i > 3)
+			{
+				if (inst->lab_name[i])
+					inst->op->params[i] = get_val(inst, pl, inst->lab_name[i]);
+			}
 			inst = inst->next;
 		}
 		lab = lab->next;
 	}
-	return (pl);
-}
-
-t_champ			*get_labels_params(t_champ *pl)
-{
-	t_lab	*lab;
-
-	lab = pl->lab;
-	while (lab)
-	{
-		lab->pc = lab->lst->pc;
-		lab = lab->next;
-	}
-	pl = fill_params(pl);
 	return (pl);
 }

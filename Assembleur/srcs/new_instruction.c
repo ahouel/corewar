@@ -14,22 +14,25 @@
 
 /*
 **	Initialise une nouvelle structure instruction puis la place correctement par
-**	rapport aux labels.
+**	rapport aux labels. Initialise egalement le t_op qui y est lie.
 */
 
-t_inst		*new_instruction(char *name, t_champ **champ)
+t_inst		*new_instruction(t_champ *pl, int i)
 {
 	t_inst	*new;
 	t_inst	*tmp;
 	t_lab	*current_lab;
 
 	if (!(new = ft_memalloc(sizeof(t_inst))))
-		return (NULL); //a gerer
-	new->name = ft_strdup(name);
-	current_lab = (*champ)->lab;
+		exit_free("unsuccesfull malloc\n", pl);
+	new->pc = pl->current_pc;
+	if (!(new->op = ft_memalloc(sizeof(t_op))))
+		exit_free("unsuccesfull malloc\n", pl);
+	new->op = ft_memcpy(new->op, &(op_tab[i]), sizeof(t_op));
+	current_lab = pl->lab;
 	if (!current_lab)
-		current_lab = (new_label("origin_label", *champ))->lab;
-	while (current_lab->next != NULL)
+		current_lab = (new_label("origin_label", pl))->lab;
+	while (current_lab->next)
 		current_lab = current_lab->next;
 	tmp = current_lab->lst;
 	if (!tmp)

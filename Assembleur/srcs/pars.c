@@ -12,133 +12,84 @@
 
 #include "../includes/asm.h"
 
-/*
-**	Cette fonction sera dégagée dès que j'aurais intégré la structure présente
-**	dans op.c.
-*/
-
-static char		**init_instruction_tab(void)
+static void		get_params(t_champ *pl, char *s, int i)
 {
+	t_inst	*new;
 	char	**tab;
+	int		j;
 
-	if (!(tab = malloc(sizeof(char*) * 17)))
-		return (NULL); // ATTENTION
-	tab[0] = ft_strdup("live");
-	tab[1] = ft_strdup("ldi");
-	tab[2] = ft_strdup("sti");
-	tab[3] = ft_strdup("add");
-	tab[4] = ft_strdup("sub");
-	tab[5] = ft_strdup("and");
-	tab[6] = ft_strdup("or");
-	tab[7] = ft_strdup("xor");
-	tab[8] = ft_strdup("zjmp");
-	tab[9] = ft_strdup("ld");
-	tab[10] = ft_strdup("st");
-	tab[11] = ft_strdup("fork");
-	tab[12] = ft_strdup("lldi");
-	tab[13] = ft_strdup("lld");
-	tab[14] = ft_strdup("lfork");
-	tab[15] = ft_strdup("aff");
-	tab[16] = NULL;
-	return (tab);
-}
-
-/*
-**	On récupère la ligne à traiter, ainsi que l'index de l'instruction
-**	correspondante dans le tableau, et notre structure générale.
-**	Le tableau de pointeur sur fonction est initialisé, et on retourne l'appelle
-**	à la fonction correspondante.
-**	??? Remplacer ce pointeur sur fonction par un nouvel élément dans la
-**	structure d'op.c ?
-*/
-
-static t_champ	*select_fun(char *s, int i, t_champ *pl)
-{
-	t_champ	*(*funptr[15])(t_champ*, char*);
-
-	funptr[0] = &make_live;
-	funptr[1] = &make_ldi;
-	funptr[2] = &make_sti;
-	funptr[3] = &make_add;
-	funptr[4] = &make_sub;
-	funptr[5] = &make_and;
-	funptr[6] = &make_or;
-	funptr[7] = &make_xor;
-	funptr[8] = &make_zjmp;
-	funptr[9] = NULL;
-	funptr[10] = NULL;
-	funptr[11] = NULL;
-	funptr[12] = NULL;
-	funptr[13] = NULL;
-	funptr[14] = NULL;
-	if (!funptr[i])
+	new = new_instruction(pl, i);
+	tab = ft_strsplit(&(s[ft_strlen(new->op->name)]), SEPARATOR_CHAR);
+	if (ft_tablen(tab) != new->op->nb_param)
+		exit_free("instruction xxx wrong usage at the line xxx\n", pl);
+	j = 0;
+	while (tab[j])
 	{
-		new_instruction(s, &pl);
-		return (pl);
+		(new->op->p_type)[j] = (new->op->p_type)[j] & get_param_type(tab[j]);
+		if (!(new->op->p_type)[i])
+			exit_free("wrong parametre type at the line xxx\n", pl);
 	}
-	return (funptr[i](pl, s));
 }
 
 /*
-**	On avance dans la ligne jusqu'à une potentielle instruction et on intialise
-**	le tableau avec tous les termes. La couple compare notre ligne avec chacuns
-**	et s'il y a correspondance, on appelle select_fun qui s'occupera de traiter
-**	l'instruction.
+**	On recupere le premier mot de la string puis on le compare avec le nom de
+**	chaque instruction presente dans op_tab. On renvoit le tout get_params qui
+**	accedera au parsing et recuperera les information necessaires.
 */
 
 static int		get_instruction(char *s, t_champ *pl)
 {
 	char	**to_compare;
+	int		len;
 	int		i;
-	int		ret;
 
+	len = 0;
+	while (s[len] && ft_iswhitespace(s[len]))
+		len++;
+	s = &(s[len]);
+	len = 0;
+	while (s[len] && ft_isalpha(s[len]))
+		len++;
 	i = 0;
-	while (ft_iswhitespace(s[i]))
+	while ((op_tab[i]).name && ft_strncmp(s, (op_tab[i]).name, len) != 0)
 		i++;
-	s = &(s[i]);
-	to_compare = init_instruction_tab();
-	i = -1;
-	ret = 0;
-	while (to_compare[++i] && ret == 0)
-		if (ft_strncmp(s, to_compare[i], ft_strlen(to_compare[i])) == 0)
-			if (ft_iswhitespace(s[ft_strlen(to_compare[i])]))
-			{
-				select_fun(s, i, pl);
-				ret = 1;
-			}
-	free_tab(to_compare);
-	return (ret);
+	if ((op_tab[i]).name)
+		get_params(pl, s, i); //REPRENDRE ICI
+	return ((op_tab[i]).opcode);
 }
 
 /*
 **	On parcourt le tableau selon 3 conditions : 
 **		-si on arrive sur un commentaire, on passe à la ligne suivante;
 **		-si on tombe sur une instruction, elle sera traitée depuis la fonction
-**			qui l'identifie;
-*		-si on lit un label, on le place dans notre liste chainée puis on avance
+**			qui l'identifie et on passe a la ligne suivante;
+**		-si on lit un label, on le place dans notre liste chainée puis on avance
 *			dans la ligne jusqu'à la fin de ce label.
 */
 
-t_champ			*do_parsing(t_champ *pl, char **input, int i)
+t_champ			*do_parsing(t_champ *pl, int i)
 {
 	int		j;
 
-	while (input[++i])
+	while ((pl->input)[++i])
 	{
 		j = 0;
-		while (j != -1 && input[i][j])
+		while (j != -1 && (pl->input)[i][j])
 		{
-			if (input[i][j] == COMMENT_CHAR)
+			if ((pl->input[i][j]) == COMMENT_CHAR)
 				j = -1;
-			else if (get_instruction(&(input[i][j]), pl))
+			else if (get_instruction(&((pl->input)[i][j]), pl))
 				j = -1;
-			else if (how_many_label_char(&(input[i][j])))
+			else if (how_many_label_char(&((pl->input)[i][j])))
 			{
-				pl = new_label(&(input[i][j]), pl);
-				j += how_many_label_char(&(input[i][j])) + 1;
+				pl = new_label(&((pl->input)[i][j]), pl);
+				j += how_many_label_char(&((pl->input)[i][j])) + 1;
+				while ((pl->input)[i][j] && ft_iswhitespace((pl->input)[i][j]))
+					j++;
 			}
+			else
+				exit_free("wrong input at the line xxx", pl);
 		}
 	}
-	pl = get_labels_params(pl);
-	return (pl);
+	return (fill_label_params(pl));
 }

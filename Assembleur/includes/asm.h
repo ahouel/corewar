@@ -17,26 +17,23 @@
 # include "op.h"
 # include "../../libft/includes/libft.h"
 
-/*
-** Possibilite de monter une nouvelle structure pour les parametre.
-*/
+typedef struct	s_op
+{
+	char	*name;
+	int		nb_param;
+	int		p_type[3];
+	char	*params[3];
+	char	opcode;
+	int		ocp;
+	int		size;
+	int		adrr_rest; //pas sure d'en avoir besoin
+}				t_op;
 
 typedef struct	s_inst
 {
-	int				size;
 	int				pc;
-	char			*name;
-	char			opcode;
-	char			ocp;
-	char			*param_one;
-	int				size_one[2];
-	char			*one_label_name;
-	char			*param_two;
-	int				size_two[2];
-	char			*two_label_name;
-	char			*param_three;
-	int				size_three[2];
-	char			*three_label_name;
+	char			*lab_name[3];
+	t_op			*op;
 	struct s_inst	*next;
 }				t_inst;
 
@@ -51,6 +48,7 @@ typedef struct	s_lab
 typedef struct	s_champ
 {
 	int			current_pc;
+	char		**input;
 	header_t	*head;
 	t_lab		*lab;
 }				t_champ;
@@ -59,16 +57,16 @@ typedef struct	s_champ
 ** fonctions de parcours
 */
 
-t_champ			*manage_header(char **input, t_champ *champ);
-t_champ			*do_parsing(t_champ *champ, char **input, int i);
-t_champ			*get_labels_params(t_champ *pl);
+t_champ			*manage_header(t_champ *pl);
+t_champ			*do_parsing(t_champ *champ, int i);
+t_champ			*fill_label_params(t_champ *pl);
 void			end_it(t_champ *champ, char *file_name);
 
 /*
 ** fonctions outil
 */
 
-t_inst			*new_instruction(char *name, t_champ **champ);
+t_inst			*new_instruction(t_champ *champ, int i);
 t_champ			*new_label(char *name, t_champ *champ);
 int				how_many_label_char(char *s);
 char			*itohex(int n, int size);
@@ -76,25 +74,10 @@ int				is_direct(char *s, t_champ *pl, int param, t_inst *new);
 char			get_ocp(t_inst *current);
 
 /*
-** gestion des instructions
-*/
-
-t_champ			*make_live(t_champ *pl, char *s);
-t_champ			*make_sti(t_champ *pl, char *s);
-t_champ			*make_and(t_champ *pl, char *s);
-t_champ			*make_zjmp(t_champ *pl, char *s);
-t_champ			*make_ldi(t_champ *pl, char *s);
-t_champ			*make_add(t_champ *pl, char *s);
-t_champ			*make_sub(t_champ *pl, char *s);
-t_champ			*make_or(t_champ *pl, char *s);
-t_champ			*make_xor(t_champ *pl, char *s);
-t_champ			*make_ld(t_champ *pl, char *s);
-
-/*
 ** gestion d'erreur && free
 */
 
-void			exit_free(char *str, t_champ *champ, char **input);
+void			exit_free(char *str, t_champ *pl);
 void			free_tab(char **tab);
 void			free_champ(t_champ *champ);
 
@@ -104,5 +87,11 @@ void			free_champ(t_champ *champ);
 
 void			print_tab(char **tab);
 void			print_lst(t_champ *champ);
+
+/*
+** op_tab de reference
+*/
+
+extern t_op		op_tab[];
 
 #endif
