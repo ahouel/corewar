@@ -82,11 +82,11 @@ static void	color_two_bis(void)
 
 void		ncurses_colors_init(char color)
 {
-	if (color == 1)
+	if (color == '1')
 		color_one();
 	else if (color == '!')
 		color_one_bis();
-	else if (color == 2)
+	else if (color == '2')
 		color_two();
 	else if (color == '@')
 		color_two_bis();

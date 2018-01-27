@@ -86,7 +86,7 @@ void		init_ncurses(void)
 	curs_set(0);
 	noecho();
 	nodelay(w, TRUE);
-	ncurses_colors_init(1);
+	ncurses_colors_init('1');
 	basic_print(0);
 	basic_print_two();
 }
