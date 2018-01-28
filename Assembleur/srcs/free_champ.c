@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itohex.c                                           :+:      :+:    :+:   */
+/*   free_champ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 02:59:11 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/27 21:13:46 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/28 01:06:58 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-char		*itohex(int n, int size)
+void		free_champ(t_champ *champ)
 {
-	char			*ret;
-
-	if (!(ret = ft_memalloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	printf("ITOHEX [%d] ->", n);
-	while (--size >= 0)
-	{
-		ret[size] = n % 256;
-		n /= 256;
-	}
-	printf("|%s| size = %zu\n", ret, ft_strlen(ret));
-	if (ret[0] == 1)
-		printf("-_-_-_ YOUHOU _-_-_-\n");
-	return (ret);
+	if (champ->input)
+		free_tab((champ->input));
+	if (champ->head)
+		free(champ->head);
+	champ->head = NULL;
+	if (champ->lab)
+		free_labs(champ->lab);
+	free(champ);
+	champ = NULL;
 }

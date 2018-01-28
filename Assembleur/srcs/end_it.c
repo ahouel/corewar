@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 17:00:49 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/24 19:31:41 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 03:59:06 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static void	write_header(int fd, t_champ *pl)
 	tmp = COREWAR_EXEC_MAGIC;
 	ft_bswap(&tmp, 4);
 	pl->head->magic = tmp;
+	tmp = pl->current_pc;
+	ft_bswap(&tmp, 4);
+	pl->head->prog_size = tmp;
 	write(fd, pl->head, sizeof(header_t));
-	free(pl->head);
-	pl->head = NULL;
 }
 
 /*
@@ -61,14 +62,42 @@ static int	create_cor_file(char *file_name, t_champ *pl)
 
 static void	write_instruction(t_op *op, int fd)
 {
-	int	i;
+	int		i;
+	char	tmp;
+//	int		k;//
+//	char	*s;
 
 	write(fd, &(op->opcode), 1);
 	if (op->ocp)
-		write(fd, &(op->ocp), 1);
+	{
+		tmp = get_ocp(op);
+		write(fd, &tmp, 1);
+	}
 	i = 0;
 	while (i < op->nb_param)
-		write(fd, (op->params)[i], ft_strlen((op->params)[i]));
+	{
+		/*printf("||| I = %d | SIZE = %d |||\n", i, (op->psize)[i]);
+		write(1, "B\n", 2);
+		if (!(s = malloc(sizeof(char) * op->psize[i])))
+			return;
+		write(1, "C\n", 2);
+		if (!(s = ft_memcpy(s, (op->params)[i], 2)))
+			return;
+		write(1, "D\n", 2);
+		k = 0;//
+		printf("\t\t\t\t-> "); 
+		while (k < op->psize[i])
+		{
+			printf("*");
+			printf("%c", ((op->params)[i])[k] + 48);
+			printf("^");
+			k++;
+		}
+		printf("\n");*/
+		write(fd, (op->params)[i], (op->psize)[i]);
+//		free(s);
+		i++;
+	}
 }
 
 /*
@@ -94,6 +123,7 @@ void		end_it(t_champ *pl, char *file_name)
 		}
 		lab = lab->next;
 	}
+	close(fd);
 	write(1, file_name, ft_strlen(file_name));
 	write(1, " executed\n", 10);
 	free_champ(pl);

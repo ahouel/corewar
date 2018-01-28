@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/24 18:16:00 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 03:14:46 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,24 @@ static void		get_params(t_champ *pl, char *s, int i)
 	int		j;
 
 	new = new_instruction(pl, i);
-	tab = ft_strsplit(&(s[ft_strlen(new->op->name)]), SEPARATOR_CHAR);
+	j = ft_strlen(new->op->name);
+	while (ft_iswhitespace(s[j]))
+		j++;
+	tab = ft_strsplit(&(s[j]), SEPARATOR_CHAR);
 	if (ft_tablen(tab) != new->op->nb_param)
 		exit_free("instruction xxx wrong usage at the line xxx\n", pl);
 	j = 0;
 	while (tab[j])
 	{
-		(new->op->p_type)[j] = (new->op->p_type)[j] & get_param_type(tab[j]);
-		if (!(new->op->p_type)[i])
-			exit_free("wrong parametre type at the line xxx\n", pl);
+		new->op->p_type[j] = new->op->p_type[j] & par_type(tab[j], new, j);
+		if (!(new->op->p_type)[j])
+			exit_free("wrong parametre at the line xxx\n", pl);
+		j++;
 	}
+	new->op->size += new->op->psize[0] + new->op->psize[1] + new->op->psize[2];
+	if (new->op->ocp)
+		new->op->size += 1;
+	pl->current_pc += new->op->size;
 }
 
 /*
@@ -37,11 +45,12 @@ static void		get_params(t_champ *pl, char *s, int i)
 **	accedera au parsing et recuperera les information necessaires.
 */
 
-static int		get_instruction(char *s, t_champ *pl)
+static char		get_instruction(char *s, t_champ *pl)
 {
 	char	**to_compare;
 	int		len;
 	int		i;
+	char	*tmp;
 
 	len = 0;
 	while (s[len] && ft_iswhitespace(s[len]))
@@ -50,11 +59,15 @@ static int		get_instruction(char *s, t_champ *pl)
 	len = 0;
 	while (s[len] && ft_isalpha(s[len]))
 		len++;
+	if (s[len] == LABEL_CHAR)
+		return (0);
+	tmp = ft_strsub(s, 0, len);
 	i = 0;
-	while ((op_tab[i]).name && ft_strncmp(s, (op_tab[i]).name, len) != 0)
+	while ((op_tab[i]).name && ft_strcmp(tmp, (op_tab[i]).name) != 0)
 		i++;
+	free(tmp);
 	if ((op_tab[i]).name)
-		get_params(pl, s, i); //REPRENDRE ICI
+		get_params(pl, s, i);
 	return ((op_tab[i]).opcode);
 }
 

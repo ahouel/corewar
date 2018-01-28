@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itohex.c                                           :+:      :+:    :+:   */
+/*   free_instructions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 02:59:11 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/27 21:19:53 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/27 23:20:03 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-char		*itohex(int n, int size)
+void	free_instructions(t_inst *lst)
 {
-	char			*ret;
-
-	if (!(ret = ft_memalloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	printf("ITOHEX [%d] ->", n);
-	while (--size >= 0)
+	if (lst->op)
+		free(lst->op);
+	lst->op = NULL;
+	if (lst->next)
 	{
-		ret[size] = n % 256;
-		n /= 256;
+		free_instructions(lst->next);
+		lst->next = NULL;
 	}
-	printf("|%s| size = %zu\n", ret, ft_strlen(ret));
-	if (ret[0] == 1)
-		printf("-_-_-_ YOUHOU _-_-_-\n");
-	return (ret);
+	free(lst);
+	lst = NULL;
 }

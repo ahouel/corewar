@@ -26,7 +26,7 @@ void	print_lst(t_champ *champ)
 		insttmp = labtmp->lst;
 		while (insttmp)
 		{
-			printf("\t\t%s\n", insttmp->name);
+			printf("\t\t%s\n", insttmp->op->name);
 			insttmp = insttmp->next;
 		}
 		labtmp = labtmp->next;

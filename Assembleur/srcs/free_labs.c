@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itohex.c                                           :+:      :+:    :+:   */
+/*   free_labs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 02:59:11 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/27 21:17:20 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/27 23:17:56 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-char		*itohex(int n, int size)
+void		free_labs(t_lab *lab)
 {
-	char			*ret;
-
-	if (!(ret = ft_memalloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	printf("ITOHEX [%d] ->", n);
-	while (--size >= 0)
+	if (lab->name)
+		free(lab->name);
+	lab->name = NULL;
+	if (lab->lst)
+		free_instructions(lab->lst);
+	if (lab->next)
 	{
-		ret[size] = n % 256;
-		n /= 256;
+		free_labs(lab->next);
+		lab->next = NULL;
 	}
-	printf("|%s| size = %zu\n", ret, ft_strlen(ret));
-	if (ret[0] == 1)
-		printf("-_-_-_ YOUHOU _-_-_-\n");
-	return (ret);
+	free(lab);
+	lab = NULL;
 }

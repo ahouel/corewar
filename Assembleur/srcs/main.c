@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:56:27 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/02 15:02:03 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 01:05:10 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,38 @@ static char		**read_champ(char *file_name)
 }
 
 /*
+** Simplifie le parsing en supprimant les commentaires en fin de ligne.
+*/
+
+static char		**cut_comment(char **tab)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 0;
+	while (tab[i])
+	{
+		j = 0;
+		while (tab[i][j] && tab[i][j] != COMMENT_CHAR)
+			j++;
+		if (tab[i][j--] == COMMENT_CHAR)
+		{
+			while (j >= 0 && ft_iswhitespace(tab[i][j]))
+				j--;
+			tmp = tab[i];
+			if (j < 0)
+				tab[i] = ft_strdup("#");
+			else
+				tab[i] = ft_strsub(tab[i], j + 1, ft_strlen(tab[i]) - (j + 1));
+			free(tmp);
+		}
+		i++;
+	}
+	return (tab);
+}
+
+/*
 **	On boucle pour traiter un par un tous les fichiers envoyés : on le lit, on
 **	récupère les informations du header et on renvoit directement tout ça dans
 **	le parsing, qui renverra la structure avec tout ce qui est nécessaire
@@ -62,6 +94,7 @@ int				main(int argc, char **argv)
 	while (i != argc)
 	{
 		input = read_champ(argv[i]);
+		input = cut_comment(input);
 		if (!input)
 			exit_free("invalid file\n", NULL);
 		if (!(pl = ft_memalloc(sizeof(t_champ))))
@@ -69,7 +102,7 @@ int				main(int argc, char **argv)
 		pl->input = input;
 		pl = manage_header(pl);
 		free_tab(pl->input);
-		print_lst(pl); //
+//		print_lst(pl); //
 		end_it(pl, argv[i]);
 		i++;
 	}

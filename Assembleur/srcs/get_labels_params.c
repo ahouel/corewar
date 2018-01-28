@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/24 15:40:17 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 04:02:30 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static char		*get_val(t_inst *current, t_champ *pl, char *s)
 	while (lab && ft_strcmp(lab->name, s) != 0)
 		lab = lab->next;
 	if (!lab)
-		return (NULL); //a revoir
+		exit_free("wrong parametre at the line xxx", pl);
+	printf("\n PC = %d\n\n", current->pc - lab->pc);
 	if (lab->pc < current->pc)
 		return (itohex(65536 - ((current->pc - lab->pc) % 65536), 2));
 	return (itohex((lab->pc - current->pc) % 65536, 2));
 }
 
 /*
-**	Cette fonction finira surement très vite par s'integrer à la detection des
-**	direct, pour ne pas avoir a tout reparcourir ainsi.
+** Parcourt nos listes chainees a la recherche des addressage par label.
 */
 
 t_champ			*fill_label_params(t_champ *pl)
@@ -50,10 +50,11 @@ t_champ			*fill_label_params(t_champ *pl)
 		while (inst)
 		{
 			i = 0;
-			while (i > 3)
+			while (i < inst->op->nb_param)
 			{
 				if (inst->lab_name[i])
 					inst->op->params[i] = get_val(inst, pl, inst->lab_name[i]);
+				i++;
 			}
 			inst = inst->next;
 		}
