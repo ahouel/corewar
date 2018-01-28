@@ -6,36 +6,37 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 03:14:46 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 06:57:31 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-static void		get_params(t_champ *pl, char *s, int i)
+static void		get_params(t_champ *pl, char *s, int i, int line)
 {
 	t_inst	*new;
 	char	**tab;
 	int		j;
 
-	new = new_instruction(pl, i);
+	new = new_instruction(pl, i, line);
 	j = ft_strlen(new->op->name);
 	while (ft_iswhitespace(s[j]))
 		j++;
 	tab = ft_strsplit(&(s[j]), SEPARATOR_CHAR);
 	if (ft_tablen(tab) != new->op->nb_param)
-		exit_free("instruction xxx wrong usage at the line xxx\n", pl);
+		exit_free("instruction wrong usage at the line ", pl, line);
 	j = 0;
 	while (tab[j])
 	{
 		new->op->p_type[j] = new->op->p_type[j] & par_type(tab[j], new, j);
 		if (!(new->op->p_type)[j])
-			exit_free("wrong parametre at the line xxx\n", pl);
+			exit_free("wrong parametre at the line ", pl, line);
 		j++;
 	}
 	new->op->size += new->op->psize[0] + new->op->psize[1] + new->op->psize[2];
 	if (new->op->ocp)
 		new->op->size += 1;
+//	printf("PC = %d [%s]\n", pl->current_pc, s);
 	pl->current_pc += new->op->size;
 }
 
@@ -45,7 +46,7 @@ static void		get_params(t_champ *pl, char *s, int i)
 **	accedera au parsing et recuperera les information necessaires.
 */
 
-static char		get_instruction(char *s, t_champ *pl)
+static char		get_instruction(char *s, t_champ *pl, int line)
 {
 	char	**to_compare;
 	int		len;
@@ -67,7 +68,7 @@ static char		get_instruction(char *s, t_champ *pl)
 		i++;
 	free(tmp);
 	if ((op_tab[i]).name)
-		get_params(pl, s, i);
+		get_params(pl, s, i, line);
 	return ((op_tab[i]).opcode);
 }
 
@@ -91,7 +92,7 @@ t_champ			*do_parsing(t_champ *pl, int i)
 		{
 			if ((pl->input[i][j]) == COMMENT_CHAR)
 				j = -1;
-			else if (get_instruction(&((pl->input)[i][j]), pl))
+			else if (get_instruction(&((pl->input)[i][j]), pl, i - 1))
 				j = -1;
 			else if (how_many_label_char(&((pl->input)[i][j])))
 			{
@@ -100,8 +101,8 @@ t_champ			*do_parsing(t_champ *pl, int i)
 				while ((pl->input)[i][j] && ft_iswhitespace((pl->input)[i][j]))
 					j++;
 			}
-			else
-				exit_free("wrong input at the line xxx", pl);
+			else if (pl->input[i])
+				exit_free("wrong input at the line ", pl, i);
 		}
 	}
 	return (fill_label_params(pl));

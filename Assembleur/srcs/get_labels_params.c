@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 04:02:30 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 05:52:32 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static char		*get_val(t_inst *current, t_champ *pl, char *s)
 	while (lab && ft_strcmp(lab->name, s) != 0)
 		lab = lab->next;
 	if (!lab)
-		exit_free("wrong parametre at the line xxx", pl);
-	printf("\n PC = %d\n\n", current->pc - lab->pc);
+		exit_free("wrong parametre at the line ", pl, current->line);
 	if (lab->pc < current->pc)
 		return (itohex(65536 - ((current->pc - lab->pc) % 65536), 2));
 	return (itohex((lab->pc - current->pc) % 65536, 2));

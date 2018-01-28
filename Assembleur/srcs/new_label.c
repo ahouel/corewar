@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 16:53:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/27 21:29:36 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 05:51:03 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_champ		*new_label(char *name, t_champ *pl)
 
 	i = 0;
 	if (!(new = ft_memalloc(sizeof(t_lab))))
-		exit_free("unsuccesfull malloc", pl);
+		exit_free("unsuccesfull malloc", pl, 0);
 	if (!(new->name = ft_strsub(name, 0, how_many_label_char(name))))
-		exit_free("unsuccesfull malloc", pl);
+		exit_free("unsuccesfull malloc", pl, 0);
 	new->pc = pl->current_pc;
 	tmp = (*pl).lab;
 	if (!tmp)

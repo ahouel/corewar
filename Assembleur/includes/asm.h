@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 01:19:41 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 06:35:50 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct	s_inst
 	int				pc;
 	char			*lab_name[3];
 	t_op			*op;
+	int				line;
 	struct s_inst	*next;
 }				t_inst;
 
@@ -69,10 +70,10 @@ void			end_it(t_champ *champ, char *file_name);
 **	fonctions outil
 */
 
-t_inst			*new_instruction(t_champ *champ, int i);
+t_inst			*new_instruction(t_champ *champ, int i, int line);
 t_champ			*new_label(char *name, t_champ *champ);
 int				how_many_label_char(char *s);
-char			*itohex(int n, int size);
+char			*itohex(long n, int size);
 int				is_direct(char *s, t_inst *cur, int param);
 char			get_ocp(t_op *current);
 
@@ -80,7 +81,7 @@ char			get_ocp(t_op *current);
 **	gestion d'erreur && free
 */
 
-void			exit_free(char *str, t_champ *pl);
+void			exit_free(char *str, t_champ *pl, int line);
 void			free_tab(char **tab);
 void			free_champ(t_champ *champ);
 void			free_labs(t_lab *lab);

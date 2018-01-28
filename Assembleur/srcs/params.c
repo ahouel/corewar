@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 18:08:52 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 03:12:39 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 05:51:07 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,13 @@ int			is_direct(char *s, t_inst *cur, int param)
 		(cur->lab_name)[param] = ft_strsub(s, 2, count);
 		return (T_LAB);
 	}
-	while (s[i] && ft_isdigit(s[i]))
-		i++;
+	else
+	{
+		if (s[i] == '-')
+			i++;
+		while (s[i] && ft_isdigit(s[i]))
+			i++;
+	}
 	if (s[i])
 		return (0);
 	return (T_DIR);
@@ -75,7 +80,6 @@ int			is_registre(char *s, t_op *op, int p)
 		i++;
 	if (s[i] || i == 1)
 		return (0);
-	printf("\n|%s| numero %d\n\n", s, p);//
 	op->params[p] = itohex(ft_atoi(&(s[1])), 1);
 	op->psize[p] = 1;
 	return (T_REG);

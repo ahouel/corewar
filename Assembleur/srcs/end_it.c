@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 17:00:49 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 03:59:06 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 05:24:38 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static int	create_cor_file(char *file_name, t_champ *pl)
 
 	size = ft_strlen(file_name);
 	if (!(tmp = ft_memalloc(sizeof(char) * (size + 3))))
-		exit_free("unsuccessful malloc\n", pl);
+		exit_free("unsuccessful malloc\n", pl, 0);
 	tmp = ft_strncpy(tmp, file_name, size - 1);
 	tmp[size - 1] = '\0';
 	tmp = ft_strcat(tmp, "cor\0");
 	fd = open(tmp, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	free(tmp);
 	if (fd == -1)
-		exit_free("open function failed\n", pl);
+		exit_free("open function failed\n", pl, 0);
 	write_header(fd, pl);
 	return (fd);
 }
@@ -64,8 +64,6 @@ static void	write_instruction(t_op *op, int fd)
 {
 	int		i;
 	char	tmp;
-//	int		k;//
-//	char	*s;
 
 	write(fd, &(op->opcode), 1);
 	if (op->ocp)
@@ -76,26 +74,7 @@ static void	write_instruction(t_op *op, int fd)
 	i = 0;
 	while (i < op->nb_param)
 	{
-		/*printf("||| I = %d | SIZE = %d |||\n", i, (op->psize)[i]);
-		write(1, "B\n", 2);
-		if (!(s = malloc(sizeof(char) * op->psize[i])))
-			return;
-		write(1, "C\n", 2);
-		if (!(s = ft_memcpy(s, (op->params)[i], 2)))
-			return;
-		write(1, "D\n", 2);
-		k = 0;//
-		printf("\t\t\t\t-> "); 
-		while (k < op->psize[i])
-		{
-			printf("*");
-			printf("%c", ((op->params)[i])[k] + 48);
-			printf("^");
-			k++;
-		}
-		printf("\n");*/
 		write(fd, (op->params)[i], (op->psize)[i]);
-//		free(s);
 		i++;
 	}
 }

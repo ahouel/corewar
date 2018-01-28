@@ -6,21 +6,21 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/27 21:29:15 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/28 06:09:47 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-static void	check_comment(char *s, header_t *head, t_champ *pl)
+static int	check_comment(char *s, header_t *head, t_champ *pl)
 {
 	int		i;
 	int		count;
 
 	if (ft_strncmp(s, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
-		exit_free("no comment under the name\n", pl);
+		exit_free("no comment under the name\n", pl, 0);
 	if ((head->comment)[0] != 0)
-		exit_free("a champ can have only one comment\n", pl);
+		exit_free("a champ can have only one comment\n", pl, 0);
 	i = ft_strlen(COMMENT_CMD_STRING);
 	while (ft_iswhitespace(s[i]))
 		i++;
@@ -31,7 +31,8 @@ static void	check_comment(char *s, header_t *head, t_champ *pl)
 	while (s[i] && ft_iswhitespace(s[i]))
 		i++;
 	if (s[i] && s[i] != '#')
-		exit_free("format comment line\n", pl);
+		exit_free("format comment line\n", pl, 0);
+	return (1);
 }
 
 static void	check_name(char *s, header_t *head, t_champ *pl)
@@ -40,9 +41,9 @@ static void	check_name(char *s, header_t *head, t_champ *pl)
 	int		count;
 
 	if (ft_strncmp(s, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-		exit_free("no name at the top of the file\n", pl);
+		exit_free("no name at the top of the file\n", pl, 0);
 	if ((head->prog_name)[0] != 0)
-		exit_free("a champ can have only one name\n", pl);
+		exit_free("a champ can have only one name\n", pl, 0);
 	i = ft_strlen(NAME_CMD_STRING);
 	while (ft_iswhitespace(s[i]))
 		i++;
@@ -54,7 +55,7 @@ static void	check_name(char *s, header_t *head, t_champ *pl)
 	while (s[i] && ft_iswhitespace(s[i]))
 		i++;
 	if (s[i] && s[i] != '#')
-		exit_free("format name line\n", pl);
+		exit_free("format name line\n", pl, 0);
 }
 
 /*
@@ -67,22 +68,23 @@ t_champ		*manage_header(t_champ *pl)
 {
 	int			i;
 	header_t	*head;
+	int			com_ret;
 
 	i = 0;
 	if (!(head = ft_memalloc(sizeof(header_t))))
-		exit_free("unsuccessful malloc\n", pl);
+		exit_free("unsuccessful malloc\n", pl, 0);
 	pl->head = head;
 	while ((pl->input)[i][0] == COMMENT_CHAR)
 		i++;
 	check_name((pl->input)[i], head, pl);
 	if ((head->prog_name)[0] == 0)
-		exit_free("no name at the top of a file\n", pl);
+		exit_free("no name at the top of a file\n", pl, 0);
 	i++;
 	while ((pl->input)[i][0] == COMMENT_CHAR)
 		i++;
-	check_comment((pl->input)[i], head, pl);
-	if ((head->comment)[0] == 0)
-		exit_free("no comment under the name\n", pl);
+	com_ret = check_comment((pl->input)[i], head, pl);
+	if (!com_ret)
+		exit_free("no comment under the name\n", pl, 0);
 	i++;
 	return (do_parsing(pl, i));
 }
