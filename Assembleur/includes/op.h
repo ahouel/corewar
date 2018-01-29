@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:09:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 17:20:02 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/29 19:48:39 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef char	t_arg_type;
 #define T_DIR					2
 #define T_IND					4
 #define T_LAB					8
+#define T_ILAB					16
 
 /*
 **

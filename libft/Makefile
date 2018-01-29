@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/03 08:37:55 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/24 14:31:52 by lgaveria         ###   ########.fr        #
+#    Updated: 2018/01/29 20:00:15 by lgaveria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ FCTS = ft_memset ft_bzero ft_memcpy ft_memccpy \
 	   pf_apply_flag pf_apply_precision pf_apply_width \
 	   pf_apply_color pf_memjoin2 pf_dispatch_convert \
 	   ft_reader ft_malloc_2d ft_free_2d ft_str_isdigit \
-	   ft_bswap ft_iswhitespace ft_tablen
+	   ft_bswap ft_iswhitespace ft_tablen ft_strfulltrim
 SRCS = $(addsuffix .c, $(FCTS))
 SRC = $(addprefix $(VPATH), $(SRCS))
 OBJ = $(SRCS:.c=.o)

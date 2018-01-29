@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 06:09:47 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/29 18:06:28 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_champ		*manage_header(t_champ *pl)
 	if (!(head = ft_memalloc(sizeof(header_t))))
 		exit_free("unsuccessful malloc\n", pl, 0);
 	pl->head = head;
-	while ((pl->input)[i][0] == COMMENT_CHAR)
+	while ((pl->input)[i][0] == COMMENT_CHAR || ft_strlen((pl->input)[i]) == 0)
 		i++;
 	check_name((pl->input)[i], head, pl);
 	if ((head->prog_name)[0] == 0)
@@ -85,6 +85,20 @@ t_champ		*manage_header(t_champ *pl)
 	com_ret = check_comment((pl->input)[i], head, pl);
 	if (!com_ret)
 		exit_free("no comment under the name\n", pl, 0);
-	i++;
 	return (do_parsing(pl, i));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
