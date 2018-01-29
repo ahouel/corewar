@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/16 18:56:08 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/29 17:51:04 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,22 @@ static int	srch_ncurses(t_vm *vm, char *arg)
 }
 
 /*
-**	Regarde si l'argument arg est un -a
+**	Regarde si l'argument arg est un -a ou un -sound
 */
 
-static int	srch_aff(t_vm *vm, char *arg)
+static int	srch_aff_sound(t_vm *vm, char *arg)
 {
 	if (!ft_strcmp(arg, "-a"))
 	{
 		if (vm->aff)
 			error(vm, "can't use twice -a");
 		return (1);
+	}
+	else if (!ft_strcmp(arg, "-sound"))
+	{
+		if (vm->sound)
+			error(vm, "can't use twice -sound");
+		return (2);
 	}
 	return (0);
 }
@@ -114,8 +120,8 @@ int			check_arg(t_vm *vm, int ac, char **av)
 			vm->ncurses = ret;
 		else if ((ret = srch_verbosity(vm, ac, av, &i)))
 			vm->verbosity = ret;
-		else if ((ret = srch_aff(vm, av[i])))
-			vm->aff = ret;
+		else if ((ret = srch_aff_sound(vm, av[i])))
+			ret == 1 ? (vm->aff = 1) : (vm->sound = 1);
 		else if (!(srch_player(vm, ac, av, &i)))
 		{
 			ft_printf("%{RED}s %{BLUE}s\n",

@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/29 16:32:45 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/29 17:48:21 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct			s_vm
 	char		aff;
 	char		ncurses;
 	char		pause;
+	char		sound;
+	char		aff;
 	int			nb_player;
 	int			cycle;
 	int			delay;
