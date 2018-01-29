@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:08:08 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/29 16:32:45 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/29 17:48:21 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef struct			s_vm
 {
 	char		ncurses;
 	char		pause;
+	char		sound;
+	char		aff;
 	int			nb_player;
 	int			cycle;
 	int			delay;
@@ -101,7 +103,7 @@ typedef struct			s_vm
 	int			nb_proc;
 	int			next_pid;
 	t_pcb		*proc_lst;
-	t_aff		aff;
+	t_aff		ncurses_aff;
 	t_player	player[MAX_PLAYERS];
 	t_mem		ram[MEM_SIZE];
 }						t_vm;

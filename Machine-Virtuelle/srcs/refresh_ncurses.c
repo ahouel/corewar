@@ -6,7 +6,7 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:15:14 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/12 17:15:16 by gbradel          ###   ########.fr       */
+/*   Updated: 2018/01/29 17:51:49 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	print_live_store(t_vm *vm)
 
 static void	print_aff(t_vm *vm)
 {
-	
+	(void)vm;	
 }
 
 void		refresh_all(t_vm *vm)
