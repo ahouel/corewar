@@ -40,6 +40,11 @@ static void	print_live_store(t_vm *vm)
 	}
 }
 
+static void	print_aff(t_vm *vm)
+{
+	
+}
+
 void		refresh_all(t_vm *vm)
 {
 	t_pcb	*tmp;
@@ -64,4 +69,5 @@ void		refresh_all(t_vm *vm)
 		tmp = tmp->next;
 	}
 	print_live_store(vm);
+	print_aff(vm);
 }

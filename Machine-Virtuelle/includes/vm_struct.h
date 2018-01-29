@@ -72,6 +72,16 @@ typedef struct			s_mem
 }						t_mem;
 
 /*
+**	aff du ncurses
+*/
+
+typedef struct			s_aff
+{
+	int				in[MAX_PLAYERS];
+	int				end[MAX_PLAYERS];
+}						t_aff;
+
+/*
 **	Environnement de la vm
 */
 

@@ -14,8 +14,8 @@
 
 static void	print_stats(int *tab, t_vm *vm, int x, int y)
 {
-	int		i;
-	int		tmp[MAX_PLAYERS];
+	int			i;
+	int			tmp[MAX_PLAYERS];
 
 	i = -1;
 	while (++i < MAX_PLAYERS)
@@ -35,19 +35,23 @@ static void	print_stats(int *tab, t_vm *vm, int x, int y)
 	attron(COLOR_PAIR(40));
 }
 
+
 void		live_stats(t_vm *vm)
 {
-	int		total;
-	int		i;
-	int		tmp;
-	int		tab[MAX_PLAYERS];
+	int			total;
+	int			i;
+	int			tmp;
+	static int	tab[MAX_PLAYERS];
 
 	total = 0;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		total += vm->player[i].lives_count;
 	if (total == 0)
+	{
+		print_stats(tab, vm, 198, 62);
 		return ;
+	}
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (vm->player[i].name)
