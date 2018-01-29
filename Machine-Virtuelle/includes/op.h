@@ -71,5 +71,6 @@ typedef char	t_arg_type;
 # define NCURSES_DELAY			100000
 # define LIVE_FLASH				11
 # define ST_FLASH				10
+# define AFF_DELAY				30
 
 #endif

@@ -35,7 +35,6 @@ static void	print_stats(int *tab, t_vm *vm, int x, int y)
 	attron(COLOR_PAIR(40));
 }
 
-
 void		live_stats(t_vm *vm)
 {
 	int			total;

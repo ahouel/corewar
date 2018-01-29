@@ -23,20 +23,24 @@ static void	basic_print(int i)
 		mvprintw(65, i, "*");
 	}
 	i = -1;
-	while (++i < 84)
+	while (++i < 83) // 65
 	{
 		mvprintw(i, 0, "*");
 		mvprintw(i, 1, "*");
 		mvprintw(i, 249, "*");
 		mvprintw(i, 248, "*");
-		mvprintw(i, 195, "*");
-		mvprintw(i, 196, "*");
 	}
 	i = 195;
 	while (++i < 249)
 	{
 		mvprintw(2, i, "*");
 		mvprintw(48, i, "*");
+	}
+	i = -1;
+	while (++i < 65)
+	{
+		mvprintw(i, 195, "*");
+		mvprintw(i, 196, "*");
 	}
 	attroff(COLOR_PAIR(42));
 }
@@ -66,7 +70,7 @@ static void	basic_print_two(void)
 	attron(COLOR_PAIR(30));
 	mvprintw(1, 216, "~ ~ PAUSED ~ ~");
 	attron(COLOR_PAIR(20));
-	mvprintw(65, 220, " CHAT ");
+	mvprintw(65, 123, " CHAT ");
 	mvprintw(48, 217, " live stats ");
 }
 

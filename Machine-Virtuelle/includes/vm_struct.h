@@ -87,6 +87,7 @@ typedef struct			s_aff
 
 typedef struct			s_vm
 {
+	char		aff;
 	char		ncurses;
 	char		pause;
 	int			nb_player;
@@ -101,7 +102,7 @@ typedef struct			s_vm
 	int			nb_proc;
 	int			next_pid;
 	t_pcb		*proc_lst;
-	t_aff		aff;
+	t_aff		aff_ncurses;
 	t_player	player[MAX_PLAYERS];
 	t_mem		ram[MEM_SIZE];
 }						t_vm;

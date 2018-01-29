@@ -40,9 +40,39 @@ static void	print_live_store(t_vm *vm)
 	}
 }
 
+static void	delete_aff(int p)
+{
+	int		i;
+
+	i = 2;
+	while (++i < 248)
+	{
+		mvprintw(65 + p * 2, i, "*");
+	}
+}
+
 static void	print_aff(t_vm *vm)
 {
-	
+	t_pcb	*tmp;
+	int		i;
+
+	tmp = vm->proc_lst;
+	while (tmp)
+	{
+		if (tmp->aff)
+		{
+			mvprintw(65 + tmp->uid * 2, vm->aff_ncurses.in[tmp->uid]++ + 3, "%c", tmp->aff);
+			vm->aff_ncurses.end[tmp->uid] = AFF_DELAY;
+		}
+		tmp = tmp->next;
+	}
+	i = -1
+	while (++i < MAX_PLAYERS)
+		if (vm->aff_ncurses.end[i])
+			vm->aff_ncurses.end[i]--;
+	while (++i < MAX_PLAYERS)
+		if (!vm->aff_ncurses.end[i])
+			delete_aff(i);
 }
 
 void		refresh_all(t_vm *vm)
