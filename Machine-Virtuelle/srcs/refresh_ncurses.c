@@ -61,12 +61,13 @@ static void	print_aff(t_vm *vm)
 	{
 		if (tmp->aff)
 		{
+			attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color));
 			mvprintw(65 + tmp->uid * 2, vm->aff_ncurses.in[tmp->uid]++ + 3, "%c", tmp->aff);
 			vm->aff_ncurses.end[tmp->uid] = AFF_DELAY;
 		}
 		tmp = tmp->next;
 	}
-	i = -1
+	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (vm->aff_ncurses.end[i])
 			vm->aff_ncurses.end[i]--;

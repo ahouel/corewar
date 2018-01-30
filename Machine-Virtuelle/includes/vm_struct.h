@@ -87,7 +87,6 @@ typedef struct			s_aff
 
 typedef struct			s_vm
 {
-	char		aff;
 	char		ncurses;
 	char		pause;
 	char		sound;
