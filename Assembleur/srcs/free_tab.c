@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 21:10:01 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 01:06:49 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/30 17:14:31 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void		free_tab(char **tab)
 {
-	int i;
-
-	i = 0;
-	while (tab[i])
+	if (tab)
 	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
+		if (tab[0] && tab[1])
+			free_tab(&(tab[1]));
+		if (*tab)
+			free(*tab);
+		*tab = NULL;
+		free(tab);
+		tab = NULL;
 	}
-	tab = NULL;
 }

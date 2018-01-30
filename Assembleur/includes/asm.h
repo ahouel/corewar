@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/29 17:39:23 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:28:27 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct	s_op
 	char	*params[3];
 	int		psize[3];
 	char	opcode;
-	int		d_siz;
+	int		dir_size;
 	int		ocp;
 	int		size;
 	int		adrr_rest; //pas sure d'en avoir besoin
@@ -52,6 +52,7 @@ typedef struct	s_champ
 {
 	int			current_pc;
 	char		**input;
+	char		**t;
 	header_t	*head;
 	t_lab		*lab;
 }				t_champ;
@@ -81,7 +82,7 @@ char			get_ocp(t_op *current);
 **	gestion d'erreur && free
 */
 
-void			exit_free(char *str, t_champ *pl, int line);
+void			exit_free(char *str, t_champ *pl, char **tab, int line);
 void			free_tab(char **tab);
 void			free_champ(t_champ *champ);
 void			free_labs(t_lab *lab);
@@ -99,6 +100,6 @@ void			print_lst(t_champ *champ);
 **	op_tab de reference
 */
 
-extern t_op		op_tab[];
+extern t_op		g_op_tab[];
 
 #endif

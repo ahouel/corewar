@@ -1,23 +1,18 @@
 Diff constatees et pas corrigees :
 
--Gagnant.s
--doge.s
--_.s
-	les espaces entre un parametre le SEPARATOR_CHAR ne sont pas toleres
-
 -leeloo.s
 	il est chelou, l'asm resosurce aussi fait pete plein d'erreurs mais je
 	crois que cest pas les memes
 
--Rainbow_dash.s
--ultimate-surrender.s
-	des ";" sont utilises comme COMMENT_CHAR
+-Misaka_Mikoto.s
+	utilise des caracteres speciaux (genre kanjis) dans son commentaire
 
 Champion ok:
 -42.s
 -Backward.s
 -Car.s
 -Death.s
+-Gagnant.s
 -Octobre_Rouge_v4.2.s
 -Survivor.s
 -Torpille.s
@@ -49,3 +44,29 @@ Champion ok:
 -MarineKing.s
 -corelol.s
 -salamahenagalabadoun.s
+-Varimathras.s
+-Rainbow_dash.s
+-ultimate-surrender.s
+-doge.s
+-_.s
+-Wall.s
+-justin_bee.s
+-_honeybaadger.s
+-dubo.s
+-live.s
+-meowluigi.s
+-skynet.s
+-Asombra.s
+-THUNDER.s
+-casimir.s
+-champ.s
+-darksasuke.s
+-jinx.s
+-littlepuppy.s
+
+-bee_gees.s
+-bigzork.s
+-fluttershy.s
+-helltrain.s
+-turtle.s
+

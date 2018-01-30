@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 18:08:52 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/29 20:16:05 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:36:20 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,22 @@ static int	is_direct(char *s, t_inst *cur, int param, t_champ *pl)
 	{
 		count = 0;
 		while (s[++i] && is_label_char(s[i]))
-			count ++;
-		if (count == 0 || s[i])
-			exit_free("0wrong parameter format at line ", pl, cur->line);
+			count++;
+		if (count == 0 || (s[i] && (s[i] != ' ' || s[i + 1])))
+			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
 		(cur->lab_name)[param] = ft_strsub(s, 2, count);
 		return (T_LAB);
 	}
 	else if (s[i] == '0' || ft_atoi(&(s[i++])))
-	{;
+	{
 		while (s[i] && ft_isdigit(s[i]))
 			i++;
-		if (s[i] || (i <= 1 || (i == 2 && s[1] == '-')))
-			exit_free("1wrong parameter format at line ", pl, cur->line);
+		if (s[i] && (s[i] != ' ' || s[i + 1]))
+			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
 		return (T_DIR);
 	}
 	return (0);
 }
-
 
 static int	is_index(char *s, t_inst *cur, int param, t_champ *pl)
 {
@@ -56,7 +55,7 @@ static int	is_index(char *s, t_inst *cur, int param, t_champ *pl)
 		while (s[++i] && is_label_char(s[i]))
 			count++;
 		if (count == 0 || s[i])
-			exit_free("2wrong parameter format at line ", pl, cur->line);
+			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
 		(cur->lab_name)[param] = ft_strsub(s, 1, count);
 		return (T_ILAB);
 	}
@@ -64,8 +63,8 @@ static int	is_index(char *s, t_inst *cur, int param, t_champ *pl)
 	{
 		while (s[i] && ft_isdigit(s[i]))
 			i++;
-		if (s[i] || (i == 0 || (i == 1 && s[0] == '-')))
-			exit_free("3wrong parameter format at line ", pl, cur->line);
+		if ((s[i] && (s[i] != ' ' || s[i + 1])))
+			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
 		return (T_IND);
 	}
 	return (0);
@@ -80,7 +79,7 @@ static int	is_registre(char *s, t_op *op, int p)
 	i = 1;
 	while (s[i] && ft_isdigit(s[i]))
 		i++;
-	if (s[i] || i == 1)
+	if ((s[i] && (s[i] != ' ' || s[i + 1])) || i == 1)
 		return (0);
 	op->params[p] = itohex(ft_atoi(&(s[1])), 1);
 	op->psize[p] = 1;
@@ -98,8 +97,8 @@ int			par_type(char *s, t_inst *cur, int p, t_champ *pl)
 	if ((ret = is_direct(&(s[i]), cur, p, pl)))
 	{
 		if (ret == T_DIR)
-			(cur->op->params)[p] = itohex(ft_atoi(&(s[i + 1])), cur->op->d_siz);
-		cur->op->psize[p] = cur->op->d_siz;
+			cur->op->params[p] = itohex(ft_atoi(&(s[++i])), cur->op->dir_size);
+		cur->op->psize[p] = cur->op->dir_size;
 	}
 	else if ((ret = is_index(&(s[i]), cur, p, pl)))
 	{

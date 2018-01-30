@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/29 18:06:28 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:32:50 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,28 @@ static int	check_comment(char *s, header_t *head, t_champ *pl)
 {
 	int		i;
 	int		count;
+	char	*tmp;
 
-	if (ft_strncmp(s, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
-		exit_free("no comment under the name\n", pl, 0);
-	if ((head->comment)[0] != 0)
-		exit_free("a champ can have only one comment\n", pl, 0);
-	i = ft_strlen(COMMENT_CMD_STRING);
-	while (ft_iswhitespace(s[i]))
+	tmp = ft_strfulltrim(s);
+	if (ft_strncmp(tmp, COMMENT_CMD_STR, ft_strlen(COMMENT_CMD_STR)) != 0)
+	{
+		free(tmp);
+		exit_free("no comment under the name\n", pl, NULL, 0);
+	}
+	i = ft_strlen(COMMENT_CMD_STR);
+	while (ft_iswhitespace(tmp[i]))
 		i++;
 	count = 0;
-	while (s[++i] && s[i] != '\"' && count < COMMENT_LENGTH)
-		(head->comment)[count++] = s[i];
-	i++;
-	while (s[i] && ft_iswhitespace(s[i]))
-		i++;
-	if (s[i] && s[i] != '#')
-		exit_free("format comment line\n", pl, 0);
+	while (tmp[++i] && tmp[i] != '\"' && count < COMMENT_LENGTH)
+		(head->comment)[count++] = tmp[i];
+	while (tmp[++i] && ft_iswhitespace(tmp[i]))
+		i = i;
+	if (tmp[i])
+	{
+		free(tmp);
+		exit_free("comment line format\n", pl, NULL, 0);
+	}
+	free(tmp);
 	return (1);
 }
 
@@ -39,23 +45,29 @@ static void	check_name(char *s, header_t *head, t_champ *pl)
 {
 	int		i;
 	int		count;
+	char	*tmp;
 
-	if (ft_strncmp(s, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-		exit_free("no name at the top of the file\n", pl, 0);
-	if ((head->prog_name)[0] != 0)
-		exit_free("a champ can have only one name\n", pl, 0);
-	i = ft_strlen(NAME_CMD_STRING);
-	while (ft_iswhitespace(s[i]))
+	tmp = ft_strfulltrim(s);
+	if (tmp && ft_strncmp(tmp, NAME_CMD_STR, ft_strlen(NAME_CMD_STR)) != 0)
+	{
+		free(tmp);
+		exit_free("no name at the top of the file\n", pl, NULL, 0);
+	}
+	i = ft_strlen(NAME_CMD_STR);
+	while (tmp[i] && ft_iswhitespace(tmp[i]))
 		i++;
 	count = 0;
+	while (tmp[++i] && tmp[i] != '\"' && count < PROG_NAME_LENGTH)
+		(head->prog_name)[count++] = tmp[i];
 	i++;
-	while (s[i] && s[i] != '\"' && count < PROG_NAME_LENGTH)
-		(head->prog_name)[count++] = s[i++];
-	i++;
-	while (s[i] && ft_iswhitespace(s[i]))
+	while (tmp[i] && ft_iswhitespace(tmp[i]))
 		i++;
-	if (s[i] && s[i] != '#')
-		exit_free("format name line\n", pl, 0);
+	if (tmp[i])
+	{
+		free(tmp);
+		exit_free("format name line\n", pl, NULL, 0);
+	}
+	free(tmp);
 }
 
 /*
@@ -72,33 +84,23 @@ t_champ		*manage_header(t_champ *pl)
 
 	i = 0;
 	if (!(head = ft_memalloc(sizeof(header_t))))
-		exit_free("unsuccessful malloc\n", pl, 0);
+		exit_free("unsuccessful malloc\n", pl, NULL, 0);
 	pl->head = head;
-	while ((pl->input)[i][0] == COMMENT_CHAR || ft_strlen((pl->input)[i]) == 0)
+	while (pl->input[i] && ((pl->input)[i][0] == COMMENT_CHAR ||
+			(pl->input)[i][0] == COM_CHAR || ft_strlen((pl->input)[i]) == 0))
 		i++;
-	check_name((pl->input)[i], head, pl);
+	if (pl->input[i])
+		check_name((pl->input)[i], head, pl);
+	else
+		exit_free("invalid file\n", pl, NULL, 0);
 	if ((head->prog_name)[0] == 0)
-		exit_free("no name at the top of a file\n", pl, 0);
-	i++;
-	while ((pl->input)[i][0] == COMMENT_CHAR)
-		i++;
-	com_ret = check_comment((pl->input)[i], head, pl);
-	if (!com_ret)
-		exit_free("no comment under the name\n", pl, 0);
+		exit_free("no name at the top of a file\n", pl, NULL ,0);
+	while (pl->input[++i] && ((pl->input)[i][0] == COMMENT_CHAR ||
+			(pl->input)[i][0] == COM_CHAR || ft_strlen((pl->input)[i]) == 0))
+		i = i;
+	if (pl->input[i])
+		com_ret = check_comment((pl->input)[i], head, pl);
+	if (!(pl->input[i]) || !com_ret)
+		exit_free("no comment under the name\n", pl, NULL, 0);
 	return (do_parsing(pl, i));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
