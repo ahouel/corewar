@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 13:53:00 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/27 21:44:49 by lgaveria         ###   ########.fr        #
+#    Updated: 2018/01/29 17:39:36 by lgaveria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC_FILES = end_it.c \
 			get_labels_params.c \
 			get_ocp.c \
 			header.c \
+			is_label_char.c \
 			itohex.c \
 			label_chars.c \
 			main.c \

@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 06:57:31 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/29 20:34:18 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,24 @@ static void		get_params(t_champ *pl, char *s, int i, int line)
 
 	new = new_instruction(pl, i, line);
 	j = ft_strlen(new->op->name);
-	while (ft_iswhitespace(s[j]))
-		j++;
-	tab = ft_strsplit(&(s[j]), SEPARATOR_CHAR);
+	if (line == 424)
+		printf("STRING = |%s|\n", s);
+	s = ft_strfulltrim(&(s[j]));
+	tab = ft_strsplit(s, SEPARATOR_CHAR);
 	if (ft_tablen(tab) != new->op->nb_param)
-		exit_free("instruction wrong usage at the line ", pl, line);
+	{
+		printf("tablen = %zu | nb_param = %d | line = %d\n", ft_tablen(tab), new->op->nb_param, line);
+		exit_free("instruction wrong usage at line ", pl, line);
+	}
 	j = 0;
 	while (tab[j])
 	{
-		new->op->p_type[j] = new->op->p_type[j] & par_type(tab[j], new, j);
+		new->op->p_type[j] = new->op->p_type[j] & par_type(tab[j], new, j, pl);
 		if (!(new->op->p_type)[j])
-			exit_free("wrong parametre at the line ", pl, line);
+		{
+			printf("line[%d] |%s %s| [%s]\n", line, new->op->name, s, tab[j]);
+			exit_free("wrong parameter type at line ", pl, line);
+		}
 		j++;
 	}
 	new->op->size += new->op->psize[0] + new->op->psize[1] + new->op->psize[2];
@@ -58,7 +65,7 @@ static char		get_instruction(char *s, t_champ *pl, int line)
 		len++;
 	s = &(s[len]);
 	len = 0;
-	while (s[len] && ft_isalpha(s[len]))
+	while (is_label_char(s[len]))
 		len++;
 	if (s[len] == LABEL_CHAR)
 		return (0);
@@ -88,7 +95,7 @@ t_champ			*do_parsing(t_champ *pl, int i)
 	while ((pl->input)[++i])
 	{
 		j = 0;
-		while (j != -1 && (pl->input)[i][j])
+		while (j != -1 && (pl->input)[i] && (pl->input)[i][j])
 		{
 			if ((pl->input[i][j]) == COMMENT_CHAR)
 				j = -1;
@@ -101,8 +108,10 @@ t_champ			*do_parsing(t_champ *pl, int i)
 				while ((pl->input)[i][j] && ft_iswhitespace((pl->input)[i][j]))
 					j++;
 			}
-			else if (pl->input[i])
-				exit_free("wrong input at the line ", pl, i);
+			else if (ft_strlen(ft_strtrim(pl->input[i])))
+				exit_free("wrong input at line ", pl, i);
+			else
+				j = -1;
 		}
 	}
 	return (fill_label_params(pl));

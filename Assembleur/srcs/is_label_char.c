@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   is_label_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/25 15:13:37 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/29 16:48:37 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/29 17:36:48 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/29 17:38:55 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/asm.h"
 
-size_t	ft_strlen(const char *s)
+int		is_label_char(char c)
 {
-	size_t r;
+	int		i;
+	char	*to_compare;
 
-	r = 0;
-	if (!s)
+	if (!c)
 		return (0);
-	while (s[r])
-		++r;
-	return (r);
+	to_compare = LABEL_CHARS;
+	i = 0;
+	while (to_compare[i])
+	{
+		if (to_compare[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }

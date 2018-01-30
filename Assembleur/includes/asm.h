@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 06:35:50 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/29 17:39:23 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct	s_champ
 
 t_champ			*manage_header(t_champ *pl);
 t_champ			*do_parsing(t_champ *champ, int i);
-int				par_type(char *s, t_inst *cur, int p);
+int				par_type(char *s, t_inst *cur, int p, t_champ *pl);
 t_champ			*fill_label_params(t_champ *pl);
 void			end_it(t_champ *champ, char *file_name);
 
@@ -73,8 +73,8 @@ void			end_it(t_champ *champ, char *file_name);
 t_inst			*new_instruction(t_champ *champ, int i, int line);
 t_champ			*new_label(char *name, t_champ *champ);
 int				how_many_label_char(char *s);
+int				is_label_char(char c);
 char			*itohex(long n, int size);
-int				is_direct(char *s, t_inst *cur, int param);
 char			get_ocp(t_op *current);
 
 /*

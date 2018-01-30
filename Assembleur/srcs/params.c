@@ -6,29 +6,13 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 18:08:52 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 05:51:07 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/29 20:16:05 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-static int	is_label_chars(char c)
-{
-	char	*chars;
-	int		i;
-
-	chars = LABEL_CHARS;
-	i = 0;
-	while (chars[i])
-	{
-		if (chars[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int			is_direct(char *s, t_inst *cur, int param)
+static int	is_direct(char *s, t_inst *cur, int param, t_champ *pl)
 {
 	int	i;
 	int	count;
@@ -38,38 +22,56 @@ int			is_direct(char *s, t_inst *cur, int param)
 	i = 1;
 	if (s[i] && s[i] == LABEL_CHAR)
 	{
-		while (s[++i] && is_label_chars(s[i]))
+		count = 0;
+		while (s[++i] && is_label_char(s[i]))
 			count ++;
 		if (count == 0 || s[i])
-			return (0);
+			exit_free("0wrong parameter format at line ", pl, cur->line);
 		(cur->lab_name)[param] = ft_strsub(s, 2, count);
 		return (T_LAB);
 	}
-	else
-	{
-		if (s[i] == '-')
-			i++;
+	else if (s[i] == '0' || ft_atoi(&(s[i++])))
+	{;
 		while (s[i] && ft_isdigit(s[i]))
 			i++;
+		if (s[i] || (i <= 1 || (i == 2 && s[1] == '-')))
+			exit_free("1wrong parameter format at line ", pl, cur->line);
+		return (T_DIR);
 	}
-	if (s[i])
-		return (0);
-	return (T_DIR);
+	return (0);
 }
 
-int			is_index(char *s)
+
+static int	is_index(char *s, t_inst *cur, int param, t_champ *pl)
 {
 	int	i;
+	int	count;
 
-	i = 0;
-	while (s[i] && ft_isdigit(s[i]))
-		i++;
-	if (s[i] || i == 0)
+	if (!s)
 		return (0);
-	return (T_IND);
+	i = 0;
+	if (s[i] && s[i] == LABEL_CHAR)
+	{
+		count = 0;
+		while (s[++i] && is_label_char(s[i]))
+			count++;
+		if (count == 0 || s[i])
+			exit_free("2wrong parameter format at line ", pl, cur->line);
+		(cur->lab_name)[param] = ft_strsub(s, 1, count);
+		return (T_ILAB);
+	}
+	else if (s[i] == '0' || ft_atoi(&(s[i++])))
+	{
+		while (s[i] && ft_isdigit(s[i]))
+			i++;
+		if (s[i] || (i == 0 || (i == 1 && s[0] == '-')))
+			exit_free("3wrong parameter format at line ", pl, cur->line);
+		return (T_IND);
+	}
+	return (0);
 }
 
-int			is_registre(char *s, t_op *op, int p)
+static int	is_registre(char *s, t_op *op, int p)
 {
 	int i;
 
@@ -85,7 +87,7 @@ int			is_registre(char *s, t_op *op, int p)
 	return (T_REG);
 }
 
-int			par_type(char *s, t_inst *cur, int p)
+int			par_type(char *s, t_inst *cur, int p, t_champ *pl)
 {
 	int	i;
 	int	ret;
@@ -93,15 +95,16 @@ int			par_type(char *s, t_inst *cur, int p)
 	i = 0;
 	if (s[i] == ' ')
 		i++;
-	if ((ret = is_direct(&(s[i]), cur, p)))
+	if ((ret = is_direct(&(s[i]), cur, p, pl)))
 	{
 		if (ret == T_DIR)
 			(cur->op->params)[p] = itohex(ft_atoi(&(s[i + 1])), cur->op->d_siz);
 		cur->op->psize[p] = cur->op->d_siz;
 	}
-	else if ((ret = is_index(&(s[i]))))
+	else if ((ret = is_index(&(s[i]), cur, p, pl)))
 	{
-		cur->op->params[p] = itohex(ft_atoi(&(s[i])), 2);
+		if (ret == T_IND)
+			cur->op->params[p] = itohex(ft_atoi(&(s[i])), 2);
 		cur->op->psize[p] = 2;
 	}
 	else if ((ret = is_registre(&(s[i]), cur->op, p)))

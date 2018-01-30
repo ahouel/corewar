@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/28 05:52:32 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/29 19:14:36 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	la soustraction.
 */
 
-static char		*get_val(t_inst *current, t_champ *pl, char *s)
+static char		*get_val(t_inst *cur, t_champ *pl, char *s)
 {
 	t_lab	*lab;
 
@@ -26,10 +26,10 @@ static char		*get_val(t_inst *current, t_champ *pl, char *s)
 	while (lab && ft_strcmp(lab->name, s) != 0)
 		lab = lab->next;
 	if (!lab)
-		exit_free("wrong parametre at the line ", pl, current->line);
-	if (lab->pc < current->pc)
-		return (itohex(65536 - ((current->pc - lab->pc) % 65536), 2));
-	return (itohex((lab->pc - current->pc) % 65536, 2));
+		exit_free("wrong parametre at the line ", pl, cur->line);
+	if (lab->pc < cur->pc)
+		return (itohex(65536 - ((cur->pc - lab->pc) % 65536), cur->op->d_siz));
+	return (itohex((lab->pc - cur->pc) % 65536, cur->op->d_siz));
 }
 
 /*
