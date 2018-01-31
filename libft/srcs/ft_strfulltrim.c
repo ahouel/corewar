@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 19:49:37 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/29 20:34:10 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/31 14:14:43 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*fill_str(char const *s, int len)
 	char	*new;
 	int		i;
 
+	if (!s)
+		return (NULL);
 	if (!(new = malloc(sizeof(char) * len)))
 		return (NULL);
 	len = 0;
@@ -58,5 +60,5 @@ char		*ft_strfulltrim(char const *s)
 			i++;
 		count++;
 	}
-	return(fill_str(s, count));
+	return (fill_str(s, count));
 }

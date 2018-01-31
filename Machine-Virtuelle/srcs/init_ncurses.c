@@ -6,11 +6,28 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:07:58 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/24 16:56:45 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/31 16:36:51 by gbradel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+static void	basic_print_bis(int i)
+{
+	i = 195;
+	while (++i < 249)
+	{
+		mvprintw(2, i, "*");
+		mvprintw(48, i, "*");
+	}
+	i = -1;
+	while (++i < 65)
+	{
+		mvprintw(i, 195, "*");
+		mvprintw(i, 196, "*");
+	}
+	attroff(COLOR_PAIR(42));
+}
 
 static void	basic_print(int i)
 {
@@ -30,13 +47,7 @@ static void	basic_print(int i)
 		mvprintw(i, 249, "*");
 		mvprintw(i, 248, "*");
 	}
-	i = 195;
-	while (++i < 249)
-	{
-		mvprintw(2, i, "*");
-		mvprintw(48, i, "*");
-	}
-	attroff(COLOR_PAIR(42));
+	basic_print_bis(i);
 }
 
 static void	basic_print_two(void)

@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/29 17:51:04 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/31 15:03:20 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,15 @@ static int	srch_aff_sound(t_vm *vm, char *arg)
 	{
 		if (vm->aff)
 			error(vm, "can't use twice -a");
+		vm->aff = 1;
 		return (1);
 	}
 	else if (!ft_strcmp(arg, "-sound"))
 	{
 		if (vm->sound)
 			error(vm, "can't use twice -sound");
-		return (2);
+		vm->sound = 1;
+		return (1);
 	}
 	return (0);
 }
@@ -121,7 +123,7 @@ int			check_arg(t_vm *vm, int ac, char **av)
 		else if ((ret = srch_verbosity(vm, ac, av, &i)))
 			vm->verbosity = ret;
 		else if ((ret = srch_aff_sound(vm, av[i])))
-			ret == 1 ? (vm->aff = 1) : (vm->sound = 1);
+			;
 		else if (!(srch_player(vm, ac, av, &i)))
 		{
 			ft_printf("%{RED}s %{BLUE}s\n",

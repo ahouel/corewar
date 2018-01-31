@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/29 19:14:36 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:25:02 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,24 @@
 **	la soustraction.
 */
 
-static char		*get_val(t_inst *cur, t_champ *pl, char *s)
+static char		*get_val(t_inst *cur, t_champ *pl, char *s, int param)
 {
 	t_lab	*lab;
+	int		size;
 
 	lab = pl->lab;
 	while (lab && ft_strcmp(lab->name, s) != 0)
 		lab = lab->next;
 	if (!lab)
-		exit_free("wrong parametre at the line ", pl, cur->line);
+		exit_free("wrong parametre at the line ", pl, NULL, cur->line);
+	size = 0;
+	if (cur->op->p_type[param] == T_LAB)
+		size = cur->op->dir_size;
+	else if (cur->op->p_type[param] == T_ILAB)
+		size = 2;
 	if (lab->pc < cur->pc)
-		return (itohex(65536 - ((cur->pc - lab->pc) % 65536), cur->op->d_siz));
-	return (itohex((lab->pc - cur->pc) % 65536, cur->op->d_siz));
+		return (itohex(65536 - ((cur->pc - lab->pc) % 65536), size));
+	return (itohex((lab->pc - cur->pc) % 65536, size));
 }
 
 /*
@@ -39,23 +45,24 @@ static char		*get_val(t_inst *cur, t_champ *pl, char *s)
 t_champ			*fill_label_params(t_champ *pl)
 {
 	t_lab	*lab;
-	t_inst	*inst;
+	t_inst	*ins;
 	int		i;
+	char	*tmp;
 
 	lab = pl->lab;
 	while (lab)
 	{
-		inst = lab->lst;
-		while (inst)
+		ins = lab->lst;
+		while (ins)
 		{
 			i = 0;
-			while (i < inst->op->nb_param)
+			while (i < ins->op->nb_param)
 			{
-				if (inst->lab_name[i])
-					inst->op->params[i] = get_val(inst, pl, inst->lab_name[i]);
+				if (ins->lab_name[i])
+					ins->op->params[i] = get_val(ins, pl, ins->lab_name[i], i);
 				i++;
 			}
-			inst = inst->next;
+			ins = ins->next;
 		}
 		lab = lab->next;
 	}
