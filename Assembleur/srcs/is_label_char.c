@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   is_label_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 11:18:49 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/30 16:24:26 by lgaveria         ###   ########.fr       */
+/*   Created: 2018/01/29 17:36:48 by lgaveria          #+#    #+#             */
+/*   Updated: 2018/01/30 16:25:57 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-void		exit_free(char *str, t_champ *pl, char **tab, int line)
+int		is_label_char(char c)
 {
-	ft_putstr("error: ");
-	ft_putstr(str);
-	if (line)
+	int		i;
+	char	*to_compare;
+
+	if (!c)
+		return (0);
+	to_compare = LABEL_CHARS;
+	i = 0;
+	while (to_compare[i])
 	{
-		ft_putnbr(line + 1);
-		write(1, "\n", 1);
+		if (to_compare[i] == c)
+			return (1);
+		i++;
 	}
-	if(tab)
-		free_tab(tab);
-	if (pl)
-		free_champ(pl);
-	exit(EXIT_FAILURE);
+	return (0);
 }

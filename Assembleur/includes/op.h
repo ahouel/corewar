@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:09:54 by ahouel            #+#    #+#             */
-/*   Updated: 2017/11/27 17:20:02 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/30 15:22:35 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
 #define COMMENT_CHAR			'#'
+#define COM_CHAR				';'
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
 #define SEPARATOR_CHAR			','
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
-#define NAME_CMD_STRING			".name"
-#define COMMENT_CMD_STRING		".comment"
+#define NAME_CMD_STR			".name"
+#define COMMENT_CMD_STR			".comment"
 
 #define REG_NUMBER				16
 
@@ -59,6 +60,9 @@ typedef char	t_arg_type;
 #define T_DIR					2
 #define T_IND					4
 #define T_LAB					8
+#define T_ILAB					16
+#define T_I						T_IND | T_ILAB
+#define T_D						T_DIR | T_LAB
 
 /*
 **
