@@ -101,9 +101,9 @@ int				main(int argc, char **argv)
 			exit_free("unsuccessful malloc\n", NULL, NULL, 0);
 		pl->input = input;
 		pl = manage_header(pl);
-		free_tab(pl->input);
 		end_it(pl, argv[i]);
 		i++;
 	}
+	while(1);
 	return (0);
 }

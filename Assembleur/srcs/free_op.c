@@ -14,8 +14,18 @@
 
 void	free_op(t_op *op)
 {
-	if (op->name)
-		free(op->name);
+	int	i;
+
+	if (op->params)
+	{
+		i = 0;
+		while (i < 3)
+		{
+			if (op->params[i])
+				free(op->params[i]);
+				i++;
+		}
+	}
 	op->name = NULL;
 	free(op);
 	op = NULL;
