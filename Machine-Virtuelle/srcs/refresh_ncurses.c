@@ -45,10 +45,9 @@ static void	delete_aff(int p)
 	int		i;
 
 	i = 2;
+	attron(COLOR_PAIR(99));
 	while (++i < 248)
-	{
 		mvprintw(65 + p * 2, i, "*");
-	}
 }
 
 static void	print_aff(t_vm *vm)
@@ -59,11 +58,13 @@ static void	print_aff(t_vm *vm)
 	tmp = vm->proc_lst;
 	while (tmp)
 	{
-		if (tmp->aff)
+		if (tmp->aff > 0)
 		{
 			attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color));
-			mvprintw(65 + tmp->uid * 2, vm->aff_ncurses.in[tmp->uid]++ + 3, "%c", tmp->aff);
-			vm->aff_ncurses.end[tmp->uid] = AFF_DELAY;
+			mvprintw(65 + tmp->uid * 2, vm->aff_ncurses.in[tmp->uid]++
+				+ 3, "%c", tmp->aff);
+			vm->aff_ncurses.end[tmp->uid - 1] = AFF_DELAY;
+			tmp->aff = -1;
 		}
 		tmp = tmp->next;
 	}
@@ -71,9 +72,10 @@ static void	print_aff(t_vm *vm)
 	while (++i < MAX_PLAYERS)
 		if (vm->aff_ncurses.end[i])
 			vm->aff_ncurses.end[i]--;
+	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (!vm->aff_ncurses.end[i])
-			delete_aff(i);
+			delete_aff(i + 1);
 }
 
 void		refresh_all(t_vm *vm)

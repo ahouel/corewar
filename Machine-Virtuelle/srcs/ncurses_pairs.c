@@ -14,7 +14,7 @@
 
 void	ncurses_pairs(void)
 {
-	init_pair(0, 0, 0);
+	init_pair(99, 0, 0);
 	init_pair(5, 50, 0);
 	init_pair(6, 60, 0);
 	init_pair(7, 70, 0);

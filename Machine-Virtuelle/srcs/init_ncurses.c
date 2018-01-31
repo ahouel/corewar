@@ -23,7 +23,7 @@ static void	basic_print(int i)
 		mvprintw(65, i, "*");
 	}
 	i = -1;
-	while (++i < 83) // 65
+	while (++i < 83)
 	{
 		mvprintw(i, 0, "*");
 		mvprintw(i, 1, "*");
@@ -35,12 +35,6 @@ static void	basic_print(int i)
 	{
 		mvprintw(2, i, "*");
 		mvprintw(48, i, "*");
-	}
-	i = -1;
-	while (++i < 65)
-	{
-		mvprintw(i, 195, "*");
-		mvprintw(i, 196, "*");
 	}
 	attroff(COLOR_PAIR(42));
 }
@@ -74,6 +68,19 @@ static void	basic_print_two(void)
 	mvprintw(48, 217, " live stats ");
 }
 
+static void	basic_print_three(void)
+{
+	int		i;
+
+	attron(COLOR_PAIR(42));
+	i = -1;
+	while (++i < 65)
+	{
+		mvprintw(i, 195, "*");
+		mvprintw(i, 196, "*");
+	}
+}
+
 void		init_ncurses(void)
 {
 	void	*w;
@@ -93,4 +100,5 @@ void		init_ncurses(void)
 	ncurses_colors_init('1');
 	basic_print(0);
 	basic_print_two();
+	basic_print_three();
 }
