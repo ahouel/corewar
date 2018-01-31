@@ -6,18 +6,11 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:18:14 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/24 16:56:44 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/31 18:37:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-/*
-**	Control pour le ncurses
-**	TO DO : le refaire proprement, changer le delay par un autre nom, idem
-**	pour le nom du fichier .c (voir aue c'est dans la partie ncurses)
-**	utiliser plutot usleep() que sleep()
-*/
 
 static void	keys_press(t_vm *vm, char key)
 {
@@ -30,13 +23,13 @@ static void	keys_press(t_vm *vm, char key)
 	}
 	if (key == 'w')
 	{
-		if (vm->delay + 12000 < 1000000)
-			vm->delay += 12000;
+		if (vm->delay + 10000 < 410000)
+			vm->delay += 10000;
 	}
 	else if (key == 'e')
 	{
-		if (vm->delay - 12000 > 0)
-			vm->delay -= 12000;
+		if (vm->delay - 10000 > 0)
+			vm->delay -= 10000;
 		else
 			vm->delay = 0;
 	}
@@ -54,7 +47,6 @@ void		ncurses_controller(t_vm *vm)
 		keys_press(vm, key);
 	while (!vm->pause)
 	{
-		move(0, 0);
 		key = getch();
 		if (key != -1)
 		{

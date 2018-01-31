@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:19:04 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/31 15:03:21 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/31 17:24:46 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,6 @@ void		exe(t_vm *vm)
 		}
 		if (vm->cycle == vm->next_ctd || !vm->next_ctd)
 			ctd_manager(vm);
-		if (vm->ncurses)
-			ncurses_controller(vm);
 		if (!vm->ncurses && vm->cycle == vm->dump)
 		{
 			print_ram(vm);
