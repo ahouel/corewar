@@ -105,8 +105,6 @@ void		exe(t_vm *vm)
 		++vm->cycle;
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle);
-		if (vm->ncurses)
-			ncurses_controller(vm);
 		proc = vm->proc_lst;
 		while (proc)
 		{
@@ -115,6 +113,8 @@ void		exe(t_vm *vm)
 		}
 		if (vm->cycle == vm->next_ctd || !vm->next_ctd)
 			ctd_manager(vm);
+		if (vm->ncurses)
+			ncurses_controller(vm);
 		if (!vm->ncurses && vm->cycle == vm->dump)
 		{
 			print_ram(vm);
