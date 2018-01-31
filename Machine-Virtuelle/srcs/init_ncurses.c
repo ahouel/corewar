@@ -6,30 +6,14 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:07:58 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/24 16:56:45 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/31 14:42:30 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void	basic_print(int i)
+static void	basic_print_bis(int i)
 {
-	attron(COLOR_PAIR(42));
-	i = -1;
-	while (++i < 250)
-	{
-		mvprintw(0, i, "*");
-		mvprintw(83, i, "*");
-		mvprintw(65, i, "*");
-	}
-	i = -1;
-	while (++i < 83) // 65
-	{
-		mvprintw(i, 0, "*");
-		mvprintw(i, 1, "*");
-		mvprintw(i, 249, "*");
-		mvprintw(i, 248, "*");
-	}
 	i = 195;
 	while (++i < 249)
 	{
@@ -43,6 +27,27 @@ static void	basic_print(int i)
 		mvprintw(i, 196, "*");
 	}
 	attroff(COLOR_PAIR(42));
+}
+
+static void	basic_print(int i)
+{
+	attron(COLOR_PAIR(42));
+	i = -1;
+	while (++i < 250)
+	{
+		mvprintw(0, i, "*");
+		mvprintw(83, i, "*");
+		mvprintw(65, i, "*");
+	}
+	i = -1;
+	while (++i < 83)
+	{
+		mvprintw(i, 0, "*");
+		mvprintw(i, 1, "*");
+		mvprintw(i, 249, "*");
+		mvprintw(i, 248, "*");
+	}
+	basic_print_bis(i);
 }
 
 static void	basic_print_two(void)

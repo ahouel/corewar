@@ -6,7 +6,7 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:15:14 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/29 17:52:55 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/31 14:45:51 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static void	print_aff(t_vm *vm)
 		if (tmp->aff)
 		{
 			attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color));
-			mvprintw(65 + tmp->uid * 2, vm->aff_ncurses.in[tmp->uid]++ + 3, "%c", tmp->aff);
+			mvprintw(65 + tmp->uid * 2,
+					vm->aff_ncurses.in[tmp->uid]++ + 3, "%c", tmp->aff);
 			vm->aff_ncurses.end[tmp->uid] = AFF_DELAY;
 		}
 		tmp = tmp->next;

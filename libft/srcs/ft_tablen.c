@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 14:29:15 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/24 14:30:38 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/01/31 14:14:58 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t		ft_tablen(char **tab)
 	int i;
 
 	if (!tab)
-		return(0);
+		return (0);
 	i = 0;
 	while (tab[i])
 		i++;
