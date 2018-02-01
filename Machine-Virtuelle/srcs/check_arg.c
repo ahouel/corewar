@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 17:03:05 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/01 19:15:29 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	srch_ncurses(t_vm *vm, char *arg)
 **	Regarde si l'argument arg est un -a ou un -sound
 */
 
-static int	srch_aff_sound(t_vm *vm, char *arg)
+static int	srch_aff(t_vm *vm, char *arg)
 {
 	if (!ft_strcmp(arg, "-a"))
 	{
@@ -114,7 +114,7 @@ int			check_arg(t_vm *vm, int ac, char **av)
 			vm->ncurses = ret;
 		else if ((ret = srch_verbosity(vm, ac, av, &i)))
 			vm->verbosity = ret;
-		else if ((ret = srch_aff_sound(vm, av[i])))
+		else if ((ret = srch_aff(vm, av[i])))
 			vm->aff = ret;
 		else if (!(srch_player(vm, ac, av, &i)))
 		{

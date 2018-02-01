@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:56:27 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 15:58:12 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 19:11:00 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int				main(int argc, char **argv)
 
 	i = 1;
 	if (argc < 2)
-		exit_free("usage : ./asm [champ to compile]\n", NULL, NULL, 0);
+		ft_printf("%{MAGENTA}s %{RED}s\n",
+				"Usage:", "./asm [champ to compile]");
 	while (i != argc)
 	{
 		if (ft_strlen(argv[i]) < 3)

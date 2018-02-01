@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 14:56:01 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/01 19:14:37 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	usage_verbosity(void)
 static void	usage(char *cw)
 {
 	ft_printf("%{MAGENTA}s %{RED}s %{CYAN}s %{BLUE}s\n", "Usage:", cw,
-		"[-dump N -v N -ncurses] [-n N]", "<champion1.cor> <...>");
+		"[-dump N -v N -ncurses -a] [-n N]", "<champion1.cor> <...>");
 	ft_printf("%{GREEN}s\n",
 		"###################### CHOOSE CHAMPION NUMBER ######################");
 	ft_printf("    %{CYAN}s %{BLUE}s %{CYAN}s\n", "-n N", "<champion.cor>",
@@ -41,9 +41,9 @@ static void	usage(char *cw)
 	ft_printf("%{GREEN}s\n",
 		"######################### TEXT OUTPUT MODE #########################");
 	ft_printf("    %{CYAN}s\n",
-		"-d N\t: Dumps memory after N cycles then exits");
+		"-dump N\t: Dumps memory after N cycles then exits");
 	ft_printf("    %{CYAN}s\n",
-		"-s N\t: Runs N cycles, dumps memory, pauses, then repeats");
+		"-a\t: Show aff done, default is to hide it");
 	ft_printf("    %{CYAN}s\n",
 		"-v N\t: Verbosity levels, can be added together to enable several");
 	usage_verbosity();
