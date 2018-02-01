@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 14:02:54 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/11 15:33:10 by ahouel           ###   ########.fr        #
+#    Updated: 2018/02/01 15:13:31 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ LIB_NAME = libft.a
 
 VM_PATH = ./Machine-Virtuelle/
 ASM_PATH = ./Assembleur/
-#DASM_PATH = ./Desassembleur/
 LIB_PATH = ./libft/
+LIB_NAME = libft.a
 OBJS_PATHS = obj/
 
 all: $(NAME)
@@ -36,10 +36,6 @@ $(ASM_NAME):
 	@echo "\033[35mCompiling \033[1m$(notdir $(ASM_NAME))\033[0m\033[35m...\033[0m"
 	@make -C $(ASM_PATH)
 
-#$(DASM_NAME):
-#	@echo "\033[35mCompiling \033[1m$(notdir $(DASM_NAME))\033[0m\033[35m..\033[0m"
-#	@make -C $(DASM_PATH)
-
 clean:
 	@make -C $(LIB_PATH) clean
 ifeq ("$(shell test -e $(VM_PATH)$(OBJS_PATHS) && echo toto)", "toto")
@@ -48,20 +44,16 @@ endif
 ifeq ("$(shell test -e $(ASM_PATH)$(OBJS_PATHS) && echo tata)", "tata")
 	@make -C $(ASM_PATH) clean
 endif
-#ifeq ("$(shell test -e $(DASM_PATH)$(OBJS_PATHS) && echo titi)", "titi")
-#	@make -C $(DASM_PATH) clean
-#endif
 
-fclean:
-	@make -C $(LIB_PATH) fclean
+fclean: clean
+	@rm -f $(LIB_PATH)$(LIB_NAME)
 ifeq ("$(shell test -e $(VM_NAME) && echo toti)", "toti")
-	@make -C $(VM_PATH) fclean
+	@rm -f $(VM_NAME)
+	@echo "\033[31mBinary \033[1;31m$(notdir $(VM_NAME))\033[1;0m\033[31m removed.\033[0m"
 endif
 ifeq ("$(shell test -e $(ASM_NAME) && echo toty)", "toty")
-	@make -C $(ASM_PATH) fclean
+	@rm -f $(ASM_NAME)
+	@echo "\033[31mBinary \033[1;31m$(notdir $(ASM_NAME))\033[1;0m\033[31m removed.\033[0m"
 endif
-#ifeq ("$(shell test -e $(DASM_NAME) && echo totu)", "totu")
-#	@make -C $(DASM_PATH) fclean
-#endif
 
 re: fclean all
