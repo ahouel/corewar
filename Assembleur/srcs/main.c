@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:56:27 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 11:38:13 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:58:12 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char		**read_champ(char *file_name)
 	int		gnl_ret;
 
 	if (ft_strncmp(&(file_name[ft_strlen(file_name) - 2]), ".s", 2) != 0)
-		exit_free("extension's file must be [.s]", NULL, NULL, 0);
+		exit_free("extension's file must be [.s]\n", NULL, NULL, 0);
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		exit_free("invalid file\n", NULL, NULL, 0);
 	if (!(ret = malloc(sizeof(char*) * 1)))
@@ -93,6 +93,8 @@ int				main(int argc, char **argv)
 		exit_free("usage : ./asm [champ to compile]\n", NULL, NULL, 0);
 	while (i != argc)
 	{
+		if (ft_strlen(argv[i]) < 3)
+			exit_free("invalid name_file\n", NULL, NULL, 0);
 		input = read_champ(argv[i]);
 		input = cut_comment(input);
 		if (!input || ft_tablen(input) < 3)
@@ -104,6 +106,5 @@ int				main(int argc, char **argv)
 		end_it(pl, argv[i]);
 		i++;
 	}
-	while (1);
 	return (0);
 }

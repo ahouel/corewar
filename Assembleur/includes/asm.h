@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 12:45:26 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 14:23:23 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void			end_it(t_champ *champ, char *file_name);
 
 t_inst			*new_instruction(t_champ *champ, int i, int line);
 t_champ			*new_label(char *name, t_champ *champ);
-int				how_many_label_char(char *s);
+int				how_many_label_char(char *s, t_champ *pl);
 int				is_label_char(char c, t_champ *pl);
 char			*itohex(long n, int size);
 char			get_ocp(t_op *current);

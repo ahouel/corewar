@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 12:00:21 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:41:35 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char		*get_val(t_inst *cur, t_champ *pl, char *s, int param)
 	while (lab && ft_strcmp(lab->name, s) != 0)
 		lab = lab->next;
 	if (!lab)
-		exit_free("wrong parametre at the line ", pl, NULL, cur->line);
+		exit_free("wrong label reference at line ", pl, NULL, cur->line);
 	size = 0;
 	if (cur->op->p_type[param] == T_LAB)
 		size = cur->op->dir_size;

@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 14:11:45 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:19:23 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		get_params(t_champ *pl, char *s, int i, int line)
 		tmp = new->op->p_type[j] & par_type(pl->t[j], new, j, pl);
 		if (!tmp)
 			exit_free("wrong parameter type at line ", pl, pl->t, line);
-		(new->op->p_type)[j] = i;
+		(new->op->p_type)[j] = tmp;
 	}
 	new->op->size += new->op->psize[0] + new->op->psize[1] + new->op->psize[2];
 	if (new->op->ocp)
@@ -92,17 +92,17 @@ t_champ			*do_parsing(t_champ *pl, int i)
 		{
 			if (pl->input[i][j] == COMMENT_CHAR || pl->input[i][j] == COM_CHAR)
 				j = -1;
-			else if (get_instruction(&((pl->input)[i][j]), pl, i - 1))
+			else if (get_instruction(&((pl->input)[i][j]), pl, i + 1))
 				j = -1;
-			else if (how_many_label_char(&((pl->input)[i][j])))
+			else if (how_many_label_char(&((pl->input)[i][j]), pl))
 			{
 				pl = new_label(&((pl->input)[i][j]), pl);
-				j += how_many_label_char(&((pl->input)[i][j])) + 1;
+				j += how_many_label_char(&((pl->input)[i][j]), pl) + 1;
 				while ((pl->input)[i][j] && ft_iswhitespace((pl->input)[i][j]))
 					j++;
 			}
 			else if (ft_strlen(ft_strtrim(pl->input[i])))
-				exit_free("wrong input at line ", pl, NULL, i);
+				exit_free("wrong input at line ", pl, NULL, i + 1);
 			else
 				j = -1;
 		}

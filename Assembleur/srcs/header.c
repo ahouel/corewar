@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 12:27:25 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:49:34 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	check_comment(char *s, t_header *head, t_champ *pl, int count)
 	if (tmp[i])
 	{
 		free(tmp);
-		exit_free("comment line format\n", pl, NULL, 0);
+		exit_free("wrong comment format\n", pl, NULL, 0);
 	}
 	free(tmp);
 	return (1);
@@ -63,7 +63,7 @@ static void	check_name(char *s, t_header *head, t_champ *pl, int count)
 	if (tmp[i])
 	{
 		free(tmp);
-		exit_free("format name line\n", pl, NULL, 0);
+		exit_free("wrong name format\n", pl, NULL, 0);
 	}
 	free(tmp);
 }
