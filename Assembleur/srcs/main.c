@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:56:27 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 11:38:13 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 14:29:27 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int				main(int argc, char **argv)
 		exit_free("usage : ./asm [champ to compile]\n", NULL, NULL, 0);
 	while (i != argc)
 	{
+		if (ft_strlen(argv[i]) < 3)
+			exit_free("invalid name_file\n", NULL, NULL, 0);
 		input = read_champ(argv[i]);
 		input = cut_comment(input);
 		if (!input || ft_tablen(input) < 3)
@@ -104,6 +106,5 @@ int				main(int argc, char **argv)
 		end_it(pl, argv[i]);
 		i++;
 	}
-	while (1);
 	return (0);
 }
