@@ -6,19 +6,19 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/30 16:32:50 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 12:27:25 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-static int	check_comment(char *s, header_t *head, t_champ *pl)
+static int	check_comment(char *s, t_header *head, t_champ *pl, int count)
 {
 	int		i;
-	int		count;
 	char	*tmp;
 
-	tmp = ft_strfulltrim(s);
+	if (!(tmp = ft_strfulltrim(s)))
+		exit_free("unsuccessful malloc\n", pl, NULL, 0);
 	if (ft_strncmp(tmp, COMMENT_CMD_STR, ft_strlen(COMMENT_CMD_STR)) != 0)
 	{
 		free(tmp);
@@ -27,11 +27,10 @@ static int	check_comment(char *s, header_t *head, t_champ *pl)
 	i = ft_strlen(COMMENT_CMD_STR);
 	while (ft_iswhitespace(tmp[i]))
 		i++;
-	count = 0;
 	while (tmp[++i] && tmp[i] != '\"' && count < COMMENT_LENGTH)
 		(head->comment)[count++] = tmp[i];
 	while (tmp[++i] && ft_iswhitespace(tmp[i]))
-		i = i;
+		;
 	if (tmp[i])
 	{
 		free(tmp);
@@ -41,13 +40,13 @@ static int	check_comment(char *s, header_t *head, t_champ *pl)
 	return (1);
 }
 
-static void	check_name(char *s, header_t *head, t_champ *pl)
+static void	check_name(char *s, t_header *head, t_champ *pl, int count)
 {
 	int		i;
-	int		count;
 	char	*tmp;
 
-	tmp = ft_strfulltrim(s);
+	if (!(tmp = ft_strfulltrim(s)))
+		exit_free("unsuccessful malloc\n", pl, NULL, 0);
 	if (tmp && ft_strncmp(tmp, NAME_CMD_STR, ft_strlen(NAME_CMD_STR)) != 0)
 	{
 		free(tmp);
@@ -56,7 +55,6 @@ static void	check_name(char *s, header_t *head, t_champ *pl)
 	i = ft_strlen(NAME_CMD_STR);
 	while (tmp[i] && ft_iswhitespace(tmp[i]))
 		i++;
-	count = 0;
 	while (tmp[++i] && tmp[i] != '\"' && count < PROG_NAME_LENGTH)
 		(head->prog_name)[count++] = tmp[i];
 	i++;
@@ -79,27 +77,27 @@ static void	check_name(char *s, header_t *head, t_champ *pl)
 t_champ		*manage_header(t_champ *pl)
 {
 	int			i;
-	header_t	*head;
+	t_header	*head;
 	int			com_ret;
 
 	i = 0;
-	if (!(head = ft_memalloc(sizeof(header_t))))
+	if (!(head = ft_memalloc(sizeof(t_header))))
 		exit_free("unsuccessful malloc\n", pl, NULL, 0);
 	pl->head = head;
 	while (pl->input[i] && ((pl->input)[i][0] == COMMENT_CHAR ||
 			(pl->input)[i][0] == COM_CHAR || ft_strlen((pl->input)[i]) == 0))
 		i++;
 	if (pl->input[i])
-		check_name((pl->input)[i], head, pl);
+		check_name((pl->input)[i], head, pl, 0);
 	else
 		exit_free("invalid file\n", pl, NULL, 0);
 	if ((head->prog_name)[0] == 0)
-		exit_free("no name at the top of a file\n", pl, NULL ,0);
+		exit_free("no name at the top of a file\n", pl, NULL, 0);
 	while (pl->input[++i] && ((pl->input)[i][0] == COMMENT_CHAR ||
 			(pl->input)[i][0] == COM_CHAR || ft_strlen((pl->input)[i]) == 0))
-		i = i;
+		;
 	if (pl->input[i])
-		com_ret = check_comment((pl->input)[i], head, pl);
+		com_ret = check_comment((pl->input)[i], head, pl, 0);
 	if (!(pl->input[i]) || !com_ret)
 		exit_free("no comment under the name\n", pl, NULL, 0);
 	return (do_parsing(pl, i));

@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 17:00:49 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/30 16:24:49 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 12:00:05 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	write_header(int fd, t_champ *pl)
 	tmp = pl->current_pc;
 	ft_bswap(&tmp, 4);
 	pl->head->prog_size = tmp;
-	write(fd, pl->head, sizeof(header_t));
+	write(fd, pl->head, sizeof(t_header));
 }
 
 /*
@@ -83,7 +83,6 @@ static int	empty_file(t_champ *pl)
 {
 	t_lab	*lab;
 	t_inst	*inst;
-	int		ret;
 
 	lab = pl->lab;
 	while (lab)
@@ -91,7 +90,7 @@ static int	empty_file(t_champ *pl)
 		inst = lab->lst;
 		if (inst)
 			return (1);
-		lab= lab->next;
+		lab = lab->next;
 	}
 	return (0);
 }
@@ -108,7 +107,7 @@ void		end_it(t_champ *pl, char *file_name)
 	t_inst	*inst;
 
 	if (!(empty_file(pl)))
-		exit_free("no instructions\n", pl, NULL,  0);
+		exit_free("no instructions\n", pl, NULL, 0);
 	fd = create_cor_file(file_name, pl);
 	lab = pl->lab;
 	while (lab)

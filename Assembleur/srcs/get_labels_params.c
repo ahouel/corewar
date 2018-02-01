@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/30 16:25:02 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 12:00:21 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_champ			*fill_label_params(t_champ *pl)
 	t_lab	*lab;
 	t_inst	*ins;
 	int		i;
-	char	*tmp;
 
 	lab = pl->lab;
 	while (lab)

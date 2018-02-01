@@ -6,14 +6,14 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 13:53:00 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/31 14:06:48 by ahouel           ###   ########.fr        #
+#    Updated: 2018/02/01 12:04:42 by lgaveria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re
 
 CC = gcc
-CFLAGS = -g
+CFLAGS = -g -Wall -Wextra -Werror
 NAME = ../asm
 
 SRC_PATH = ./srcs/
@@ -40,7 +40,6 @@ SRC_FILES = end_it.c \
 			op.c \
 			params.c \
 			pars.c \
-			coding_help.c
 
 INC_FILES = asm.h \
 			op.h

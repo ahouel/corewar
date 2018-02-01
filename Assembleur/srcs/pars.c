@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/30 17:06:29 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 14:11:45 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static void		get_params(t_champ *pl, char *s, int i, int line)
 	pl->t = ft_strsplit(s, SEPARATOR_CHAR);
 	if (s)
 		free(s);
-	if (ft_tablen(pl->t) != new->op->nb_param)
+	if (ft_tablen(pl->t) != (size_t)new->op->nb_param)
 		exit_free("instruction wrong usage at line ", pl, pl->t, line);
 	j = -1;
 	while ((pl->t)[++j])
 	{
-		i = new->op->p_type[j] & par_type(pl->t[j], new, j, pl);
-		if (!i)
+		tmp = new->op->p_type[j] & par_type(pl->t[j], new, j, pl);
+		if (!tmp)
 			exit_free("wrong parameter type at line ", pl, pl->t, line);
 		(new->op->p_type)[j] = i;
 	}
@@ -49,7 +49,6 @@ static void		get_params(t_champ *pl, char *s, int i, int line)
 
 static char		get_instruction(char *s, t_champ *pl, int line)
 {
-	char	**to_compare;
 	int		len;
 	int		i;
 	char	*tmp;
@@ -59,7 +58,7 @@ static char		get_instruction(char *s, t_champ *pl, int line)
 		len++;
 	s = &(s[len]);
 	len = 0;
-	while (is_label_char(s[len]))
+	while (is_label_char(s[len], pl))
 		len++;
 	if (s[len] == LABEL_CHAR)
 		return (0);
@@ -103,7 +102,7 @@ t_champ			*do_parsing(t_champ *pl, int i)
 					j++;
 			}
 			else if (ft_strlen(ft_strtrim(pl->input[i])))
-				exit_free("wrong input at line ", pl, NULL,  i);
+				exit_free("wrong input at line ", pl, NULL, i);
 			else
 				j = -1;
 		}

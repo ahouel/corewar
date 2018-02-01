@@ -6,14 +6,13 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/30 16:28:27 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 12:45:26 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 # define ASM_H
 # include <stdlib.h>
-# include <stdio.h> //
 # include "op.h"
 # include "../../libft/includes/libft.h"
 
@@ -28,7 +27,6 @@ typedef struct	s_op
 	int		dir_size;
 	int		ocp;
 	int		size;
-	int		adrr_rest; //pas sure d'en avoir besoin
 }				t_op;
 
 typedef struct	s_inst
@@ -53,7 +51,7 @@ typedef struct	s_champ
 	int			current_pc;
 	char		**input;
 	char		**t;
-	header_t	*head;
+	t_header	*head;
 	t_lab		*lab;
 }				t_champ;
 
@@ -74,7 +72,7 @@ void			end_it(t_champ *champ, char *file_name);
 t_inst			*new_instruction(t_champ *champ, int i, int line);
 t_champ			*new_label(char *name, t_champ *champ);
 int				how_many_label_char(char *s);
-int				is_label_char(char c);
+int				is_label_char(char c, t_champ *pl);
 char			*itohex(long n, int size);
 char			get_ocp(t_op *current);
 
@@ -88,13 +86,6 @@ void			free_champ(t_champ *champ);
 void			free_labs(t_lab *lab);
 void			free_instructions(t_inst *lst);
 void			free_op(t_op *op);
-
-/*
-**	fonctions a supprimer dans la version finale
-*/
-
-void			print_tab(char **tab);
-void			print_lst(t_champ *champ);
 
 /*
 **	op_tab de reference
