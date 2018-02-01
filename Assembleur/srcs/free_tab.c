@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 21:10:01 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 11:26:46 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:39:30 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void		free_tab(char **tab)
 		return ;
 	i = ft_tablen(tab);
 	while (--i >= 0)
+	{
 		free(tab[i]);
+		tab[i] = NULL;
+	}
 	free(tab);
 	tab = NULL;
 }

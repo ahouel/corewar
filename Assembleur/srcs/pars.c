@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 15:00:37 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:19:23 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_champ			*do_parsing(t_champ *pl, int i)
 		{
 			if (pl->input[i][j] == COMMENT_CHAR || pl->input[i][j] == COM_CHAR)
 				j = -1;
-			else if (get_instruction(&((pl->input)[i][j]), pl, i - 1))
+			else if (get_instruction(&((pl->input)[i][j]), pl, i + 1))
 				j = -1;
 			else if (how_many_label_char(&((pl->input)[i][j]), pl))
 			{
@@ -102,7 +102,7 @@ t_champ			*do_parsing(t_champ *pl, int i)
 					j++;
 			}
 			else if (ft_strlen(ft_strtrim(pl->input[i])))
-				exit_free("wrong input at line ", pl, NULL, i);
+				exit_free("wrong input at line ", pl, NULL, i + 1);
 			else
 				j = -1;
 		}
