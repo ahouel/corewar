@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/31 18:39:13 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/01 14:48:31 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ int			main(int ac, char **av)
 	win = get_winner(&vm);
 	ft_printf("Contestant %d, \"%s\", has won !\n",
 			win + 1, vm.player[win].name);
+	free_vm(&vm);
+	while (2);
 	return (0);
 }
