@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 18:08:52 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/01/30 16:36:20 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 14:10:06 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_direct(char *s, t_inst *cur, int param, t_champ *pl)
 	if (s[i] && s[i] == LABEL_CHAR)
 	{
 		count = 0;
-		while (s[++i] && is_label_char(s[i]))
+		while (s[++i] && is_label_char(s[i], pl))
 			count++;
 		if (count == 0 || (s[i] && (s[i] != ' ' || s[i + 1])))
 			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
@@ -52,7 +52,7 @@ static int	is_index(char *s, t_inst *cur, int param, t_champ *pl)
 	if (s[i] && s[i] == LABEL_CHAR)
 	{
 		count = 0;
-		while (s[++i] && is_label_char(s[i]))
+		while (s[++i] && is_label_char(s[i], pl))
 			count++;
 		if (count == 0 || s[i])
 			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
