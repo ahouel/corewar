@@ -16,6 +16,7 @@ static void		get_params(t_champ *pl, char *s, int i, int line)
 {
 	t_inst	*new;
 	int		j;
+	int		tmp;
 
 	new = new_instruction(pl, i, line);
 	j = ft_strlen(new->op->name);
@@ -28,16 +29,16 @@ static void		get_params(t_champ *pl, char *s, int i, int line)
 	j = -1;
 	while ((pl->t)[++j])
 	{
-//		new->op->p_type[j] = new->op->p_type[j] & par_type(tab[j], new, j, pl);
-		if (!(new->op->p_type)[j])
+		i = new->op->p_type[j] & par_type(pl->t[j], new, j, pl);
+		if (!i)
 			exit_free("wrong parameter type at line ", pl, pl->t, line);
+		(new->op->p_type)[j] = i;
 	}
 	new->op->size += new->op->psize[0] + new->op->psize[1] + new->op->psize[2];
 	if (new->op->ocp)
 		new->op->size += 1;
 	pl->current_pc += new->op->size;
 	free_tab(pl->t);
-	pl->t = NULL;
 }
 
 /*

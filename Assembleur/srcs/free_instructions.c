@@ -15,7 +15,7 @@
 void	free_instructions(t_inst *lst)
 {
 	if (lst->op)
-		free(lst->op);
+		free_op(lst->op);
 	lst->op = NULL;
 	if (lst->next)
 	{

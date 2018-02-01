@@ -14,14 +14,13 @@
 
 void		free_tab(char **tab)
 {
-	if (tab)
-	{
-		if (tab[0] && tab[1])
-			free_tab(&(tab[1]));
-		if (*tab)
-			free(*tab);
-		*tab = NULL;
-		free(tab);
-		tab = NULL;
-	}
+	int		i;
+
+	if (!tab)
+		return;
+	i = ft_tablen(tab);
+	while (--i >= 0)
+		free(tab[i]);
+	free(tab);
+	tab = NULL;
 }
