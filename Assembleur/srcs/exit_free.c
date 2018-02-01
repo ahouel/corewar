@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:18:49 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 15:42:31 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/01 15:59:15 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		exit_free(char *str, t_champ *pl, char **tab, int line)
 	}
 	if (tab)
 		free_tab(tab);
-	if (!tab && pl->t)
+	if (!tab && pl && pl->t)
 	{
 		if (pl->t[0])
 			free_tab(pl->t);
