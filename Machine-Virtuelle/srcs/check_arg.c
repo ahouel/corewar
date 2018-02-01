@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:17:54 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 12:43:37 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/01 17:03:05 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	srch_dump(t_vm *vm, int ac, char **av, int *i)
 	ret = 0;
 	if (!ft_strcmp(av[*i], "-dump"))
 	{
-		if (vm->dump != 1)
+		if (vm->dump != -1)
 			error(vm, "can't use twice -dump");
 		if (*i + 1 < ac && ft_str_isdigit(av[*i + 1]))
 		{
