@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/31 17:24:39 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/01/31 18:39:13 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	usage_verbosity(void)
 static void	usage(char *cw)
 {
 	ft_printf("%{MAGENTA}s %{RED}s %{CYAN}s %{BLUE}s\n", "Usage:", cw,
-		"[-dump N -s N -v N -ncurses] [-n N]", "<champion1.cor> <...>");
+		"[-dump N -v N -ncurses] [-n N]", "<champion1.cor> <...>");
 	ft_printf("%{GREEN}s\n",
 		"###################### CHOOSE CHAMPION NUMBER ######################");
 	ft_printf("    %{CYAN}s %{BLUE}s %{CYAN}s\n", "-n N", "<champion.cor>",

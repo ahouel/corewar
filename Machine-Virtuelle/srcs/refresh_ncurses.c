@@ -6,7 +6,7 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:15:14 by gbradel           #+#    #+#             */
-/*   Updated: 2018/01/31 16:40:15 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/01 14:36:50 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		refresh_all(t_vm *vm)
 	attron(COLOR_PAIR(40));
 	mvprintw(7, 216, "%d", vm->cycle);
 	mvprintw(12, 212, "%d", vm->nb_proc);
-	mvprintw(5, 220, "%d", vm->delay);
+	mvprintw(5, 220, "%03d", 1000000 / vm->delay);
 	mvprintw(36, 215, "%d", vm->ctd);
 	mvprintw(39, 214, "%d", CYCLE_DELTA);
 	mvprintw(42, 211, "%d", NBR_LIVE);

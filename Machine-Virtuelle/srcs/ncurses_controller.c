@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:18:14 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/31 18:37:56 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/01 14:36:49 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static void	keys_press(t_vm *vm, char key)
 	{
 		if (vm->delay - 10000 > 0)
 			vm->delay -= 10000;
-		else
-			vm->delay = 0;
 	}
 	ncurses_colors_init(key);
 }
@@ -41,9 +39,8 @@ void		ncurses_controller(t_vm *vm)
 	char	key;
 
 	key = -1;
-	key = getch();
 	call_ncurses(vm);
-	if (key != -1)
+	while ((key = getch()) != -1)
 		keys_press(vm, key);
 	while (!vm->pause)
 	{
