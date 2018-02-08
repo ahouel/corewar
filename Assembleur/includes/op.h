@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:09:54 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 12:42:14 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 14:43:37 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 
 # define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
 
-# define NAME_CMD_STR			".name"
-# define COMMENT_CMD_STR		".comment"
+# define NAME_STR			".name"
+# define COMMENT_STR		".comment"
 
 # define REG_NUMBER				16
 
@@ -62,7 +62,7 @@ typedef char	t_arg_type;
 # define T_D					T_DIR | T_LAB
 
 # define PROG_NAME_LENGTH		(128)
-# define COMMENT_LENGTH			(2048)
+# define COM_LEN				(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
 /*
@@ -74,7 +74,7 @@ typedef struct		s_header
 	unsigned int		magic;
 	char				prog_name[PROG_NAME_LENGTH + 1];
 	unsigned int		prog_size;
-	char				comment[COMMENT_LENGTH + 1];
+	char				comment[COM_LEN + 1];
 }					t_header;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 17:36:48 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 12:44:50 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 14:56:07 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		is_label_char(char c, t_champ *pl)
 	if (!c)
 		return (0);
 	if (!(to_compare = LABEL_CHARS))
-		exit_free("undefined label_chars\n", pl, NULL, 0);
+		exit_free(DEF_LAB, pl, NULL, 0);
 	i = 0;
 	while (to_compare[i])
 	{

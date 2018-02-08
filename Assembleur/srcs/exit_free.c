@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:18:49 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 15:59:15 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 16:10:23 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,13 @@
 
 void		exit_free(char *str, t_champ *pl, char **tab, int line)
 {
-	ft_putstr("error: ");
-	ft_putstr(str);
+	ft_printf("%{MAGENTA}s", "error: ");
 	if (line)
-	{
-		ft_putnbr(line);
-		write(1, "\n", 1);
-	}
+		ft_printf(str, line);
+	else
+		ft_printf("%{RED}s\n", str);
 	if (tab)
 		free_tab(tab);
-	if (!tab && pl && pl->t)
-	{
-		if (pl->t[0])
-			free_tab(pl->t);
-	}
 	if (pl)
 		free_champ(pl);
 	exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:56:27 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 19:11:00 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/08 15:55:29 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@ static char		**read_champ(char *file_name)
 	int		gnl_ret;
 
 	if (ft_strncmp(&(file_name[ft_strlen(file_name) - 2]), ".s", 2) != 0)
-		exit_free("extension's file must be [.s]\n", NULL, NULL, 0);
+		exit_free(EXT_FILE, NULL, NULL, 0);
 	if ((fd = open(file_name, O_RDONLY)) == -1)
-		exit_free("invalid file\n", NULL, NULL, 0);
+		exit_free("invalid file", NULL, NULL, 0);
 	if (!(ret = malloc(sizeof(char*) * 1)))
-		exit_free("unsuccessful malloc\n", NULL, NULL, 0);
+		exit_free(ERR_MALLOC, NULL, NULL, 0);
 	i = 0;
 	while ((gnl_ret = get_next_line(fd, &(ret[i]))) > 0)
 	{
 		if (!(ret = realloc(ret, sizeof(char*) * (i + 2))))
-			exit_free("unsuccessful malloc\n", NULL, NULL, 0);
+			exit_free(ERR_MALLOC, NULL, NULL, 0);
 		ret[++i] = NULL;
 	}
 	if (gnl_ret == -1)
-		exit_free("unsuccessful read\n", NULL, NULL, 0);
+		exit_free(ERR_READ, NULL, NULL, 0);
 	close(fd);
 	return (ret);
 }
@@ -90,20 +90,20 @@ int				main(int argc, char **argv)
 
 	i = 1;
 	if (argc < 2)
-		ft_printf("%{MAGENTA}s %{RED}s\n",
-				"Usage:", "./asm [champ to compile]");
+		ft_printf("%{MAGENTA}s %{RED}s\n", "Usage:",
+				"./asm [champ to compile]");
 	while (i != argc)
 	{
 		if (ft_strlen(argv[i]) < 3)
-			exit_free("invalid name_file\n", NULL, NULL, 0);
+			exit_free(NAME_FILE, NULL, NULL, 0);
 		input = read_champ(argv[i]);
 		input = cut_comment(input);
 		if (!input || ft_tablen(input) < 3)
-			exit_free("invalid file\n", NULL, NULL, 0);
+			exit_free("invalid file", NULL, NULL, 0);
 		if (!(pl = ft_memalloc(sizeof(t_champ))))
-			exit_free("unsuccessful malloc\n", NULL, NULL, 0);
+			exit_free(ERR_MALLOC, NULL, NULL, 0);
 		pl->input = input;
-		pl = manage_header(pl);
+		pl = manage_header(pl, 0);
 		end_it(pl, argv[i]);
 		i++;
 	}

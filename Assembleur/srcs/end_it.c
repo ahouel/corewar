@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 17:00:49 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 14:44:11 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 16:10:04 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static int	create_cor_file(char *file_name, t_champ *pl)
 
 	size = ft_strlen(file_name);
 	if (!(tmp = ft_memalloc(sizeof(char) * (size + 3))))
-		exit_free("unsuccessful malloc\n", pl, NULL, 0);
+		exit_free(ERR_MALLOC, pl, NULL, 0);
 	tmp = ft_strncpy(tmp, file_name, size - 1);
 	tmp[size - 1] = '\0';
 	tmp = ft_strcat(tmp, "cor\0");
 	fd = open(tmp, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	free(tmp);
 	if (fd == -1)
-		exit_free("open function failed\n", pl, NULL, 0);
+		exit_free(ERR_OPEN, pl, NULL, 0);
 	write_header(fd, pl);
 	return (fd);
 }
@@ -105,9 +105,10 @@ void		end_it(t_champ *pl, char *file_name)
 	int		fd;
 	t_lab	*lab;
 	t_inst	*inst;
+	int		tmp;
 
 	if (!(empty_file(pl)))
-		exit_free("no instructions\n", pl, NULL, 0);
+		exit_free(EMPTY, pl, NULL, 0);
 	fd = create_cor_file(file_name, pl);
 	lab = pl->lab;
 	while (lab)
@@ -121,7 +122,7 @@ void		end_it(t_champ *pl, char *file_name)
 		lab = lab->next;
 	}
 	close(fd);
-	write(1, file_name, ft_strlen(file_name));
-	write(1, " executed\n", 10);
+	tmp = ft_strlen(file_name) - 2;
+	ft_printf("%{GREEN}s compiled to %.*s.cor\n", file_name, tmp, file_name);
 	free_champ(pl);
 }

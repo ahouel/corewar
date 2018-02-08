@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 14:23:23 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:53:56 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,34 @@ typedef struct	s_champ
 }				t_champ;
 
 /*
+**	strings d'erreur
+*/
+
+# define ERR_MALLOC		"malloc function failed"
+# define ERR_OPEN		"open function failed"
+# define EMPTY			"no instructions to play"
+# define LAB_REF		"line [%{RED}d] : wrong label reference\n"
+# define COM_SIZE		"comment size must be under %{RED}d bytes\n"
+# define COM_NOEND		"comment has no end"
+# define COM_LINE_FORM	"wrong comment line format"
+# define NO_COM			"no comment under the name"
+# define COM_FORM		"wrong comment format"
+# define NO_NAME		"no name at the top of the file"
+# define NAME_FORM		"wrong name format"
+# define DEF_LAB		"you should redefine label_chars"
+# define EXT_FILE		"extension's file must be [.s]"
+# define ERR_READ		"read function failed"
+# define NAME_FILE		"invalid name file"
+# define PARAM_FORM		"line [%{RED}d] : wrong parameter format\n"
+# define ARG_NB			"line [%{RED}d] : instruction wrong usage\n"
+# define PARAM_TYPE		"line [%{RED}d] : wrong parameter type\n"
+# define WR_LINE		"line [%{RED}d] : wrong input\n"
+
+/*
 **	fonctions de parcours
 */
 
-t_champ			*manage_header(t_champ *pl);
+t_champ			*manage_header(t_champ *pl, int i);
 t_champ			*do_parsing(t_champ *champ, int i);
 int				par_type(char *s, t_inst *cur, int p, t_champ *pl);
 t_champ			*fill_label_params(t_champ *pl);
