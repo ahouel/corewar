@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2018/01/31 14:04:58 by ahouel           ###   ########.fr        #
+#    Updated: 2018/02/08 18:02:38 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRC_FILES =	main.c					\
 			aff.c					\
 			init_ncurses.c			\
 			ncurses_colors_init.c	\
+			print_aff.c				\
 			ncurses_stats.c			\
 			ncurses_pairs.c			\
 			refresh_ncurses.c		\

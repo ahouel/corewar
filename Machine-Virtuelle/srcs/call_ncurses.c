@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:33 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/31 17:28:10 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/08 18:01:49 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void		call_ncurses(t_vm *vm)
 	wprint_ram(vm);
 	live_stats(vm);
 	refresh_all(vm);
+	print_aff(vm);
 	refresh();
 	usleep(vm->delay);
 }

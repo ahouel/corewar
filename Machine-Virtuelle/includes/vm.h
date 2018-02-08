@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 10:56:25 by ahouel            #+#    #+#             */
-/*   Updated: 2018/01/24 17:01:06 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/08 18:01:20 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ void		ncurses_colors_init(char color);
 void		live_stats(t_vm *vm);
 void		refresh_all(t_vm *vm);
 void		ncurses_pairs(void);
+void		print_aff(t_vm *vm);
 
 #endif

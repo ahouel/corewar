@@ -6,7 +6,7 @@
 /*   By: gbradel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 17:15:14 by gbradel           #+#    #+#             */
-/*   Updated: 2018/02/01 14:36:50 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/08 18:04:22 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,44 +40,6 @@ static void	print_live_store(t_vm *vm)
 	}
 }
 
-static void	delete_aff(int p)
-{
-	int		i;
-
-	i = 2;
-	attron(COLOR_PAIR(99));
-	while (++i < 248)
-		mvprintw(65 + p * 2, i, "*");
-}
-
-static void	print_aff(t_vm *vm)
-{
-	t_pcb	*tmp;
-	int		i;
-
-	tmp = vm->proc_lst;
-	while (tmp)
-	{
-		if (tmp->aff > 0)
-		{
-			attron(COLOR_PAIR(vm->player[tmp->uid - 1].id_color));
-			mvprintw(65 + tmp->uid * 2, vm->aff_ncurses.in[tmp->uid]++
-				+ 3, "%c", tmp->aff);
-			vm->aff_ncurses.end[tmp->uid - 1] = AFF_DELAY;
-			tmp->aff = -1;
-		}
-		tmp = tmp->next;
-	}
-	i = -1;
-	while (++i < MAX_PLAYERS)
-		if (vm->aff_ncurses.end[i])
-			vm->aff_ncurses.end[i]--;
-	i = -1;
-	while (++i < MAX_PLAYERS)
-		if (!vm->aff_ncurses.end[i])
-			delete_aff(i + 1);
-}
-
 void		refresh_all(t_vm *vm)
 {
 	t_pcb	*tmp;
@@ -86,7 +48,7 @@ void		refresh_all(t_vm *vm)
 	attron(COLOR_PAIR(40));
 	mvprintw(7, 216, "%d", vm->cycle);
 	mvprintw(12, 212, "%d", vm->nb_proc);
-	mvprintw(5, 220, "%03d", 1000000 / vm->delay);
+	mvprintw(5, 220, "%04d", 1000000 / vm->delay);
 	mvprintw(36, 215, "%d", vm->ctd);
 	mvprintw(39, 214, "%d", CYCLE_DELTA);
 	mvprintw(42, 211, "%d", NBR_LIVE);
