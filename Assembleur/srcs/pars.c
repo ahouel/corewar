@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:56:42 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 15:19:23 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:06:26 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static void		get_params(t_champ *pl, char *s, int i, int line)
 	if (s)
 		free(s);
 	if (ft_tablen(pl->t) != (size_t)new->op->nb_param)
-		exit_free("instruction wrong usage at line ", pl, pl->t, line);
+		exit_free(ARG_NB, pl, pl->t, line);
 	j = -1;
 	while ((pl->t)[++j])
 	{
 		tmp = new->op->p_type[j] & par_type(pl->t[j], new, j, pl);
 		if (!tmp)
-			exit_free("wrong parameter type at line ", pl, pl->t, line);
+			exit_free(PARAM_TYPE, pl, pl->t, line);
 		(new->op->p_type)[j] = tmp;
 	}
 	new->op->size += new->op->psize[0] + new->op->psize[1] + new->op->psize[2];
@@ -102,7 +102,7 @@ t_champ			*do_parsing(t_champ *pl, int i)
 					j++;
 			}
 			else if (ft_strlen(ft_strtrim(pl->input[i])))
-				exit_free("wrong input at line ", pl, NULL, i + 1);
+				exit_free(WR_LINE, pl, NULL, i + 1);
 			else
 				j = -1;
 		}

@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 18:08:52 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 15:01:22 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:53:53 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_direct(char *s, t_inst *cur, int param, t_champ *pl)
 		while (s[++i] && is_label_char(s[i], pl))
 			count++;
 		if (count == 0 || (s[i] && (s[i] != ' ' || s[i + 1])))
-			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
+			exit_free(PARAM_FORM, pl, pl->t, cur->line);
 		(cur->lab_name)[param] = ft_strsub(s, 2, count);
 		return (T_LAB);
 	}
@@ -35,7 +35,7 @@ static int	is_direct(char *s, t_inst *cur, int param, t_champ *pl)
 		while (s[i] && ft_isdigit(s[i]))
 			i++;
 		if (s[i] && (s[i] != ' ' || s[i + 1]))
-			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
+			exit_free(PARAM_FORM, pl, pl->t, cur->line);
 		return (T_DIR);
 	}
 	return (0);
@@ -55,7 +55,7 @@ static int	is_index(char *s, t_inst *cur, int param, t_champ *pl)
 		while (s[++i] && is_label_char(s[i], pl))
 			count++;
 		if (count == 0 || s[i])
-			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
+			exit_free(PARAM_FORM, pl, pl->t, cur->line);
 		(cur->lab_name)[param] = ft_strsub(s, 1, count);
 		return (T_ILAB);
 	}
@@ -64,7 +64,7 @@ static int	is_index(char *s, t_inst *cur, int param, t_champ *pl)
 		while (s[i] && ft_isdigit(s[i]))
 			i++;
 		if ((s[i] && (s[i] != ' ' || s[i + 1])))
-			exit_free("wrong parameter format at line ", pl, pl->t, cur->line);
+			exit_free(PARAM_FORM, pl, pl->t, cur->line);
 		return (T_IND);
 	}
 	return (0);

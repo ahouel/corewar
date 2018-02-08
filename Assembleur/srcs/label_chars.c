@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 17:00:24 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 14:17:17 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/08 14:56:24 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		how_many_label_char(char *s, t_champ *pl)
 	count = 0;
 	i = 0;
 	if (!(to_compare = LABEL_CHARS))
-		exit_free("undefined label_chars", pl, NULL, 0);
+		exit_free(DEF_LAB, pl, NULL, 0);
 	while (s[i] && i == count)
 	{
 		j = -1;
