@@ -6,15 +6,14 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:03:32 by ahouel            #+#    #+#              #
-#    Updated: 2018/02/08 18:02:38 by ahouel           ###   ########.fr        #
+#    Updated: 2018/02/13 15:59:42 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re
 
 CC = clang
-DEBUGFLAGS = -fsanitize=address
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 NAME = ../corewar
 
 SRC_PATH = ./srcs/

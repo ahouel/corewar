@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/08 15:53:56 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/13 16:10:13 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct	s_champ
 **	strings d'erreur
 */
 
+# define ERR_CLOSE		"close function failed"
 # define ERR_MALLOC		"malloc function failed"
 # define ERR_OPEN		"open function failed"
 # define EMPTY			"no instructions to play"

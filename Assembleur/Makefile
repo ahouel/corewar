@@ -6,14 +6,14 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 13:53:00 by ahouel            #+#    #+#              #
-#    Updated: 2018/02/01 12:04:42 by lgaveria         ###   ########.fr        #
+#    Updated: 2018/02/13 16:03:04 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re
 
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 NAME = ../asm
 
 SRC_PATH = ./srcs/
@@ -56,7 +56,7 @@ $(OBJ_PATH):
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
+	@$(CC) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
 	@echo "\033[34mCompilation of \033[1m$(notdir $<)\033[0m \033[34mdone.\033[0m"
 
 $(LIB):

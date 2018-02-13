@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 11:21:24 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 19:14:37 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/08 20:15:14 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	usage(char *cw)
 	ft_printf("    %{CYAN}s\n",
 		"-dump N\t: Dumps memory after N cycles then exits");
 	ft_printf("    %{CYAN}s\n",
-		"-a\t: Show aff done, default is to hide it");
+		"-a\t\t: Show aff done, default is to hide it");
 	ft_printf("    %{CYAN}s\n",
 		"-v N\t: Verbosity levels, can be added together to enable several");
 	usage_verbosity();
