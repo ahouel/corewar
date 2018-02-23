@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:56:27 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/13 16:10:28 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/16 16:33:00 by gbradel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char		**read_champ(char *file_name)
 	if (gnl_ret == -1)
 		exit_free(ERR_READ, NULL, NULL, 0);
 	if (close(fd))
-		exit_free(ERR_CLOSE, NULL, NULL, 0);
+		exit_free(ERR_CLOSE, NULL, ret, 0);
 	return (ret);
 }
 

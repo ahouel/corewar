@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:01:26 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/13 16:10:13 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/16 16:25:01 by gbradel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,13 @@ typedef struct	s_champ
 # define EMPTY			"no instructions to play"
 # define LAB_REF		"line [%{RED}d] : wrong label reference\n"
 # define COM_SIZE		"comment size must be under %{RED}d bytes\n"
+# define NAME_SIZE		"name size must be under %{RED}d bytes\n"
 # define COM_NOEND		"comment has no end"
 # define COM_LINE_FORM	"wrong comment line format"
 # define NO_COM			"no comment under the name"
 # define COM_FORM		"wrong comment format"
 # define NO_NAME		"no name at the top of the file"
+# define NAME_NOEND		"name has no end"
 # define NAME_FORM		"wrong name format"
 # define DEF_LAB		"you should redefine label_chars"
 # define EXT_FILE		"extension's file must be [.s]"

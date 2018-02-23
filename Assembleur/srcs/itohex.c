@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 17:15:59 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/01 14:55:31 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/16 17:53:46 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char		*itohex(long n, int size)
 	char			*ret;
 
 	if (!(ret = ft_memalloc(sizeof(char) * (size + 1))))
-		return (NULL);
+		exit(EXIT_FAILURE);
 	if (n == -2147483648)
 	{
 		ret[0] = (char)128;

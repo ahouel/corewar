@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:54:43 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/08 16:01:56 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:30:24 by gbradel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,23 @@ static int	check_comment(t_header *head, t_champ *pl, int line)
 static void	check_name(char *s, t_header *head, t_champ *pl, int count)
 {
 	int		i;
-	char	*tmp;
 
-	if (!(tmp = ft_strfulltrim(s)))
-		exit_free(ERR_MALLOC, pl, NULL, 0);
-	if (tmp && ft_strncmp(tmp, NAME_STR, ft_strlen(NAME_STR)) != 0)
-	{
-		free(tmp);
+	i = 0;
+	while (s[i] && ft_iswhitespace(s[i]))
+		i++;
+	if (ft_strncmp(&(s[i]), NAME_STR, ft_strlen(NAME_STR)) != 0)
 		exit_free(NO_NAME, pl, NULL, 0);
-	}
-	i = ft_strlen(NAME_STR);
-	while (tmp[i] && ft_iswhitespace(tmp[i]))
+	i += ft_strlen(NAME_STR);
+	while (s[i] && ft_iswhitespace(s[i]))
 		i++;
-	while (tmp[++i] && tmp[i] != '\"' && count < PROG_NAME_LENGTH)
-		(head->prog_name)[count++] = tmp[i];
-	i++;
-	while (tmp[i] && ft_iswhitespace(tmp[i]))
-		i++;
-	if (tmp[i])
-	{
-		free(tmp);
+	if (s[i++] != '\"')
 		exit_free(NAME_FORM, pl, NULL, 0);
-	}
-	free(tmp);
+	while (s[i] && s[i] != '\"' && count < PROG_NAME_LENGTH)
+		(head->prog_name)[count++] = s[i++];
+	if (count >= PROG_NAME_LENGTH && (s[i] && s[i] != '\"'))
+		exit_free(NAME_SIZE, pl, NULL, PROG_NAME_LENGTH);
+	if (!s[i])
+		exit_free(NAME_NOEND, pl, NULL, 0);
 }
 
 /*

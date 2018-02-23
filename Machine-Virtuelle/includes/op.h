@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:09:54 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/08 17:59:20 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/16 16:32:07 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ typedef char	t_arg_type;
 # define NCURSES_DELAY			101000
 # define LIVE_FLASH				11
 # define ST_FLASH				10
-# define AFF_DELAY				50
+# define AFF_DELAY				100
 
 #endif

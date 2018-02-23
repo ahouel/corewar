@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 17:54:45 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/08 18:01:31 by ahouel           ###   ########.fr       */
+/*   Updated: 2018/02/16 16:58:40 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void		print_aff(t_vm *vm)
 			vm->aff_ncurses.end[i]--;
 	i = -1;
 	while (++i < MAX_PLAYERS)
-		if (!vm->aff_ncurses.end[i] || vm->aff_ncurses.in[i] > 245)
+		if (!vm->aff_ncurses.end[i] || vm->aff_ncurses.in[i] > 240)
 			delete_aff(i + 1, vm);
 }

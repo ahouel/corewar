@@ -6,7 +6,7 @@
 /*   By: lgaveria <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 17:03:22 by lgaveria          #+#    #+#             */
-/*   Updated: 2018/02/08 14:48:35 by lgaveria         ###   ########.fr       */
+/*   Updated: 2018/02/16 17:54:37 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 
 static char		*get_val(t_inst *cur, t_champ *pl, char *s, int param)
 {
-	t_lab	*lab;
-	int		size;
+	t_lab			*lab;
+	int				size;
+	long long int	mod;
 
 	lab = pl->lab;
 	while (lab && ft_strcmp(lab->name, s) != 0)
@@ -33,9 +34,10 @@ static char		*get_val(t_inst *cur, t_champ *pl, char *s, int param)
 		size = cur->op->dir_size;
 	else if (cur->op->p_type[param] == T_ILAB)
 		size = 2;
+	mod = (size == 2 ? 65536 : 4294967296);
 	if (lab->pc < cur->pc)
-		return (itohex(65536 - ((cur->pc - lab->pc) % 65536), size));
-	return (itohex((lab->pc - cur->pc) % 65536, size));
+		return (itohex(mod - ((cur->pc - lab->pc) % mod), size));
+	return (itohex((lab->pc - cur->pc) % mod, size));
 }
 
 /*
